@@ -122,7 +122,6 @@ class Coordinator:
         self.private.chmod(0o700)
         self.inactivity_seconds, self.poll_seconds = inactivity_seconds, poll_seconds
         self.publish = publish
-        self.published_head = None
         self.running: dict[str, Running] = {}
         self.next_poll = 0.0
         self.stopping = False
@@ -201,6 +200,8 @@ class Coordinator:
         return receipt
 
     def recover(self) -> list[str]:
+        from . import publication_worker
+        publication_worker.recover(self.record)
         mailbox_jobs.recover(self.record)
         state, events, _ = self.record.read()
         observations = {}
@@ -509,6 +510,7 @@ class Coordinator:
                 started.append(run)
                 if run not in self.running:
                     break  # Preserve a failed startup; reconsider on the next tick.
+        publication_target = None
         if poll and now >= self.next_poll:
             self.next_poll = now + self.poll_seconds
             if self.publish:
@@ -522,19 +524,26 @@ class Coordinator:
                 inbox.poll(self.record)
             except (OSError, ValueError, KeyError, subprocess.SubprocessError) as error:
                 write_private(self.private / "inbox-error.json", {"error": type(error).__name__, "at": time.time()})
-            head = self.record.read()[2]
-            if self.publish and head != self.published_head:
-                try:
-                    from .publish import publish
-                    publish(self.record, push=True)
-                    self.published_head = head
-                except (OSError, ValueError, KeyError, subprocess.SubprocessError) as error:
-                    write_private(self.private / "publish-error.json", {"error": type(error).__name__, "at": time.time()})
+            if self.publish:
+                # Include source-only deliveries; a busy worker retains this pair.
+                publication_target = (self.record.read()[2], source_head(self.record))
+        if self.publish:
+            from . import publication_worker
+            try:
+                publication_worker.tick(self.record, wanted=publication_target,
+                                        retry_seconds=self.poll_seconds)
+            except (OSError, ValueError, KeyError, subprocess.SubprocessError) as error:
+                write_private(self.private / "publish-error.json",
+                              {"error": type(error).__name__, "reason": str(error)[:500], "at": time.time()})
         return {"started": started, "finished": ended, "active": list(self.running)}
 
     def close(self) -> None:
         self.stopping = True
-        self.reap()
+        try:
+            self.reap()
+        finally:
+            from . import publication_worker
+            publication_worker.stop(self.record)
 
 
 def execute(record: Record, gate: int, run: str) -> int:
