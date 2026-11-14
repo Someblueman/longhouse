@@ -1,0 +1,75 @@
+{
+  "source_commit": "1dcaf56f2b1173bcbc326a89bb60176aaf80b3b1",
+  "scope": "work-accounting-refresh-20261114",
+  "approval_sha256": "5ad50252f356345a1ccf7f3bdc7d909446cd801f8a3bc45347506561c2198dce",
+  "migration_sequence": 2437,
+  "runtime_sha256": "034e36552f90c2ac984e805a55999e5fb0dec3248fade4d7941196f28654310d",
+  "tests": {
+    "collected": 472,
+    "executed": 375,
+    "skipped": 97,
+    "seconds": 278.493,
+    "output_sha256": "f1456583e3c47e48629f5a0c692eb5394fc2ffc32f12b5005f7d687ef7c7e393",
+    "path": "activation-tests.txt"
+  },
+  "drain": {
+    "pause_sequence": 2428,
+    "old_run": "60c2328999f84d71ac775d126d7f3eb5",
+    "sleep_sequence": 2434,
+    "successful_exit_sequence": 2436,
+    "native_interrupted": false,
+    "old_service_pid": 60854,
+    "note": "Cancelled only exact repeatedly rejected Pages Git transfers and descendants to unblock queued mailbox replies. Never signalled native resident."
+  },
+  "service": {
+    "pid": 37192,
+    "same_label": "local.emberhall.watch",
+    "resume_sequence": 2439
+  },
+  "first_live_assignment": {
+    "run": "2921ee48624640e787d5f03756314244",
+    "agent": "opencode",
+    "start_sequence": 2440,
+    "routing_sequence": 2441,
+    "launched_sequence": 2442,
+    "pgid": 37453,
+    "reason": "balanced",
+    "prior_work_starts": {
+      "codex": 6,
+      "opencode": 6,
+      "muse": 13,
+      "agy": 7
+    }
+  },
+  "publication": {
+    "verified_remote_commit": "012caf8fe9c4dc645d5726102c9fbd46e09cc827",
+    "wire_version": 2,
+    "wire_bytes": 2769411,
+    "through": 2437,
+    "recovery_ref": "refs/house-publication-recovery/6c285ab88bb8965b4cee7f26a7952ee3b0a5db1c"
+  },
+  "browser": {
+    "public_snapshot_observed": 2437,
+    "parlor": "open; opened at2180, controls visible",
+    "accounts": "Native input, Cached input, reporting coverage, native outcomes and finished task receipts rendered; historical routing/waiting unreported",
+    "local_players": "file URL rejected by browser protocol policy after explicit owner approval; no workaround or acceptance claim",
+    "automatic_refresh_observed": 2442,
+    "parlor_refresh_check": {
+      "draft_from": 2150,
+      "unsubmitted": true,
+      "before_snapshot": 2437,
+      "after_snapshot": 2442,
+      "draft_retained": true,
+      "keyboard_focus_retained": true
+    },
+    "live_assignment_visible": "OpenCode: 1 work assignment at snapshot2442"
+  },
+  "unchanged_rule_revision": "1faa2a66b0ea4736767e3798111e255e6d94abf57fa6184ab378b40819a65e04",
+  "queue_cleanup_task": "retire-obsolete-helpers-20261114",
+  "limits": [
+    "First routing receipt does not establish long-run balance.",
+    "Task finish receipts are not independent quality acceptance.",
+    "New waiting measurements appear on native departure; history remains unknown.",
+    "Full status remains large; old native status response was 673977 bytes."
+  ]
+}

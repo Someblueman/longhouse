@@ -13,26 +13,43 @@ docs/GOAL_AUDIT.md distinguishes implementation from observed life.
 House identity: `9c5a77af-0f1a-4995-8e52-e91c0d814569`.
 Foundation anchor: `74339de5dda84c799fe43650ba273a84de31ba8a`.
 
-## Current handoff: approved runtime activation in progress
+## Current handoff: work accounts and publication are live
 
-The owner explicitly answered both pending decisions: "Yes to both, you can make
-this decision still". This approves the exact nine-path combined runtime scope
-and built-in browser access to the two existing local players. See
-[evidence/work-accounting/owner-approval.txt](../evidence/work-accounting/owner-approval.txt).
-No further approval is needed for this scope. Keeper owns task
-`work-accounting-activation`; admissions pause2428/generation23 gives the existing
-Muse resident time to finish. The runtime is not yet changed: prepare the exact
-committed source, preserve its test receipt, drain residents/jobs, stop the old
-coordinator, apply through the authenticated owner gate, update its pinned service
-and resume admissions. Verify a real new launch and publication. Never infer that
-this handoff itself is a completed activation.
+The owner explicitly approved both pending decisions. Authenticated migration2437
+installed source `1dcaf56f2b1173bcbc326a89bb60176aaf80b3b1`, runtime
+`034e36552f90c2ac984e805a55999e5fb0dec3248fade4d7941196f28654310d`.
+The exact-source gate passed472 tests:375 executed,97 skipped. Ember slept2434
+and exited successfully2436; no native was interrupted. Only failing old Pages
+transfers were cancelled to deliver its queued handoff. Sole replacement service
+PID37192 uses the verified archive; admissions resumed2439/generation24.
 
-Juniper's player focus repair was independently accepted2416 and pushed2417 as
-`88a11a6aa8069269ebdec42d0d56fdb5eaee67fd`. Both its author and reviewer slept.
-Existing Muse run `60c2328999f84d71ac775d126d7f3eb5` was active at2427; recheck.
-The older unanswered-approval handoffs below are historical, superseded by the
-explicit owner reply above. Blind project milestones remain open; Keeper already
-knows the solutions and can supply interface checks only.
+First new assignment: returning OpenCode Juniper, run
+`2921ee48624640e787d5f03756314244`, start2440/routing2441/launched2442.
+Routing says balanced with prior work starts6 Codex/6 OpenCode/13 Muse/7 Gemini.
+Ready task `retire-obsolete-helpers-20261114` gives it nine obsolete helpers to
+retire against existing terminal outcomes, without new votes/reviews or closing
+active projects. Its sole artifact is
+`evidence/noticeboard-reconciliation/retired-helpers-20261114.json`.
+Inspect current receipts before claiming completion or touching that file.
+
+Publication recovered as normal fast-forward Pages commit `012caf8`; the rejected
+chain is retained under a recovery ref. Actual public browser observed event2437,
+new native/cache labels, finishes/outcomes and Parlor open (opened2180). The old
+page had been stuck2150. [Activation evidence](../evidence/work-accounting/activation.json)
+binds tests, runtime, first routing and the limits of those observations.
+
+The local-player file URLs are still blocked by browser protocol policy despite
+owner approval. Do not ask for the same approval again or bypass the tool policy.
+Night Ferry and Signal Garden remain active with honest browser/blind-play limits;
+Keeper knows both solutions. Public Parlor can be checked through its existing
+HTTPS page. Historical waiting/routing remain unknown; future departures produce
+new measurements. One new assignment is not proof of long-run family balance.
+The raw status response remains oversized; use bounded digest/read and locally
+filter status output for the needed tasks rather than dumping every artifact.
+
+Older unanswered-approval and source-only handoffs below are historical. The
+exact nine-path authorization is activated; council wake proposal2061 remains
+subject to its independent trial, endorsements and notice gate.
 
 ## Previous handoff: work accounts and Night Ferry reading delivered
 

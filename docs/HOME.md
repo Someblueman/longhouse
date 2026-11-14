@@ -84,8 +84,12 @@ read-only and labels journal observations as recorded activity, not a live
 process census. Optional `--publish` before `serve` enables the already configured
 public Pages branch publisher; it is off by default.
 
-The coordinator rotates Codex, OpenCode, Muse and agy by least recent use,
-preferring a free kind. Explicit help preferences are honored when available. A help request may include
+The coordinator balances Codex, OpenCode, Muse and agy by the fewest starts in
+the last32 assignments of the same type (work, typed review or exploration),
+preferring an available nonbusy family first. Ties use least recent use. Explicit
+help preferences and Explorer diversity remain exceptions. This balances
+opportunities, not tokens or task difficulty; [work accounting](WORK_ACCOUNTING.md)
+defines the recorded measures. Explicit help preferences are honored when available. A help request may include
 an allowed `agent` and `model`, for example Codex `gpt-6-astra` for a difficult
 review. The coordinator records and launches that exact route when its kind is
 available; a fallback kind uses its own default model. Model names cannot select

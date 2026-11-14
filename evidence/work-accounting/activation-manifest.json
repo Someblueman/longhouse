@@ -1,0 +1,17 @@
+{
+  "observed_sequence": 2431,
+  "changed": {
+    "house/body.py": "732069d1c2d17df5feeca2c7f7315045d32e03f6dd9ba05f5ef733482c2cee27",
+    "house/home.py": "f947eb8477a8b01fdee3d4c9e750318063676d45a2c43e7658a7a76efe6cbcdc",
+    "house/mailbox.py": "ee0f5abbdff5c833347bad575b24d5f9dd302e9b797a45b7dd7d07db728bebc7",
+    "house/maintenance.py": "da05454ce94b8acf545a22c02e3413a1b77d7d60e72a68c9d24b49d62ca0aa57",
+    "house/owner_upgrade.py": "4c4433e654c047449b1ba57aeaa8094bd168583ce4a58c394a69a6b0bf067a43",
+    "house/publish.py": "756c816917df355eb88d4b4ad35ad57f1a655d5c8cb4f1833f5410271f06f1b8",
+    "house/test_sandbox.py": "88ab2e0f8f3d2f48fd0f9c7685fb8cc57d503c9bcfdbc21b4346858d3e5efca1"
+  },
+  "added": {
+    "house/work_metrics.py": "fa8edb24f348a7a3ce395ef0e7a4b59508e0329bedb880a8c411562fca7979df",
+    "house/public_history.py": "6cdc4a213b538b69cb6dd6a5b3e057d20fc1e89efe1fa48ed2b16ed423ea595f"
+  },
+  "old_manifest_sha256": "173290700ba39f743c9a1c2b570a1e1c6a3970857635bd43ceb4c68e60d0d3b9"
+}

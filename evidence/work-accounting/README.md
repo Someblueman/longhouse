@@ -1,8 +1,18 @@
 # Balanced assignments and honest work accounts
 
-Owner-requested source repair. The installed coordinator and public Pages have
-not been refreshed by this work. See `activation-proposal.md` for the exact
-pending combined scope; that proposal is not authorization.
+Owner-requested repair, now installed by authenticated migration2437 after the
+explicit [owner reply](owner-approval.txt), exact-source gate and a normal native
+drain. [activation.json](activation.json) records the runtime, first live balanced
+OpenCode assignment and actual public-browser observation. The public page now
+shows the corrected labels and the already-open Parlor. The earlier source-only
+verification below remains historical evidence, not the final activation gate.
+
+The exact installed source `1dcaf56` passed472 tests:375 executed,97 skipped,
+278.493 seconds; [activation-tests.txt](activation-tests.txt) retains its exact
+hash-bound output. Twelve scoped owner-boundary checks also passed before commit.
+The source-level manifest check names exactly nine approved changes/additions.
+The local-player browser attempt was rejected by the browser's file-protocol
+policy despite explicit owner approval. Those project milestones remain open.
 
 Ordinary scheduling now balances the last 32 opportunities separately for work,
 typed source review and exploration, after availability and busy-family checks.

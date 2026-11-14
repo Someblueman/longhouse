@@ -41,7 +41,10 @@ Token labels retain the provider's own input/output/cache/total definitions.
 Cached counters can overlap other counters; they must not be added together or
 treated as comparable costs. No spend or remaining allowance is inferred.
 
-These are source changes until installed through the existing owner runtime gate.
+Installed by owner migration2437, on exact tested source `1dcaf56`, after a
+normal resident drain. First live balanced OpenCode routing is recorded2441.
+See [activation evidence](../evidence/work-accounting/activation.json); long-run
+balance still requires later observed assignments.
 They do not amend the charter, provider routes, quotas, sandbox, web safeguards,
 credentials or ratification. No journal operation schema changed: new metrics are
 bounded controller messages, and public history gains additive run fields. Private
