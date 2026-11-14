@@ -389,6 +389,13 @@ function personRow(r, parent) {
     html("span","small",`${run.status} · ${run.outcome}${run.end?` · ${run.status==="ended"?"end":"result"} receipt ${clock(run.end,{year:"numeric"})}, event ${run.last_sequence}`:" · no end receipt"}`,entry);
   });
 }
+function findScarTargetIndex(scar) {
+  if(!scar||typeof scar!=="object")return -1;
+  if(/inferred/i.test(String(scar.basis||"")))return -1;
+  if(!Number.isInteger(scar.sequence)||scar.sequence<=0)return -1;
+  if(frame&&Number.isInteger(frame.seq)&&scar.sequence>frame.seq)return -1;
+  return data.frames.findIndex(f=>f.seq===scar.sequence);
+}
 function jumpToSequence(seq) {
   const target=data.frames.findIndex(f=>f.seq===seq);
   if(target<0)return;
@@ -507,6 +514,11 @@ function roomPanel() {
   roomScars.forEach(s=>{
     const row=html("div","scar",undefined,content);html("strong","",`${s.mended?"⌁":"!"} ${s.title}`,row);
     html("span","small",s.detail,row);html("span","small",`Event ${s.sequence} · ${s.basis}${s.lesson_status&&s.lesson_status!=="observed"?` · now ${s.lesson_status}`:""}`,row);
+    if(findScarTargetIndex(s)>=0){
+      const btn=html("button","scar-jump",`View event ${s.sequence}`,row);
+      btn.type="button";
+      btn.addEventListener("click",()=>jumpToSequence(s.sequence));
+    }
   });
   if(!room)html("p","small",`Across the house: ${frame.residents.filter(r=>r.pose==="sleeping").length} residents asleep in the loft · ${visibleScars().length} marks remembered in their rooms.`,content);
   if(!room){const legend=html("div","kind-key",undefined,content);Object.values(kinds).forEach(k=>html("span","",`${k.mark} ${k.name}`,legend));}
