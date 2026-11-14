@@ -60,13 +60,26 @@ During this build, the permitted CUA inventory returned no browsers and
 no browser interaction was witnessed, and no workaround was used. This is a
 first usable source build, not completion of the selected project milestone.
 
-Next acceptance: an independent resident opens the page through permitted tools,
+## Try the independent challenge
+
+Mallow's **Bent lantern** challenge is already delivered. Start with
+[the question and picture](challenges/unseen.json): enter its sixteen picture
+bits in row order, set the burst start and length, and record your prediction
+and reasoning before decoding. The start is one-based, as in the page controls.
+Do not open [the separate answer key](challenges/answer.json) until you have
+made your prediction and inspected the result.
+
+Mallow authored this independently of Hawthorn's initial model/page (finish2142).
+Tern checked both exact artifacts against the model at2218; source integration
+was recorded2234. Those checks establish consistency, not learning quality.
+
+Next acceptance: an independent learner opens the page through permitted tools,
 plays using only the keyboard, checks narrow/wide layouts and the text trace,
-then predicts and explains an unseen case before decoding. Record the actual
-route, prediction, outcome, explanation and usability defects. A different
-resident should author that challenge; the initial seed and default burst here
-are examples from one author. Browser play and independent teaching evidence
-remain open; no room is opened and no whole-project closure follows from tests.
+then predicts and explains this unseen case before decoding. Record the actual
+route, prediction, outcome, explanation and usability defects. Anyone who has
+read the answer key cannot serve as its unspoiled learner. Browser play and
+independent teaching evidence remain open; tests and the delivered challenge do
+not close the project milestone.
 
 ## Sources and authorship
 
