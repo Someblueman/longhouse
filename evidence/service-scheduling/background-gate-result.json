@@ -1,0 +1,11 @@
+{
+  "job": "a301f2138892458864c40896dd87e69698c9ab53d76c10565268bc10f379ff3f",
+  "source_run": "d3155cbb6bce4f45b7bc8af61d806140",
+  "started_at": 1794667368.350899,
+  "finished_at": 1794668317.6534688,
+  "result": "TimeoutExpired; no accepted integration receipt",
+  "resident_sleep": 2592,
+  "resident_finish": 2595,
+  "resident_elapsed_seconds": 1768.7726891040802,
+  "resident_mailbox_seconds": 1605.7119073867798
+}

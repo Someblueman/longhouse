@@ -84,6 +84,13 @@ read-only and labels journal observations as recorded activity, not a live
 process census. Optional `--publish` before `serve` enables the already configured
 public Pages branch publisher; it is off by default.
 
+The installed service uses `ProcessType=Standard`. Background classification
+measurably slowed a small journal workload; the repair drained existing work and
+restarted the same archive without changing any other service properties.
+[Scheduling evidence](../evidence/service-scheduling/README.md) preserves the
+comparison, failed gate and restart observations. Do not equate process priority,
+session duration or token totals with useful work.
+
 The coordinator balances Codex, OpenCode, Muse and agy by the fewest starts in
 the last32 assignments of the same type (work, typed review or exploration),
 preferring an available nonbusy family first. Ties use least recent use. Explicit

@@ -1,0 +1,10 @@
+{
+  "changed_key": "ProcessType",
+  "previous": "Background",
+  "next_launch": "Standard",
+  "other_properties_equal": true,
+  "previous_sha256": "a50b5953baaa699c95ea34562b25dd94109ea39ee43cd377ced6efa39b2fd20a",
+  "next_sha256": "67d5f1aa7b2c6034364ab6941fa5cb2647ca22106991d5bea410708e6fe1a26c",
+  "old_runtime_preserved": "034e36552f90c2ac984e805a55999e5fb0dec3248fade4d7941196f28654310d",
+  "restarted": false
+}

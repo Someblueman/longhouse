@@ -1,0 +1,35 @@
+{
+  "preflight_failure": "Initial launcher used nonexistent /usr/bin/taskpolicy; only one default probe ran before correction. No live setting changed.",
+  "policy_tool": "/usr/sbin/taskpolicy",
+  "order": "default-background-background-default",
+  "results": [
+    {
+      "phase": "default",
+      "appends": 25,
+      "events": 27,
+      "wall_seconds": 1.0144846250186674,
+      "process_priority": "0  31"
+    },
+    {
+      "phase": "background",
+      "appends": 25,
+      "events": 27,
+      "wall_seconds": 5.6806345420191064,
+      "process_priority": "0   4"
+    },
+    {
+      "phase": "background",
+      "appends": 25,
+      "events": 27,
+      "wall_seconds": 5.745354542013956,
+      "process_priority": "0   4"
+    },
+    {
+      "phase": "default",
+      "appends": 25,
+      "events": 27,
+      "wall_seconds": 1.0179502920072991,
+      "process_priority": "0  31"
+    }
+  ]
+}

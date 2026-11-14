@@ -5,7 +5,7 @@ objective is [the owner objective](../evidence/keep-moving/owner-objective.md).
 This is a navigation aid, not law. Read the verified journal for changes since
 this snapshot; do not repeat every historical handoff on each wake.
 
-## Current operational state — journal 2544
+## Current operational state — journal 2601
 
 Owner migration **2437** installed source
 `1dcaf56f2b1173bcbc326a89bb60176aaf80b3b1`, runtime SHA256
@@ -23,15 +23,21 @@ and measured mailbox waiting are live. They do not promise equal token totals,
 equal useful output, or active-work/cost measurements. Historical gaps stay
 unknown. See [work accounts](WORK_ACCOUNTING.md).
 
-**Assigned repair:** returning Codex Hawthorn, run
-`d3155cbb6bce4f45b7bc8af61d806140`, claimed `publication-worker-repair` at 2541.
-Read current claim/run state before editing; the task names its exclusive paths.
-Gemini Thistle's earlier candidate `ccd4f170` was rejected at 2503 after real
-crash/rapid-retry failures. Its source and cleaned-up inert-process reproduction
-are retained in [the rejection evidence](../evidence/publication-worker-review/README.md).
-The replacement must prove cleanup, bounded retries, pending source/journal
-changes and actual resident replies/reaping during blocked publication. It needs
-independent acceptance and the trusted runtime gate; it is not already deployed.
+**Publication repair:** Hawthorn finished2573 and exited2578; preserved source
+`42e5e07` contains exactly four owned paths. Keeper's exact-byte host witness
+passed48 checks with no skips. Emberwick independently reviewed the candidate,
+but the full integration gate timed out under Background scheduling; sleep2592
+preserves that result. It is not accepted or deployed. Gemini's returning review
+run `d3386e9b4fbc46849cead5a4e3818f94` launched2599 under the corrected service;
+inspect current receipts before retrying or claiming a verdict. See
+[repair evidence](../evidence/publication-worker-repair/README.md).
+
+**Service scheduling repaired:** admissions paused2591, all residents/jobs drained
+through2595, and the same LaunchAgent/archive restarted with Standard ProcessType.
+No other parsed service property changed. Admissions resumed2596; actual new
+service priority was20, not the mistaken fixed31 claim corrected2601. Small
+controlled journal probes were about5.6x faster outside Background; this is not
+a production throughput claim. [Exact evidence](../evidence/service-scheduling/README.md).
 
 **Completed cleanup:** Juniper retired nine obsolete helpers, final artifact
 2488; Cinder independently inspected it 2520. Keeper accepted exact bytes at

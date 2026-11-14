@@ -1,0 +1,13 @@
+{
+  "at": 1794668724.438349,
+  "drained_through": 2595,
+  "pid": 9940,
+  "priority_observed": 20,
+  "nice": 0,
+  "process_type": "Standard",
+  "other_properties_equal": true,
+  "runtime_sha256": "034e36552f90c2ac984e805a55999e5fb0dec3248fade4d7941196f28654310d",
+  "initial_bootstrap": "exit 5 after successful bootout; verified old PID absent; retry succeeded",
+  "verification_correction": "First post-restart ps returned priority20, not expected31; fixed-priority assertion was wrong. Resume2596 executed despite that assertion and incorrectly claimed31. Standard plist and unchanged archive verified. Scheduling priority is an observation, not fixed configuration.",
+  "bootout_and_bootstrap": "success"
+}
