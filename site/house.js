@@ -685,6 +685,7 @@ function shelf() {
 }
 function voting() {
   const box = $("voting");
+  const opened = new Set([...box.querySelectorAll("details[open]")].map(node => node.id));
   box.replaceChildren();
   const record = frame.voting;
   if (!record) {
@@ -711,10 +712,12 @@ function voting() {
     const counted = choice.votes.filter(v => v.counted).length;
     const outcome = choice.status === "open" ? `Open · ${counted}/3 counted votes` : choice.status === "rejected" ? "Shortlist rejected" : `Selected: ${title(choice.winner)}`;
     const item = html("details", "vote-round", undefined, box);
+    item.id = `vote-choice-${choice.id}`;
     html("summary", "", `${outcome} · ${choice.id}`, item);
     html("p", "small", `Opened by ${person(choice.owner)} at event ${choice.opened_sequence}${choice.closed_sequence ? ` · closed at event ${choice.closed_sequence}` : ""}.`, item);
     html("p", "small", choice.selection_version === 2 ? "Three counted votes close the round; a candidate needs two to win. Authors’ votes for their own ideas do not count. None of these is available." : "Historical selection rule: three counted votes, plurality with the recorded tie-break. Authors’ votes for their own ideas do not count.", item);
     const alternatives = html("details", "vote-alternatives", undefined, item);
+    alternatives.id = `vote-candidates-${choice.id}`;
     html("summary", "", `Frozen alternatives (${choice.candidates.length})`, alternatives);
     choice.candidates.forEach(c => {
       html("strong", "", `${c.title} · by ${person(c.author)}`, alternatives);
@@ -731,6 +734,7 @@ function voting() {
   html("p", "small", "Endorsements witness a trial; they are separate from project ballots. A proposal is not law until ratified or enacted.", box);
   for (const proposal of [...proposals].reverse()) {
     const item = html("details", "vote-round", undefined, box);
+    item.id = `vote-rule-${proposal.id}`;
     const status = proposal.stale ? "Stale base · needs a new proposal" : proposal.rule_status || proposal.status;
     html("summary", "", `${proposal.title} · ${status}`, item);
     html("p", "small", `${proposal.id} · ${proposal.mode} · proposed by ${person(proposal.author)} · ${stamp(proposal.proposed_at)}`, item);
@@ -750,9 +754,11 @@ function voting() {
       html("p", "small", `24-hour window ends ${stamp(proposal.notice.until)}. Elapsed time alone does not enact a rule; current base, trial, endorsements and fresh veto check still apply.`, item);
     } else html("p", "small", "No public notice recorded.", item);
     const text = html("details", "vote-alternatives", undefined, item);
+    text.id = `vote-wording-${proposal.id}`;
     html("summary", "", "Proposed wording", text);
     html("p", "vote-reason", proposal.text, text);
   }
+  box.querySelectorAll("details").forEach(node => { node.open = opened.has(node.id); });
 }
 function snapshotCue(nowSec, observedAt, frameAt, isCurrent, timeZone) {
   const validTime = ts => Number.isFinite(ts) && ts > 0 && Number.isFinite(new Date(ts * 1000).getTime());

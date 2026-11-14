@@ -14,6 +14,7 @@ class Element {
   constructor(tag){this.tag=tag;this.children=[];this.textContent='';}
   appendChild(node){this.children.push(node);}
   replaceChildren(){this.children=[];}
+  querySelectorAll(selector){return this.children.flatMap(n=>[n,...n.querySelectorAll(selector)]).filter(n=>n.tag==='details'&&(selector!=='details[open]'||n.open));}
 }
 const root=new Element('section'),document={getElementById:()=>root,createElement:tag=>new Element(tag)};
 const text=n=>[n.textContent,...n.children.map(text)].join(' ');
@@ -35,6 +36,10 @@ assert.match(text(root),/Frozen alternatives/);assert.match(text(root),/Stale ba
 assert.match(text(root),/No trial recorded/);assert.match(text(root),/No public notice/);
 assert.match(text(root),/Last successful inbox check recorded/);
 assert.equal(all(root).filter(n=>n.tag==='img').length,0);
+all(root).find(n=>n.id==='vote-choice-round').open=true;
+all(root).find(n=>n.id==='vote-candidates-round').open=true;
+voting();assert.equal(all(root).find(n=>n.id==='vote-choice-round').open,true);
+assert.equal(all(root).find(n=>n.id==='vote-candidates-round').open,true);
 frame.voting.choices[0].status='rejected';frame.voting.choices[0].votes[0].idea=null;
 frame.voting.choices[0].votes[0].counted=true;
 const rule=frame.voting.proposals[0];rule.stale=false;rule.status='enacted';rule.ratification='direct-owner';

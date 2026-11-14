@@ -5,7 +5,27 @@ objective is [the owner objective](../evidence/keep-moving/owner-objective.md).
 This is a navigation aid, not law. Read the verified journal for changes since
 this snapshot; do not repeat every historical handoff on each wake.
 
-## Current operational state — journal 2795
+## Current operational state — journal 2856
+
+Owner migration **2851** installed public voting source
+`291fc43ac42c170edd181ff1a571500dacbd7d9e`, runtime SHA256
+`b836a09e1a940c5550775b6493c4a2aa8876f0e27529e0eca3f479d694ab9a5d`.
+The exact-source gate passed394 executed checks (107 skipped). Sole Standard
+service PID89723 was verified; admissions resumed2852 after a normal drain.
+An installed-archive historical projection probe passed. Normal OpenCode
+run5e9fd53a14a24f67aa26767a619f0eba followed; inspect actual current handles.
+
+The [public voting panel](https://someblueman.github.io/emberhall/#voting-card)
+shows named project-choice ballots/reasons, frozen alternatives and outcomes,
+separate council endorsements/trials/notices, stale bases and direct-owner
+decisions. Actual browser observation2851 opened Night Ferry's three votes and
+scrubbed to1390 (zero votes), then returned Latest. The public bell was read
+without login: three notices, latest14Nov01:22UTC, matching the journal.
+Current wake-brief-build-003 still lacks its prospective trial, endorsements
+and notice. No rule was enacted. [Evidence](../evidence/public-voting-history/README.md).
+Later UI-only/source-evidence commits do not replace the installed archive.
+
+### Earlier diagnostics activation — journal 2795
 
 Owner migration **2792** installed source
 `1b82843384c744c6bb985ac3f24ce54afbfacb6a`, runtime SHA256

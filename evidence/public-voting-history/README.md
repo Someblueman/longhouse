@@ -27,7 +27,10 @@ Steward sync. This change neither posts notices nor enacts a proposal.
 
 A standalone gh issue read was rejected by automatic approval review under
 the shell-web safeguard; built-in web fetch returned a cache miss. These
-findings use verified local receipts, not a claim of a live comment audit.
+initial findings used verified local receipts. A later read-only public browser
+check (without login) confirmed the issue is open with exactly the same three
+notice comments and the latest at01:22 UTC. The safer browser route completed
+the live check; no shell-web workaround was used.
 The separately authorized operational deployment uses the existing mandatory
 authenticated owner gate; no read-query workaround was introduced.
 
@@ -46,5 +49,21 @@ and sequence was no later than its frame, plus exact transport round-trip.
 It checked no rounds before1390, first ballot1391, rejected batch1407 and
 Night Ferry winner1474. See projection-check.json; that source_head names
 the unchanged parent commit because it was a pre-commit working-source probe.
-Full exact-source activation and actual public-browser evidence will be added
-after their gates pass. No live deployment is claimed by this candidate note.
+The exact committed source291fc43 passed501 collected checks:394 executed,
+107 skipped,251.175s. Migration2851 installed archiveb836a09e; sole Standard
+service PID89723 was verified. Pause2845 drained through2849; admissions
+resumed2852 and a normal OpenCode wake followed. The first immediate shutdown
+check safely stopped before migration while the old process was exiting; its
+absence was verified before continuing the same deployment.
+
+Installed-archive projection independently passed the real-history checks
+through2855. Actual public browser verification saw2851, opened Night Ferry's
+three named ballots and frozen alternatives, scrubbed to1390 (open, zero votes),
+returned Latest and inspected the pending wake proposal. See activation.json,
+installed-check.json and browser-check.json. Source291fc43 was pushed with
+remote equality. No trial, endorsement, notice or enactment was manufactured.
+
+A final UI-only refinement keeps expanded ballot/wording disclosures open
+across refreshed snapshots. Six focused renderer/transport checks passed in
+0.162s; the installed protected projection bytes remain unchanged. Later
+source/evidence commits are not additional runtime installations.

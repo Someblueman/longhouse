@@ -1,0 +1,47 @@
+{
+  "source_head": "291fc43ac42c170edd181ff1a571500dacbd7d9e",
+  "runtime_sha256": "b836a09e1a940c5550775b6493c4a2aa8876f0e27529e0eca3f479d694ab9a5d",
+  "migration_sequence": 2851,
+  "protected_changes": [
+    "house/body.py",
+    "house/maintenance.py"
+  ],
+  "acceptance": {
+    "collected": 501,
+    "executed_passed": 394,
+    "skipped": 107,
+    "seconds": 251.175,
+    "output_sha256": "12bea742beb39ac3dfa4194e3a0b6f8d8e021249e64bab0e765b4b70dea71733"
+  },
+  "service": {
+    "label": "local.emberhall.watch",
+    "old_pid": 36291,
+    "new_pid": 89723,
+    "process_verified": true,
+    "process_type": "Standard",
+    "changed_properties": [
+      "ProgramArguments"
+    ],
+    "changed_argument_indices": [
+      2,
+      7
+    ]
+  },
+  "admissions": {
+    "pause_sequence": 2845,
+    "resume_sequence": 2852,
+    "generation": 32
+  },
+  "drain": {
+    "sleep_sequence": 2846,
+    "run_completed_sequence": 2849,
+    "active_runs_at_migration": 0,
+    "unfinished_jobs": 0,
+    "publisher_drained": true
+  },
+  "source_delivery": {
+    "commit": "291fc43ac42c170edd181ff1a571500dacbd7d9e",
+    "remote_equal": true
+  },
+  "cold_replace_note": "First immediate post-bootout check found the old process still exiting and safely stopped before migration. A separate process check confirmed it gone before the same deployment continued; no overlapping coordinator or runtime rollback."
+}

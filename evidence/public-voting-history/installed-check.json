@@ -1,0 +1,12 @@
+{
+  "sequence": 2855,
+  "journal_head": "9a3572adc982520055add61ba710799b0e697255",
+  "source_head": "291fc43ac42c170edd181ff1a571500dacbd7d9e",
+  "choices": 4,
+  "proposals": 8,
+  "wire_bytes": 3666655,
+  "seconds": 7.453,
+  "historical_probe_passed": true,
+  "runtime_sha256": "b836a09e1a940c5550775b6493c4a2aa8876f0e27529e0eca3f479d694ab9a5d",
+  "imported_member": "house/body.py inside installed zip archive (isolated interpreter)"
+}
