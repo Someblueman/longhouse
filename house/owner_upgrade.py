@@ -182,6 +182,8 @@ def apply(record: Record, plan_path: Path) -> dict:
                 "drain native residents before owner migration")
         for job in (private / "jobs").glob("*/job.json"):
             require(json.loads(job.read_text()).get("status") == "done", "drain trusted actions before migration")
+        from .publication_worker import drained
+        require(drained(record), "drain pages publisher before migration")
         if request in state["receipts"]:
             event = events[state["receipts"][request] - 1]
             require(event["op"] == "owner-migrate" and event["actor"] == actor and event["data"] == data,
