@@ -343,18 +343,35 @@ function drawHouse() {
   map.setAttribute("viewBox",selected?roomBounds[selected]||wholeBounds:wholeBounds);
 }
 function effectiveTasks() {const at=observationTime();return frame.tasks.map(t=>({...t,expired:t.status==="claimed"&&t.until<=at}));}
+function taskReadinessLabel(t) {
+  const ready=t.ready!==undefined?t.ready:(t.readiness===undefined?undefined:(t.readiness==="ready"?true:t.readiness==="blocked"?false:null));
+  if(ready===true)return "Declared ready";
+  if(ready===false)return "Blocked (declared not ready)";
+  return "Readiness unknown (unrecorded)";
+}
+function taskProjectLabel(t) {
+  const projectId=typeof t.project==="string"&&t.project.trim()!== ""?t.project:(typeof t.project_id==="string"&&t.project_id.trim()!== ""?t.project_id:null);
+  if(!projectId)return "Ordinary house work — no project recorded";
+  const projects=frame&&frame.shelf&&Array.isArray(frame.shelf.projects)?frame.shelf.projects:[];
+  const match=projects.find(p=>p&&(p.id===projectId));
+  if(match&&typeof match.title==="string"&&match.title.trim()!== "")return `Project: ${match.title}`;
+  return `Project: ${projectId}`;
+}
 function renderWorkshopTasks(content) {
   const tasks=effectiveTasks(),expired=tasks.filter(t=>t.expired).length;
   const claimed=tasks.filter(t=>t.status==="claimed"&&!t.expired).length;
   const unassigned=tasks.length-claimed-expired;
   html("p","small",`${tasks.length} unfinished · ${unassigned} unassigned · ${claimed} recorded claims · ${expired} expired leases`,content);
   html("p","small","Unassigned does not mean ready to start: readiness is not included in this snapshot. Recorded claims exclude expired leases and are not live process status.",content);
+  html("p","small","Each row names declared readiness separately (unknown means unrecorded) and any recorded project; readiness is not a live process or guaranteed launch.",content);
   tasks.forEach(t=>{
     const row=html("div",`task${t.expired?" expired":""}`,undefined,content);
     html("strong","",t.title,row);
     const status=t.expired?"Lease expired · fate unconfirmed":t.status==="claimed"?"Recorded claim":"Unassigned";
     const owner=t.status==="claimed"?` · ${t.owner?residentName(t.owner):"Owner unrecorded"}`:"";
     html("span","small",status+owner,row);
+    html("span","small",taskReadinessLabel(t),row);
+    html("span","small",taskProjectLabel(t),row);
   });
 }
 function visibleScars() {

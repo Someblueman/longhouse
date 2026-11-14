@@ -161,6 +161,25 @@ def floor_views(state: dict) -> list[dict]:
     return floors
 
 
+def public_task(task_id: str, task: dict) -> dict:
+    """Public unfinished task; readiness/project only when recorded, never inferred."""
+    item = {"id": task_id, "title": label(task["title"], 160), "owner": task["owner"],
+            "status": task["status"], "until": task["until"], "generation": task["generation"]}
+    ready = task.get("ready")
+    if ready is True or ready is False:
+        item["ready"] = ready
+    project_id = None
+    for key in ("project", "project_id"):
+        value = task.get(key)
+        if isinstance(value, str) and value.strip():
+            project_id = label(value, 100)
+            break
+    if project_id:
+        item["project"] = project_id
+        item["project_id"] = project_id
+    return item
+
+
 def export(record: Record, observed_at: float | None = None) -> dict:
     final, events, head = record.read()
     observed_at = time.time() if observed_at is None else observed_at
@@ -368,8 +387,7 @@ def export(record: Record, observed_at: float | None = None) -> dict:
                 **identity, "room": room, "pose": pose, "presence": presence,
                 "tasks": claims, **({"name_history": copy.deepcopy(name_history[resident_id])}
                                      if resident_id in name_history else {})})
-        tasks = [{"id": key, "title": label(t["title"], 160), "owner": t["owner"],
-                  "status": t["status"], "until": t["until"], "generation": t["generation"]}
+        tasks = [public_task(key, t)
                  for key, t in state["tasks"].items() if t["status"] != "done"]
         title = label(data.get("title", data.get("task", data.get("lesson", ""))), 140)
         council = state.get("council", {})
