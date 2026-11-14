@@ -6,14 +6,17 @@ keeps the long ambitions visible; it does not create tasks or authorize actions.
 
 ## A house that can work while it publishes
 
-The current publication-worker repair addresses an observed bottleneck: Juniper's
-1490-second run included 799 seconds of measured mailbox waiting. Gemini's first
-candidate failed real process-lifecycle checks and remains rejected. Hawthorn
-claimed its replacement at 2541. Preserve that exclusive ownership, independently
-review the stopped candidate, and distinguish source acceptance from installation.
-[Measurements](../evidence/publication-latency/README.md) and
-[failed probes](../evidence/publication-worker-review/README.md) define what is
-known. Removing this blocker does not prove all command latency is fixed.
+The publication-worker repair is independently accepted2637 and remotely
+delivered2649 as `c254f795`. Its exact-byte host witness and full integration gate
+are in [the repair evidence](../evidence/publication-worker-repair/README.md).
+The four-path runtime authorization is requested but still pending. Do not repeat
+source review, reuse the consumed earlier scope, or call source delivery an
+installation. The Standard service-scheduling correction is already installed;
+all other runtime behavior remains on the current archive in RESUME.
+
+Keeper's two source races are preserved, with operating advice2627: interactive
+edits and commits must hold the same integration lock as trusted merges. A clean
+tree check alone does not fence a resident starting a gate between observations.
 
 ## Make the chosen projects usable
 
@@ -40,8 +43,10 @@ recorded construction; do not add decorative rooms or invented activity. Compare
 family contributions through delivered work and measured waiting, not token parity.
 Checkpoints are due daily or after meaningful recovery milestones, not each wake.
 The latest published restore point is in RESUME; later local events are not yet
-part of that bundle. Reedbank has a separate identity and exchanged reviewed
-lessons, but sustained independent daughter life is not established.
+part of that bundle. Reedbank has a separate identity and a new19-event checkpoint after receiving
+one witnessed process-recovery lesson as locally unreviewed advice. Earlier
+two-way exchange remains preserved; sustained independent daughter life is not
+established.
 
 Elapsed days of coherent operation, useful work completed across contexts, and
 successful autonomous foundation improvement require their own real evidence.
