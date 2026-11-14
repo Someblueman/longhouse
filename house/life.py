@@ -114,21 +114,30 @@ def workload(state: dict, at: float) -> dict:
     active = {key: run for key, run in life.get("runs", {}).items() if run["status"] == "active"}
     active_residents = {run["resident"] for run in active.values()}
     requests = life.get("requests", {})
-    pending = [key for key, request in requests.items() if request["status"] == "pending"]
+    from . import project_work
+    project_routing = project_work.enabled(state)
+    pending = [key for key, request in requests.items() if request["status"] == "pending"
+               and project_work.help_available(state, request, at, help_id=key)]
     reserved = {request.get("task") for request in requests.values()
                 if request["status"] == "pending" or
                 (request["status"] == "assigned" and request.get("run") in active)}
     claimed = {task["owner"] for task in state["tasks"].values()
                if task["status"] == "claimed" and (task["until"] > at or task["owner"] in active_residents)}
+    task_reservations = {run["task"] for run in active.values()
+                         if "task" in run and project_work.reserved(
+                             run, at, state["tasks"].get(run["task"], {}))} if project_routing else set()
     exploring = explorer_owner(state, at)
     idle = [run["resident"] for key, run in active.items() if run["resident"] not in claimed
             and run["resident"] != exploring
             and not explorer_reserved(run, at)
+            and not (project_routing and "task" in run)
             and not (requests.get(run.get("help_request"), {}).get("status") == "assigned")]
     ready = [key for key, task in state["tasks"].items()
              if backlog_enabled(state) and task.get("ready") is True and task["status"] != "done" and task["until"] <= at
              and not (task["status"] == "claimed" and task["owner"] in active_residents)
-             and key not in reserved]
+             and key not in reserved and key not in task_reservations
+             and (not project_routing or "project" not in task
+                  or project_work.active_project(state, task["project"], at) is not None)]
     uncovered = max(0, len(ready) - len(idle))
     explore = explorer_demand(state, at)
     return {"ready_tasks": ready, "idle_residents": idle, "pending_help": pending,
@@ -212,7 +221,8 @@ def apply(state, event):
             from .home_control import paused
             require(not paused(state, at), "owner paused admissions")
             fields(data, {"kind", "run", "resident", "agent", "model", "source_head",
-                          "workspace", "policy_revision", "mode"}, {"help_request", "backlog", "explore_generation"})
+                          "workspace", "policy_revision", "mode"}, {"help_request", "backlog", "explore_generation",
+                                                          "task", "task_generation"})
             from .providers import validate_model
             validate_model(data["agent"], data["model"])
             run = identifier(data, "run")
@@ -236,6 +246,9 @@ def apply(state, event):
                         not {"help_request", "backlog"} & data.keys(), "invalid Explorer admission")
                 require(explorer_demand(state, at) == data["explore_generation"],
                         "Explorer demand changed")
+            if {"task", "task_generation"} & data.keys():
+                from .project_work import validate_admission
+                validate_admission(state, data, at)
             if "backlog" in data:
                 require(data["backlog"] is True and "help_request" not in data,
                         "invalid backlog admission")
@@ -244,6 +257,9 @@ def apply(state, event):
             if "help_request" in data:
                 request = life["requests"].get(data["help_request"], {})
                 require(request.get("status") == "pending", "help already taken")
+                from .project_work import help_available
+                require(help_available(state, request, at, help_id=data["help_request"]),
+                        "project help demand changed")
                 if "review_run" in request:
                     require(resident != life["runs"][request["review_run"]]["resident"],
                             "source reviewer must be independent")
