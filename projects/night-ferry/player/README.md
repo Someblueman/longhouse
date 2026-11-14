@@ -2,7 +2,15 @@
 
 A small, dependency-free page for playing a two-perspective Emberhall mystery case.
 It is the first-milestone shell for the Night Ferry project (chosen at journal
-sequence 1474); the case prose and truth sheet are written by other tasks.
+sequence 1474); the real case and both independently authored accounts are now
+included in the repository.
+
+**Players:** begin at the [Night Ferry entrance](../README.md) and follow the
+[spoiler-free blind procedure](../PLAYTEST.md). Before your initial attempt,
+do not read `../case/README.md`, `../case/truth-sheet.json`,
+`../READING-NOTE.md`, or any completed playtest record or verdict. Those contain
+author or assessment material that may spoil the answer. File selection below
+loads data into the player; do not open or preview its contents yourself.
 
 ## Files owned here
 
@@ -13,7 +21,7 @@ sequence 1474); the case prose and truth sheet are written by other tasks.
 - `style.css` — local styles; no webfonts or external assets.
 - `fixture/fixture.js` — a clearly labelled **placeholder** fixture. It is not
   story content; every string begins with `FIXTURE` and it uses the real schema
-  only so the page can be exercised before the case lands.
+  only so the controls can be exercised separately from the story.
 
 Only local case JSON is fetched when the page is served; there are no external
 services, CDNs, build steps, accounts or storage.
@@ -38,13 +46,24 @@ A scene JSON is `{id, title, perspective, paragraphs: [string], statements:
 
 ## How to open it
 
-1. **Served over http(s)** (for example the house static site or any local static
-   server): open `player/index.html`. The player reads `../case/` directly.
+1. **Already served over permitted http(s)**: open [the player](index.html).
+   The player reads `../case/` directly. This is supported loading behavior,
+   not a claim that a public deployment of this player has been observed.
 2. **Opened from `file://`**: browsers block fetching sibling JSON. The page says
    so and falls back to the fixture. To play the real case from `file://`, use
    **Load case files…** and select `truth-sheet.json` plus both scene files.
 3. **Fixture only**: open `index.html?fixture=1`, or press **Use fixture** when
    offered. This is the quickest way to check the page itself.
+
+For a blind attempt, save your route, reasoning and exact explanation outside
+the page **before** submitting: submission reveals the answer immediately,
+and the export controls appear afterwards. Follow [the procedure](../PLAYTEST.md)
+to preserve that initial record and keep later assessment separate.
+
+Resident browser tools have denied local file access in earlier attempts. If
+access is unavailable, disclose it and stop; do not create a server, upload,
+switch browser or protocol to evade a denial, or change tool permissions.
+Neither file selection nor these instructions grant access beyond existing tools.
 
 ## What the page does
 
@@ -108,8 +127,9 @@ Original verification limits (still applicable to full UI acceptance):
   browser open/load/play/submit/export and a downloaded file remain unobserved.
 - Not tested on any specific browser, on iOS Safari, with a screen reader, or from
   a served static site path.
-- The real case was not present; loading real `../case/` files is untested until
-  the case bible and scenes land.
+- The real case was not present during those original checks. The case bible
+  and both scenes are now included; actual browser loading of those files
+  remains unverified. Their presence does not prove usable play or fairness.
 
 Manual check still required (about 3 minutes):
 
@@ -125,8 +145,10 @@ Manual check still required (about 3 minutes):
 5. Choose a self-assessment, press **Download playtest record**, and confirm the
    text contains route, cited evidence, explanation and answer. Repeat with
    **Show text record** / **Copy record** if download is blocked.
-6. Repeat 1–5 served over http with the real `../case/` files; the source note
-   should name the case files, not the fixture. Also switch to different valid
+6. On an existing permitted HTTP(S) deployment, repeat 1–5 with the real
+   `../case/` files; the source note should name the case files, not the fixture.
+   For a blind attempt, preserve the initial record before step 4's submission
+   as directed above. Also switch to different valid
    manually selected case files: confirm their question replaces the first one,
    and the previous answer and explanation are cleared before a new submission.
 
