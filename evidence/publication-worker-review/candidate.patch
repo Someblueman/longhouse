@@ -1,0 +1,542 @@
+diff --git a/house/home.py b/house/home.py
+index fd93230..2bf5b45 100644
+--- a/house/home.py
++++ b/house/home.py
+@@ -523,18 +523,22 @@ class Coordinator:
+             except (OSError, ValueError, KeyError, subprocess.SubprocessError) as error:
+                 write_private(self.private / "inbox-error.json", {"error": type(error).__name__, "at": time.time()})
+             head = self.record.read()[2]
+-            if self.publish and head != self.published_head:
+-                try:
+-                    from .publish import publish
+-                    publish(self.record, push=True)
+-                    self.published_head = head
+-                except (OSError, ValueError, KeyError, subprocess.SubprocessError) as error:
+-                    write_private(self.private / "publish-error.json", {"error": type(error).__name__, "at": time.time()})
++            if self.publish:
++                from . import publication_worker
++                pub_state = publication_worker.tick(self.record, wanted_head=head)
++                self.published_head = pub_state.get("published_head")
++        elif self.publish:
++            from . import publication_worker
++            pub_state = publication_worker.tick(self.record)
++            self.published_head = pub_state.get("published_head")
+         return {"started": started, "finished": ended, "active": list(self.running)}
+ 
+     def close(self) -> None:
+         self.stopping = True
+         self.reap()
++        if self.publish:
++            from . import publication_worker
++            publication_worker.stop(self.record)
+ 
+ 
+ def execute(record: Record, gate: int, run: str) -> int:
+diff --git a/house/owner_upgrade.py b/house/owner_upgrade.py
+index 35a8078..0a6190d 100644
+--- a/house/owner_upgrade.py
++++ b/house/owner_upgrade.py
+@@ -182,6 +182,9 @@ def apply(record: Record, plan_path: Path) -> dict:
+                 "drain native residents before owner migration")
+         for job in (private / "jobs").glob("*/job.json"):
+             require(json.loads(job.read_text()).get("status") == "done", "drain trusted actions before migration")
++        pub_state = private / "publication" / "state.json"
++        if pub_state.exists():
++            require(json.loads(pub_state.read_text()).get("status") != "running", "drain pages publisher before migration")
+         if request in state["receipts"]:
+             event = events[state["receipts"][request] - 1]
+             require(event["op"] == "owner-migrate" and event["actor"] == actor and event["data"] == data,
+diff --git a/house/publication_worker.py b/house/publication_worker.py
+new file mode 100644
+index 0000000..3a3fd34
+--- /dev/null
++++ b/house/publication_worker.py
+@@ -0,0 +1,224 @@
++"""One bounded supervised worker for Pages publication."""
++from __future__ import annotations
++
++import argparse
++import fcntl
++import hashlib
++import json
++import os
++from pathlib import Path
++import re
++import subprocess
++import sys
++import time
++
++from .mailbox import directory, read_json, write_json, MAX_RESPONSE, ERRORS
++from .record import Record
++from .watch import group_members, group_stopped, kill_group
++
++LIMIT = MAX_RESPONSE + 300_000
++JOB_ID = re.compile(r"^[0-9a-f]{64}$")
++BOOT = (
++    "import sys;sys.path.insert(0,sys.argv[1]);"
++    "from house.publication_worker import main;raise SystemExit(main(sys.argv[2:]))"
++)
++
++
++def _root(record: Record) -> Path:
++    root = record.common / "house-home" / "publication"
++    root.mkdir(mode=0o700, parents=True, exist_ok=True)
++    return root
++
++
++def _write(path: Path, value: dict) -> None:
++    with directory(path.parent) as parent:
++        write_json(parent, path.name, value, LIMIT)
++
++
++def _read(path: Path) -> dict:
++    with directory(path.parent) as parent:
++        return read_json(parent, path.name, LIMIT)
++
++
++def read_state(record: Record) -> dict:
++    path = _root(record) / "state.json"
++    if not path.exists():
++        return {"status": "idle", "wanted_head": None, "published_head": None}
++    return _read(path)
++
++
++def _write_state(record: Record, state: dict) -> None:
++    _write(_root(record) / "state.json", state)
++
++
++def _write_error(record: Record, error_name: str, reason: str = "") -> None:
++    path = record.common / "house-home" / "publish-error.json"
++    _write(path, {"error": error_name, "reason": reason[:500], "at": time.time()})
++
++
++def request(record: Record, head: str) -> dict:
++    state = read_state(record)
++    if state.get("wanted_head") != head:
++        state["wanted_head"] = head
++        _write_state(record, state)
++    return state
++
++
++def _finish_running(record: Record, state: dict) -> dict:
++    job_id = state.get("job_id")
++    root = _root(record)
++    job_dir = root / job_id if job_id else None
++    processes = getattr(record, "_publication_processes", {})
++    child = processes.pop(job_id, None) if job_id else None
++    if state.get("pgid"):
++        members = group_members(state["pgid"])
++        if members and (not job_id or not any(job_id in command for command in members)):
++            raise ValueError("unidentified publication worker group; no signal sent")
++        if members:
++            kill_group(state["pgid"])
++        if child is not None:
++            child.wait(timeout=5)
++        if not group_stopped(state["pgid"]):
++            raise ValueError("publication worker group has not stopped")
++    elif child is not None:
++        child.wait(timeout=5)
++    result_path = job_dir / "result.json" if job_dir else None
++    if result_path is not None and result_path.exists():
++        response = _read(result_path)
++    else:
++        response = {"ok": False, "error": "publication interrupted without a durable result"}
++    if response.get("ok"):
++        state["published_head"] = state.get("target_head")
++        state["last_error"] = None
++    else:
++        state["last_error"] = response.get("error", "publication failed")
++        _write_error(record, response.get("error_type", "PublicationError"), state["last_error"])
++    state.update(status="idle", job_id=None, pgid=None, target_head=None, finished_at=time.time())
++    _write_state(record, state)
++    return state
++
++
++def recover(record: Record) -> dict:
++    state = read_state(record)
++    if state.get("status") == "running":
++        return _finish_running(record, state)
++    return state
++
++
++def stop(record: Record) -> dict:
++    return recover(record)
++
++
++def tick(record: Record, *, wanted_head: str | None = None, timeout_seconds: float = 1200) -> dict:
++    state = read_state(record)
++    if wanted_head is not None and state.get("wanted_head") != wanted_head:
++        state["wanted_head"] = wanted_head
++        _write_state(record, state)
++
++    processes = getattr(record, "_publication_processes", {})
++    if state.get("status") == "running":
++        job_id = state.get("job_id")
++        child = processes.get(job_id) if job_id else None
++        if child is not None and child.poll() is None and time.time() - state.get("started_at", 0) < timeout_seconds:
++            return state
++        state = _finish_running(record, state)
++
++    target_head = state.get("wanted_head")
++    if not target_head or target_head == state.get("published_head"):
++        return state
++
++    runtime = Path(getattr(record, "_mailbox_runtime", ""))
++    if not runtime.is_file() or runtime.is_symlink():
++        raise ValueError("coordinator has no trusted pinned publication runtime")
++    runtime_sha = hashlib.sha256(runtime.read_bytes()).hexdigest()
++
++    job_id = hashlib.sha256(f"{target_head}:{time.time_ns()}".encode()).hexdigest()
++    root = _root(record)
++    job_dir = root / job_id
++    job_dir.mkdir(mode=0o700, exist_ok=True)
++    job_meta = {
++        "id": job_id,
++        "target_head": target_head,
++        "runtime": str(runtime),
++        "runtime_sha256": runtime_sha,
++        "status": "running",
++        "created_at": time.time(),
++    }
++
++    with (root / "worker.lock").open("a+b") as lock:
++        try:
++            fcntl.flock(lock.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
++        except BlockingIOError:
++            return state
++        gate_read, gate_write = os.pipe()
++        child = None
++        try:
++            with (job_dir / "stdout.log").open("ab") as output, (job_dir / "stderr.log").open("ab") as errors:
++                os.chmod(output.name, 0o600)
++                os.chmod(errors.name, 0o600)
++                child = subprocess.Popen(
++                    [sys.executable, "-I", "-c", BOOT, str(runtime),
++                     "--repo", str(record.root), "--job", job_id, "--gate", str(gate_read)],
++                    cwd=job_dir,
++                    stdin=subprocess.DEVNULL,
++                    stdout=output,
++                    stderr=errors,
++                    start_new_session=True,
++                    pass_fds=(gate_read, lock.fileno()),
++                )
++            job_meta.update(pgid=child.pid, started_at=time.time())
++            _write(job_dir / "job.json", job_meta)
++            state.update(
++                status="running",
++                job_id=job_id,
++                pgid=child.pid,
++                target_head=target_head,
++                started_at=job_meta["started_at"],
++            )
++            _write_state(record, state)
++            processes[job_id] = child
++            record._publication_processes = processes
++            os.write(gate_write, b"go")
++        except (OSError, ValueError, subprocess.SubprocessError) as error:
++            if child is not None:
++                kill_group(child.pid)
++                child.wait()
++            _write_error(record, type(error).__name__, str(error))
++            state.update(status="idle", job_id=None, pgid=None, target_head=None, last_error=str(error)[:300])
++            _write_state(record, state)
++        finally:
++            os.close(gate_read)
++            os.close(gate_write)
++    return state
++
++
++def main(argv=None) -> int:
++    options = argparse.ArgumentParser(description=__doc__)
++    options.add_argument("--repo", required=True)
++    options.add_argument("--job", required=True)
++    options.add_argument("--gate", type=int, required=True)
++    args = options.parse_args(argv)
++    if not JOB_ID.fullmatch(args.job) or os.read(args.gate, 2) != b"go":
++        return 2
++    os.close(args.gate)
++    record = Record(args.repo)
++    job_dir = _root(record) / args.job
++    item = _read(job_dir / "job.json")
++    if item["status"] != "running" or item["pgid"] != os.getpid():
++        return 2
++    try:
++        runtime = Path(item["runtime"])
++        if runtime.is_symlink() or hashlib.sha256(runtime.read_bytes()).hexdigest() != item["runtime_sha256"]:
++            raise ValueError("trusted publication runtime bytes changed")
++        os.environ["EMBERHALL_PUBLICATION_JOB"] = item["id"]
++        from .publish import publish
++        result = publish(record, push=True)
++        response = {"ok": True, "result": result}
++    except (*ERRORS, subprocess.SubprocessError) as error:
++        response = {
++            "ok": False,
++            "error_type": type(error).__name__,
++            "error": type(error).__name__ + ": " + str(error)[:300],
++        }
++    _write(job_dir / "result.json", response)
++    return 0
+diff --git a/tests/test_publication_worker.py b/tests/test_publication_worker.py
+new file mode 100644
+index 0000000..41ac752
+--- /dev/null
++++ b/tests/test_publication_worker.py
+@@ -0,0 +1,258 @@
++from __future__ import annotations
++
++import json
++import os
++from pathlib import Path
++import subprocess
++import sys
++import tempfile
++import time
++import unittest
++import zipfile
++
++from house import publication_worker
++from house.home import Coordinator
++from house.record import Record
++from house.watch import group_stopped
++
++
++def _make_test_runtime(root: Path, publish_code: str) -> Path:
++    runtime = root / "runtime.pyz"
++    house_dir = Path(__file__).resolve().parent.parent / "house"
++    with zipfile.ZipFile(runtime, "w") as zf:
++        for path in house_dir.glob("*.py"):
++            if path.name == "publish.py":
++                zf.writestr("house/publish.py", publish_code)
++            else:
++                zf.write(path, f"house/{path.name}")
++    return runtime
++
++
++def _init_repo(root: Path) -> Record:
++    subprocess.run(["git", "init", "--quiet"], cwd=root, check=True)
++    subprocess.run(["git", "config", "user.email", "test@example.com"], cwd=root, check=True)
++    subprocess.run(["git", "config", "user.name", "Test"], cwd=root, check=True)
++    (root / "README.md").write_text("hi\n")
++    subprocess.run(["git", "add", "README.md"], cwd=root, check=True)
++    subprocess.run(["git", "commit", "--no-gpg-sign", "--quiet", "-m", "init"], cwd=root, check=True)
++    record = Record(root)
++    record.found("test-house", "test rules")
++    record.append("arrive", "tester", {"name": "Tester"}, "req-arrive")
++    return record
++
++
++def _ps_allowed() -> bool:
++    try:
++        subprocess.run(["ps", "-axo", "pgid="], capture_output=True, check=True)
++        return True
++    except (OSError, subprocess.SubprocessError):
++        return False
++
++
++class PublicationWorkerTests(unittest.TestCase):
++    def setUp(self) -> None:
++        if not _ps_allowed():
++            from unittest.mock import patch
++            def _alive(pgid: int) -> bool:
++                try:
++                    os.killpg(pgid, 0)
++                    return True
++                except ProcessLookupError:
++                    return False
++                except PermissionError:
++                    return True
++            p1 = patch.object(publication_worker, "group_members", side_effect=lambda pgid: [f"job {publication_worker._last_job}" if hasattr(publication_worker, "_last_job") else ""] if _alive(pgid) else [])
++            # Better: read state.json or just return True for any non-empty group? Wait: group_members is called with pgid, and _finish_running checks any(job_id in cmd for cmd in members).
++            p1.stop()
++            def _members(pgid: int) -> list[str]:
++                if not _alive(pgid):
++                    return []
++                return [f"--job {p.name}" for p in Path("/").glob("nonexistent")] or [f"--job {pgid}"]
++            # Actually, we can just check if _alive(pgid) and return [job_id] by reading proc? No, in sandbox we can't run ps. Let's patch group_members to return [] if not _alive(pgid) else [f"--job {jid}" for jid in _active_jobs]
++            self._active_job_id = ""
++            self._p1 = patch("house.publication_worker.group_members", side_effect=lambda pgid: [self._active_job_id] if _alive(pgid) and self._active_job_id else [])
++            self._p2 = patch("house.publication_worker.group_stopped", side_effect=lambda pgid: not _alive(pgid))
++            self._p1.start()
++            self._p2.start()
++            self.addCleanup(self._p1.stop)
++            self.addCleanup(self._p2.stop)
++
++    def test_slow_publisher_does_not_block_tick_and_coalesces_changes(self) -> None:
++        with tempfile.TemporaryDirectory() as tmp:
++            tmp_path = Path(tmp)
++            repo = tmp_path / "repo"
++            repo.mkdir()
++            record = _init_repo(repo)
++            control = record.common / "house-home" / "pub-control"
++            control.parent.mkdir(mode=0o700, exist_ok=True)
++            log_file = tmp_path / "pub.log"
++
++            publish_code = f"""
++import os, time
++from pathlib import Path
++
++def publish(record, *, push=False):
++    control = Path({str(control)!r})
++    log = Path({str(log_file)!r})
++    with log.open("a") as f:
++        f.write(f"start:{{record.read()[2]}}\\n")
++    while control.exists() and control.read_text().strip() == "block":
++        time.sleep(0.05)
++    with log.open("a") as f:
++        f.write(f"done:{{record.read()[2]}}\\n")
++    return {{"ok": True}}
++"""
++            runtime = _make_test_runtime(tmp_path, publish_code)
++            coord = Coordinator(record, runtime, poll_seconds=0.01, publish=True)
++            try:
++                control.write_text("block")
++                t0 = time.monotonic()
++                coord.tick(start=False, poll=True)
++                elapsed = time.monotonic() - t0
++                self.assertLess(elapsed, 2.0)
++
++                # Wait for worker to start
++                deadline = time.monotonic() + 5
++                while not log_file.exists() and time.monotonic() < deadline:
++                    time.sleep(0.05)
++                self.assertTrue(log_file.exists())
++
++                state = publication_worker.read_state(record)
++                self.assertEqual(state["status"], "running")
++                head1 = state["target_head"]
++
++                # Advance journal twice while busy -> should coalesce to head3
++                record.append("say", "tester", {"text": "msg2"}, "req-2")
++                coord.next_poll = 0.0
++                coord.tick(start=False, poll=True)
++                record.append("say", "tester", {"text": "msg3"}, "req-3")
++                head3 = record.read()[2]
++                coord.next_poll = 0.0
++                coord.tick(start=False, poll=True)
++
++                state = publication_worker.read_state(record)
++                self.assertEqual(state["status"], "running")
++                self.assertEqual(state["target_head"], head1)
++                self.assertEqual(state["wanted_head"], head3)
++
++                # Unblock first publication
++                control.write_text("go")
++                deadline = time.monotonic() + 5
++                while time.monotonic() < deadline:
++                    coord.next_poll = 0.0
++                    coord.tick(start=False, poll=True)
++                    if coord.published_head == head3:
++                        break
++                    time.sleep(0.05)
++                self.assertEqual(coord.published_head, head3)
++                lines = log_file.read_text().strip().splitlines()
++                # Only 2 publications ran (head1 and head3), not 3
++                self.assertEqual(len([l for l in lines if l.startswith("start:")]), 2)
++            finally:
++                coord.close()
++
++    def test_failed_publication_retries_without_claiming_success(self) -> None:
++        with tempfile.TemporaryDirectory() as tmp:
++            tmp_path = Path(tmp)
++            repo = tmp_path / "repo"
++            repo.mkdir()
++            record = _init_repo(repo)
++            flag = tmp_path / "should_fail"
++            flag.write_text("1")
++
++            publish_code = f"""
++from pathlib import Path
++
++def publish(record, *, push=False):
++    flag = Path({str(flag)!r})
++    if flag.exists():
++        raise OSError("simulated network failure")
++    return {{"ok": True}}
++"""
++            runtime = _make_test_runtime(tmp_path, publish_code)
++            record._mailbox_runtime = runtime
++            head = record.read()[2]
++
++            publication_worker.tick(record, wanted_head=head)
++            deadline = time.monotonic() + 5
++            while time.monotonic() < deadline:
++                state = publication_worker.tick(record)
++                if state["status"] == "idle":
++                    break
++                time.sleep(0.05)
++
++            self.assertIsNone(state["published_head"])
++            self.assertTrue((record.common / "house-home" / "publish-error.json").exists())
++
++            # Now allow retry to succeed
++            flag.unlink()
++            publication_worker.tick(record)
++            deadline = time.monotonic() + 5
++            while time.monotonic() < deadline:
++                state = publication_worker.tick(record)
++                if state["status"] == "idle" and state["published_head"] == head:
++                    break
++                time.sleep(0.05)
++            self.assertEqual(state["published_head"], head)
++
++    def test_timeout_kills_owned_group_and_descendants(self) -> None:
++        with tempfile.TemporaryDirectory() as tmp:
++            tmp_path = Path(tmp)
++            repo = tmp_path / "repo"
++            repo.mkdir()
++            record = _init_repo(repo)
++            child_pid_file = tmp_path / "child.pid"
++
++            publish_code = f"""
++import subprocess, sys, time
++from pathlib import Path
++
++def publish(record, *, push=False):
++    p = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(60)"])
++    Path({str(child_pid_file)!r}).write_text(str(p.pid))
++    time.sleep(60)
++    return {{"ok": True}}
++"""
++            runtime = _make_test_runtime(tmp_path, publish_code)
++            record._mailbox_runtime = runtime
++            head = record.read()[2]
++
++            state = publication_worker.tick(record, wanted_head=head, timeout_seconds=0.2)
++            self._active_job_id = state["job_id"]
++            pgid = state["pgid"]
++            deadline = time.monotonic() + 5
++            while not child_pid_file.exists() and time.monotonic() < deadline:
++                time.sleep(0.05)
++            self.assertTrue(child_pid_file.exists())
++
++            time.sleep(0.25)
++            state = publication_worker.tick(record, timeout_seconds=0.2)
++            self.assertIsNone(state["published_head"])
++            self.assertTrue(publication_worker.group_stopped(pgid))
++            if state.get("job_id"):
++                self._active_job_id = state["job_id"]
++            publication_worker.stop(record)
++
++    def test_recover_after_coordinator_interruption(self) -> None:
++        with tempfile.TemporaryDirectory() as tmp:
++            tmp_path = Path(tmp)
++            repo = tmp_path / "repo"
++            repo.mkdir()
++            record = _init_repo(repo)
++            head = record.read()[2]
++            job_id = "a" * 64
++            job_dir = record.common / "house-home" / "publication" / job_id
++            job_dir.mkdir(parents=True, exist_ok=True)
++            publication_worker._write(job_dir / "result.json", {"ok": True, "result": {"ok": True}})
++            publication_worker._write_state(
++                record,
++                {"status": "running", "job_id": job_id, "pgid": None, "target_head": head, "wanted_head": head},
++            )
++
++            state = publication_worker.recover(record)
++            self.assertEqual(state["status"], "idle")
++            self.assertEqual(state["published_head"], head)
++
++
++if __name__ == "__main__":
++    unittest.main()

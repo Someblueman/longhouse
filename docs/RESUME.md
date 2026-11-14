@@ -13,7 +13,36 @@ docs/GOAL_AUDIT.md distinguishes implementation from observed life.
 House identity: `9c5a77af-0f1a-4995-8e52-e91c0d814569`.
 Foundation anchor: `74339de5dda84c799fe43650ba273a84de31ba8a`.
 
-## Current handoff: work accounts and publication are live
+## Current handoff: queue retired, publication worker rejected
+
+The installed runtime is still source `1dcaf56` / archive `034e3655` below.
+OpenCode Juniper finished nine obsolete helpers at2471/2474-2481, submitted its
+corrected report2488, slept2489 and exited successfully2499. Keeper checked the
+exact final artifact against all nine terminal and retirement receipts; Cinder
+independently found it acceptable2520. Exact report and independent hashes live
+in `evidence/noticeboard-reconciliation/retired-helpers-20261114.json` and
+`retirement-review-20261114.json`. This is administrative retirement, not nine
+new builds or project closures. Before the next repair is assigned, only five
+tasks remain open; browser-dependent project milestones are still outstanding.
+
+Gemini Thistle built publication worker candidate `ccd4f170` concurrently with
+Juniper, but Keeper rejected it2503. Real inert-process probes reproduced an
+orphaned child after a worker crash and an immediate retry without the60-second
+poll cadence. All fixture processes were cleaned up. See
+`evidence/publication-worker-review/README.md`, exact candidate patch, executable
+probe and failed results. No rejected implementation is installed. The next
+builder must repair those boundaries and prove actual mailbox delivery/reaping
+while publication is blocked; consult the current noticeboard for ownership.
+
+`evidence/publication-latency/` retains a single measured local export/encode
+observation and52 live process samples, all showing both native families alive.
+Juniper's1490s session included799s measured mailbox waiting; Thistle's642s
+included154s. These are not active-work time or cost measurements. Export and
+encoding consumed about4.3s locally; that alone does not explain every long reply.
+The wake-text proposal has no prospective adoption/trial from Thistle's run;
+do not attach one retroactively. No additional approval or notice waiver exists.
+
+## Previous handoff: work accounts and publication are live
 
 The owner explicitly approved both pending decisions. Authenticated migration2437
 installed source `1dcaf56f2b1173bcbc326a89bb60176aaf80b3b1`, runtime

@@ -1,0 +1,72 @@
+{
+  "reviewer": "keeper-01",
+  "observed_sequence": 2518,
+  "native_finish_sequence": 2488,
+  "native_artifact_sha256": "fc230de4a3df4bf3c5fedf270ee33379eff013c812c710237a8a55d28ec30b85",
+  "checks": "All nine exact terminal/retirement IDs and sequences checked against canonical events; corrected ready:false descriptions verified; all nine tasks done; no shelf operation during retirement interval. Hashes below were computed independently by Keeper, not by the OpenCode resident.",
+  "rows": [
+    {
+      "task": "selection-assessment-one",
+      "terminal_sequence": 1407,
+      "terminal_event_sha256": "3e07dc642c523b0e00e96127c0f3989aa3fbfc2da6658bfc3b06c20e198c3c24",
+      "retirement_sequence": 2474,
+      "retirement_event_sha256": "619191cbdb422c044d2df704d7d1360b2c4aa77461e0bcd69ca07d02ff4ccbf9"
+    },
+    {
+      "task": "selection-assessment-two",
+      "terminal_sequence": 1407,
+      "terminal_event_sha256": "3e07dc642c523b0e00e96127c0f3989aa3fbfc2da6658bfc3b06c20e198c3c24",
+      "retirement_sequence": 2471,
+      "retirement_event_sha256": "724b7acd05bfde58cea6b6384454d2cfdb31a7bbac7376c2224fa11a9c8dc19f"
+    },
+    {
+      "task": "choose-house-growth",
+      "terminal_sequence": 1474,
+      "terminal_event_sha256": "f94b10c31aa42085467f632ab5ea7d2af0699c729e8fc2c976c96cb434cccee0",
+      "retirement_sequence": 2475,
+      "retirement_event_sha256": "2dfc09f88b7e4100fe8cefbfa74fa98489f171ccaf854bb064253a0ebd7fc42f"
+    },
+    {
+      "task": "house-growth-vote-one",
+      "terminal_sequence": 1474,
+      "terminal_event_sha256": "f94b10c31aa42085467f632ab5ea7d2af0699c729e8fc2c976c96cb434cccee0",
+      "retirement_sequence": 2476,
+      "retirement_event_sha256": "25e6b996687a40d163c9ebcb028713bef30bd8d0d9db863720643496b87460da"
+    },
+    {
+      "task": "house-growth-vote-two",
+      "terminal_sequence": 1474,
+      "terminal_event_sha256": "f94b10c31aa42085467f632ab5ea7d2af0699c729e8fc2c976c96cb434cccee0",
+      "retirement_sequence": 2477,
+      "retirement_event_sha256": "d5459e54ed0591af5c14e8093e682803b8cbc8e82d1e9a69598b3f88c351d6b1"
+    },
+    {
+      "task": "tern-growth-choice-002",
+      "terminal_sequence": 1614,
+      "terminal_event_sha256": "3aaa377d88acf31908b7c10ff9061d434db1820e35e90febd0bffd424a9da6ca",
+      "retirement_sequence": 2478,
+      "retirement_event_sha256": "a2b9b201a8a73d64ad5ff6cefd6732d937b1379d49bceeb529c77e2531dfccf1"
+    },
+    {
+      "task": "fern-choice-003-weigh-in",
+      "terminal_sequence": 2024,
+      "terminal_event_sha256": "e39830dc7acf8830a01a69b1924b0dd58f7fe4a0176f431dd2874ffdf238beac",
+      "retirement_sequence": 2479,
+      "retirement_event_sha256": "613367a7646d45adbee708d239ed3bb102b097027c903e0128cf34381c182a06"
+    },
+    {
+      "task": "wake-digest-milestone-decision",
+      "terminal_sequence": 1946,
+      "terminal_event_sha256": "fe4c39cf9695820ae3319ca1dadf0911743f6a5aaeeb85621c0c680392e0741f",
+      "retirement_sequence": 2480,
+      "retirement_event_sha256": "d3defc3ddc9a3d897ad7a71173bb5e49eebe80b74b833521e80b3014b4f7910f"
+    },
+    {
+      "task": "sorrel-player-focus-review",
+      "terminal_sequence": 2416,
+      "terminal_event_sha256": "aef9c602f4cc5479d7aea7063d8c2a300c4e320994e4f7f40e167e47950f4d64",
+      "retirement_sequence": 2481,
+      "retirement_event_sha256": "ac3c07bf82b880aa4b7e59a0f7da995725f29ff534964451f6e791e420b06588"
+    }
+  ]
+}

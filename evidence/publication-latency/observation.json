@@ -1,0 +1,540 @@
+{
+  "format": "emberhall-publication-phase-observation-v1",
+  "recorded_at": 1794663747.539386,
+  "source_head": "7c8951a02f03ada00cf327b1cdd957b6bd3763a7",
+  "journal_head": "8e89146cbef892e18a69937f71a0e24deca2e4dd",
+  "through": 2468,
+  "frames": 2468,
+  "python": "3.13.2",
+  "machine": "arm64",
+  "system": "Darwin",
+  "phases": [
+    {
+      "phase": "verified_record_and_public_frames",
+      "wall_seconds": 2.39297933402122,
+      "process_cpu_seconds": 2.241262
+    },
+    {
+      "phase": "lossless_history_encoding",
+      "wall_seconds": 1.899995374988066,
+      "process_cpu_seconds": 1.8999610000000002
+    },
+    {
+      "phase": "json_serialization",
+      "wall_seconds": 0.016507457999978215,
+      "process_cpu_seconds": 0.016507999999999967
+    }
+  ],
+  "wire_version": 2,
+  "wire_bytes": 2824615,
+  "wire_sha256": "f1ad291bdf3a06675a1ae5fe916c6c676b81de051cb20dce409e194f0bbc98d8",
+  "notes": [
+    "One production-shaped read-only local observation, not a comparative benchmark.",
+    "Live coordinator and native residents were running concurrently; no host settings were changed.",
+    "No network push is included; Git subprocess CPU is not included in Python process_cpu_seconds.",
+    "No runtime implementation or source file was changed during measurement."
+  ],
+  "coordinator_observation": {
+    "coordinator_pid": 37192,
+    "started_at": 1794663929.126585,
+    "finished_at": 1794663984.155786,
+    "interval_seconds": 1,
+    "samples": [
+      {
+        "at": 1794663929.148834,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663930.210583,
+        "children": [
+          {
+            "pid": 44375,
+            "elapsed": "00:01",
+            "operation": "git cat-file"
+          }
+        ],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663931.267427,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663932.328446,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663933.382868,
+        "children": [
+          {
+            "pid": 44453,
+            "elapsed": "00:01",
+            "operation": "git cat-file"
+          }
+        ],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663934.4433868,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663935.50315,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663936.563724,
+        "children": [
+          {
+            "pid": 44581,
+            "elapsed": "00:01",
+            "operation": "git cat-file"
+          }
+        ],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663937.6205912,
+        "children": [
+          {
+            "pid": 44645,
+            "elapsed": "00:00",
+            "operation": "git cat-file"
+          }
+        ],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663938.6818078,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663939.741684,
+        "children": [
+          {
+            "pid": 44733,
+            "elapsed": "00:00",
+            "operation": "git cat-file"
+          }
+        ],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663940.8031921,
+        "children": [
+          {
+            "pid": 44795,
+            "elapsed": "00:00",
+            "operation": "git other"
+          }
+        ],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663941.862359,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663942.925038,
+        "children": [
+          {
+            "pid": 44866,
+            "elapsed": "00:00",
+            "operation": "git cat-file"
+          }
+        ],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663943.9841359,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663945.043404,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663946.104028,
+        "children": [
+          {
+            "pid": 44922,
+            "elapsed": "00:01",
+            "operation": "git cat-file"
+          }
+        ],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663947.164237,
+        "children": [
+          {
+            "pid": 44952,
+            "elapsed": "00:00",
+            "operation": "git other"
+          }
+        ],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663948.2253592,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663949.2884102,
+        "children": [
+          {
+            "pid": 44983,
+            "elapsed": "00:00",
+            "operation": "gh api repos/Someblueman/longhouse/issues/comments"
+          }
+        ],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663950.347959,
+        "children": [
+          {
+            "pid": 45008,
+            "elapsed": "00:00",
+            "operation": "git cat-file"
+          }
+        ],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663951.407862,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663952.441786,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663953.492194,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663954.558422,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663955.6183171,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663956.679839,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663957.740635,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663958.7998521,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663959.860342,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663960.9220731,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663961.981386,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663963.0423129,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663964.102687,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663965.16257,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663966.215212,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663967.275857,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663968.334674,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663969.395666,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663970.456202,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663971.5163252,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663972.57834,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663973.625053,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663974.679512,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663975.74091,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663976.799736,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663977.862398,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663978.9223418,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663979.9835572,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663981.043575,
+        "children": [],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663982.088064,
+        "children": [
+          {
+            "pid": 45802,
+            "elapsed": "00:01",
+            "operation": "git push"
+          }
+        ],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      },
+      {
+        "at": 1794663983.145726,
+        "children": [
+          {
+            "pid": 45802,
+            "elapsed": "00:02",
+            "operation": "git push"
+          }
+        ],
+        "native_pids": [
+          37453,
+          40463
+        ]
+      }
+    ],
+    "limits": "A single censored 55-second process observation; sampled occupancy is not exact call duration or a statistical latency estimate."
+  }
+}

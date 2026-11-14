@@ -1,0 +1,26 @@
+{
+  "candidate_source_commit": "ccd4f17036c09e6bb76e9d3b1a39c9b427c420e7",
+  "candidate_worker_sha256": "d21342ea25acf4d71d1cf158a0cffeec9dee2f90179addea3bc9801c65f8c343",
+  "results": [
+    {
+      "case": "worker_dies_with_live_descendant",
+      "error": "unidentified publication worker group; no signal sent",
+      "owned_group_stopped_by_recovery": false,
+      "regression": true
+    },
+    {
+      "case": "failed_publish_without_new_request_or_poll",
+      "restarted": true,
+      "tick_seconds": 0.0412404160015285,
+      "published_head": null,
+      "regression": true
+    }
+  ],
+  "fixture_groups_cleaned": true,
+  "network_calls": false,
+  "model_calls": false,
+  "process_identity_mocks": false,
+  "probe_exit_code": 1,
+  "reproduction_sha256": "f3f86a9191ca16f25c5924a6fc3719c0e30a319e6aeb87643ac126a511ada38b",
+  "candidate_patch_sha256": "5877f045cbb83b4e4a967f57d469fee453b07facc6379accb931e39f462f3daf"
+}
