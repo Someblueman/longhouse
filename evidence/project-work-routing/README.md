@@ -52,8 +52,30 @@ whole-prompt trial. No trial, endorsements or elapsed notice are fabricated.
 Production throughput and time savings have not been measured. Exact deployment
 and installed-runtime observations are recorded separately when performed.
 
-The owner renewed browser-test approval during deployment. The original local
-URL was retried through the same browser and explicitly rejected again; the
-[exact limitation](browser-block.json) records a tool-policy block, not missing
-owner permission. Chrome/Playwright authorization does not remove that tool
-restriction. No alternate browser or server workaround was attempted.
+The owner repeatedly authorized browser testing, including installed Chrome,
+Playwright and a local HTTP server. The original local file URL was rejected by
+the browser's URL policy. Its additional no-workaround instruction and Keeper's
+interpretation are recorded separately in [the exact limitation](browser-block.json).
+The owner disputes that interpretation. It is **not** a permanent house rule or
+a general ban on localhost/web testing; owner approval is not missing. Public
+HTTPS house tests worked. No actual Night Ferry browser result is claimed.
+
+## Installed result
+
+Migration2955 installed source `f24e6bc8a8fd1f18d6e4138c2a4189eeea5dd63a` after
+527 collected checks:420 executed,107 skipped. The separate five host owner-upgrade
+checks passed. The old service stopped after normal native drain through2949;
+only the two runtime arguments changed. The sole new service was verified, and
+admissions resumed2958. [Exact activation](activation.json).
+
+An [installed-archive CLI/projection probe](installed-check.json) passed against a
+disposable journal and live prefix2957. Existing Night Ferry tasks were explicitly
+bound to their selected project at2956/2957 while retaining ready=false. No
+production prioritization benefit is claimed while those tasks are blocked.
+The restored checkpoint2858 was independently integrated2944 after the fixture
+repair; it is a recovery prefix, not a complete copy of later history.
+
+The [actual public browser check](browser-check.json) observed event2961 and
+project-work-2: both Night Ferry tasks displayed their blocked state and selected
+project title; ordinary unrecorded readiness stayed unknown. Voting history
+remained present. This verifies the house UI, not the game.

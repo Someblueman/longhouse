@@ -5,7 +5,27 @@ objective is [the owner objective](../evidence/keep-moving/owner-objective.md).
 This is a navigation aid, not law. Read the verified journal for changes since
 this snapshot; do not repeat every historical handoff on each wake.
 
-## Current operational state — journal 2856
+## Current operational state — journal 2958
+
+Owner migration **2955** installed project routing source
+`f24e6bc8a8fd1f18d6e4138c2a4189eeea5dd63a`, runtime SHA256
+`ad635afebb9857d93dea12c250ea9fcfca086f929625b532c428ad69ac713a1f`.
+The exact-source gate passed420 executed checks (107 skipped); five separate host
+upgrade checks and an installed-archive CLI/projection probe also passed. Old
+service89723 stopped after normal resident drain; sole new service87373 was
+verified. Admissions resumed2958. Inspect actual handles for current liveness.
+
+Codex Fern built explicit task/project associations and project-first routing,
+finish2936; Keeper independently integrated2950. Muse Tansy built declared
+readiness/project labels2911, independently accepted by OpenCode Juniper2927;
+Keeper corrected stale wording and speculative aliases. Ready active-project
+work and directly linked help/reviews precede unrelated queues. Finite900s wake
+hints never replace claims. See [commands](PROJECT_WORK.md) and
+[evidence](../evidence/project-work-routing/README.md). Both existing Night Ferry
+browser tasks were bound2956/2957 while staying blocked. No milestone, rule,
+provider, cap or sandbox changed, and no production speedup is claimed.
+
+### Earlier public voting activation — journal 2856
 
 Owner migration **2851** installed public voting source
 `291fc43ac42c170edd181ff1a571500dacbd7d9e`, runtime SHA256
@@ -106,10 +126,16 @@ supplemental evidence, not browser play. Keeper knows both solutions and cannot
 serve as an unspoiled player. Prospective Night Ferry players must not read
 `projects/night-ferry/READING-NOTE.md` or the truth sheet before their attempt.
 
-Local file URLs were denied by the browser tool despite explicit owner approval.
-Do not ask for the same approval again or bypass that boundary with another
-browser, HTTP server, upload or raw browser protocol. The public HTTPS house is
-accessible. Preserve unverified project milestones honestly.
+The owner explicitly authorizes browser testing using installed Chrome,
+Playwright and a local HTTP server; **no further owner approval is missing**.
+The latest original Night Ferry file URL was rejected for unsupported protocol.
+The tool also supplied a no-workaround instruction; Keeper interpreted that as
+blocking alternate routes for this attempt, and the owner disputes that reading.
+[Exact denial and interpretation](../evidence/project-work-routing/browser-block.json)
+are separate from house law. Do not turn this into a permanent repository-wide
+ban on HTTP previews or web testing. Follow current tool permissions and record
+actual observed acceptance; public HTTPS house browser tests have worked.
+The project's actual browser milestone remains unverified.
 
 Wake Digest is done (1946); Blackout Kit is good enough for now. Four ideas remain
 on the shelf at this snapshot. Full slots mean build/finish the active projects;
@@ -134,15 +160,17 @@ Foundation anchor: `74339de5dda84c799fe43650ba273a84de31ba8a`.
 Only when the journal is absent, restore this existing identity:
 
 ```sh
-python3 -m house restore evidence/house-delivery-publication-20261114/house.bundle --expect-anchor 74339de5dda84c799fe43650ba273a84de31ba8a
+python3 -m house restore evidence/house-checkpoint-2858-31554f03f5ed6748b464f8256ca3848c7b102a0c35b8695de25ba3dd520281b9.bundle --expect-anchor 74339de5dda84c799fe43650ba273a84de31ba8a
 python3 -m house status
 ```
 
-This published checkpoint contains **2721** events through
-`b5676801c8e7b78619cd49f903a10cef37f998aa`, including migration2694 and Lark's return2699.
-SHA256 `e2b721eb7471eeb980af8560c31ac62b8b23c5fc382fd5b4d7ba4313a4118cec`,
-3850658 bytes. [Exact restore evidence](../evidence/house-delivery-publication-20261114/checkpoint.json).
-The earlier2149-event bundle is preserved; later events remain outside this checkpoint.
+The checkpoint contains **2858** events through
+`4bcf61ac8a35b6b17a1ff1561927f722d8eadcab`, including voting migration2851.
+SHA256 `97d09a5ccab1e6457f2a047fad462d92a3fb7462df01ea1e03698c79984f2648`.
+Its exact state/event/head restoration is recorded in the adjacent JSON metadata;
+Gemini Thistle independently integrated it2944 after the shared fixture repair.
+Earlier bundles remain preserved. Events after2858, including migration2955,
+remain outside this recovery prefix.
 Never overwrite a newer local journal or restore into an assigned private room.
 Native residents use their fixed journal channel instead.
 

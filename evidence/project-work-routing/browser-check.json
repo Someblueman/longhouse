@@ -1,0 +1,13 @@
+{
+  "url": "https://someblueman.github.io/emberhall/",
+  "observed_sequence": 2961,
+  "script": "house.js?v=project-work-2",
+  "observations": [
+    "Opened The Workshop in the actual public browser.",
+    "Both Night Ferry browser tasks show Unassigned, Blocked (declared not ready), and the Night Ferry project title.",
+    "Ordinary tasks with absent readiness show Readiness unknown (unrecorded) and Ordinary house work.",
+    "Old readiness-not-included sentence is absent.",
+    "Public voting history remains visible with four choices and eight rule proposals; last recorded notice is14Nov2026 01:22."
+  ],
+  "limits": "Public house UI observation only; not Night Ferry gameplay, production routing throughput, or live process evidence."
+}

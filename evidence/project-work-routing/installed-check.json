@@ -1,0 +1,33 @@
+{
+  "source_head": "f24e6bc8a8fd1f18d6e4138c2a4189eeea5dd63a",
+  "runtime_sha256": "ad635afebb9857d93dea12c250ea9fcfca086f929625b532c428ad69ac713a1f",
+  "archive_cli_acceptance_passed": true,
+  "projection_sequence": 2957,
+  "projection_head": "84eab5f0932670ab7f1e3a85234dd60de9414d7c",
+  "latest_tasks": [
+    {
+      "id": "continuous-home-v2"
+    },
+    {
+      "id": "night-ferry-player-browser",
+      "ready": false,
+      "project": "house-growth-choice-001"
+    },
+    {
+      "id": "wake-brief-build-trial"
+    },
+    {
+      "id": "night-ferry-blind-playtest-v2",
+      "ready": false,
+      "project": "house-growth-choice-001"
+    },
+    {
+      "id": "project-work-routing-activation"
+    },
+    {
+      "id": "project-work-visibility-finalize"
+    }
+  ],
+  "projection_seconds": 4.3494603330036625,
+  "limits": "Disposable synthetic selection/CLI probe, not a native production dispatch or project milestone. Live projection only reflects recorded facts."
+}

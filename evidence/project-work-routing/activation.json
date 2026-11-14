@@ -1,0 +1,29 @@
+{
+  "old_pid": 89723,
+  "new_pid": 87373,
+  "source_head": "f24e6bc8a8fd1f18d6e4138c2a4189eeea5dd63a",
+  "test_count": 420,
+  "test_output_sha256": "0993a9a734dff7a6b803bd2b31fd24ba5faa37b998a1e42c16bd87a6225bdbb6",
+  "changed_properties": [
+    "ProgramArguments"
+  ],
+  "changed_argument_indices": [
+    2,
+    7
+  ],
+  "activated_at": 1794682400.4337869,
+  "service_process_verified": true,
+  "old_process_gone": true,
+  "migration": {
+    "request": "owner-migration-project-work-routing-20261114",
+    "sequence": 2955,
+    "head": "93860bf1dcd9ea20040115cf4f6066b96bd4a990",
+    "replayed": false
+  },
+  "runtime_sha256": "ad635afebb9857d93dea12c250ea9fcfca086f929625b532c428ad69ac713a1f",
+  "resume_sequence": 2958,
+  "blocked_task_bindings": [
+    2956,
+    2957
+  ]
+}
