@@ -26,11 +26,11 @@ const context=vm.createContext({assert,document,nodes,text,all});
 const source=fs.readFileSync(process.argv[1],'utf8'),tail='refresh();\nsetInterval(refresh,60000);\n';
 assert(source.endsWith(tail));vm.runInContext(source.slice(0,-tail.length),context);
 vm.runInContext(`
-data={name:'House',timezone:'Europe/London'};current=false;
 const fern={id:'fern',name:'Fern',room:'door',pose:'standing',presence:'recorded awake',agent:'muse'};
 const ash={id:'ash',name:'Ash',room:'bedroom',pose:'sleeping',presence:'asleep',agent:'agy'};
 frame={seq:1,at:100,rooms:[{id:'door',name:'The Door'},{id:'bedroom',name:'Beds'}],
  residents:[fern,ash],runs:[],tasks:[],scars:[]};selected='door';
+data={name:'House',timezone:'Europe/London',frames:[frame]};current=false;
 const figures=()=>Array.from(all(nodes.house).filter(n=>n.attrs['data-resident']),n=>n.attrs['data-resident']);
 const door=()=>all(nodes.house).find(n=>n.attrs['data-room']==='door');
 drawHouse();roomPanel();assert.deepEqual(figures(),['fern','ash']);
