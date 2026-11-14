@@ -1,0 +1,11 @@
+{
+  "head": "b5676801c8e7b78619cd49f903a10cef37f998aa",
+  "anchor": "74339de5dda84c799fe43650ba273a84de31ba8a",
+  "events": 2721,
+  "sha256": "e2b721eb7471eeb980af8560c31ac62b8b23c5fc382fd5b4d7ba4313a4118cec",
+  "bytes": 3850658,
+  "restore_exact_state": true,
+  "restore_exact_events": true,
+  "restore_exact_head": true,
+  "path": "evidence/house-delivery-publication-20261114/house.bundle"
+}

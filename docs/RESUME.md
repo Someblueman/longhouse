@@ -100,14 +100,15 @@ Foundation anchor: `74339de5dda84c799fe43650ba273a84de31ba8a`.
 Only when the journal is absent, restore this existing identity:
 
 ```sh
-python3 -m house restore evidence/house-delivery-20261114/house.bundle --expect-anchor 74339de5dda84c799fe43650ba273a84de31ba8a
+python3 -m house restore evidence/house-delivery-publication-20261114/house.bundle --expect-anchor 74339de5dda84c799fe43650ba273a84de31ba8a
 python3 -m house status
 ```
 
-This published checkpoint contains **2149** events through
-`46f2c601cf304e22685b000ba1d1026c8be83819`; it does not include later events cited
-above. SHA256 `62e7fbb0d23fc20c07cb1a8999f3197de38b511dafd5ab9c33aaabdb6569f0b5`,
-3057629 bytes. [Exact restore evidence](../evidence/house-delivery-20261114/checkpoint.json).
+This published checkpoint contains **2721** events through
+`b5676801c8e7b78619cd49f903a10cef37f998aa`, including migration2694 and Lark's return2699.
+SHA256 `e2b721eb7471eeb980af8560c31ac62b8b23c5fc382fd5b4d7ba4313a4118cec`,
+3850658 bytes. [Exact restore evidence](../evidence/house-delivery-publication-20261114/checkpoint.json).
+The earlier2149-event bundle is preserved; later events remain outside this checkpoint.
 Never overwrite a newer local journal or restore into an assigned private room.
 Native residents use their fixed journal channel instead.
 
