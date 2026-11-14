@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import fcntl
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -22,6 +23,12 @@ from .files import workspace_path
 
 
 INSPECTION_LIMIT = 64_000
+DIAGNOSTIC_LIMIT = 8_000
+DIAGNOSTIC_CHUNK = 64 * 1024
+# Receipt fields that must never reach the journal notice: a private candidate
+# name and raw candidate-authored test output. The durable private receipt keeps
+# both; the shared notice keeps the ordinary outcome fields only.
+JOURNAL_EXCLUDED_FIELDS = frozenset({"candidate", "diagnostics"})
 
 
 def source(record: Record, run: str, actor: str):
@@ -96,6 +103,37 @@ def inspect_contribution(record: Record, run: str, actor: str, path: str | None 
                 except (UnicodeDecodeError, ValueError):
                     result["content_status"] = "binary"
     return result
+
+
+def failure_diagnostics(log: Path, test_exit: int) -> dict:
+    """Identify the retained test log and include a bounded tail.
+
+    The log is candidate-authored data, never instructions. Read it in fixed
+    chunks so an arbitrarily large log cannot be buffered, report the hash of
+    all retained bytes, and keep only the last DIAGNOSTIC_LIMIT bytes of text.
+    """
+    digest = hashlib.sha256()
+    size = 0
+    tail = b""
+    try:
+        with log.open("rb") as stream:
+            while True:
+                block = stream.read(DIAGNOSTIC_CHUNK)
+                if not block:
+                    break
+                size += len(block)
+                digest.update(block)
+                tail = (tail + block)[-DIAGNOSTIC_LIMIT:]
+    except OSError:
+        return {"kind": "failed-tests", "test_exit": test_exit,
+                "source": "untrusted candidate output",
+                "reason": "retained test log is unavailable"}
+    return {"kind": "failed-tests", "test_exit": test_exit,
+            "source": "untrusted candidate output", "log_file": log.name,
+            "bytes": size, "sha256": digest.hexdigest(),
+            "limit_bytes": DIAGNOSTIC_LIMIT, "tail_bytes": len(tail),
+            "clipped": size > len(tail),
+            "tail": tail.decode("utf-8", errors="replace")}
 
 
 def check_plan(candidate: Path, base: str, head: str) -> tuple[str, list[list[str]]]:
@@ -196,7 +234,8 @@ def integrate(record: Record, run: str, actor: str, *, publish: bool = False,
             scope, commands = check_plan(candidate, head, receipt["candidate_head"])
             receipt.update(test_scope=scope, test_commands=commands)
             test_exit = 0
-            with (candidate.parent / (candidate.name + ".tests.log")).open("w") as output:
+            log = candidate.parent / (candidate.name + ".tests.log")
+            with log.open("w") as output:
                 output.write("Acceptance scope: " + scope + "\n")
                 for command in commands:
                     output.write(json.dumps(command) + "\n"); output.flush()
@@ -204,10 +243,23 @@ def integrate(record: Record, run: str, actor: str, *, publish: bool = False,
                     test_exit = tested.returncode
                     if test_exit:
                         break
-            unchanged = (git(candidate, "rev-parse", "HEAD") == receipt["candidate_head"] and
-                         not git(candidate, "status", "--porcelain", "--untracked-files=all"))
+            actual_head = git(candidate, "rev-parse", "HEAD")
+            dirty = bool(git(candidate, "status", "--porcelain", "--untracked-files=all"))
+            unchanged = actual_head == receipt["candidate_head"] and not dirty
             receipt.update(status="reviewed" if test_exit == 0 and unchanged else "tests-failed",
                            test_exit=test_exit)
+            if test_exit:
+                # The exact retained log is the only diagnostic source; no
+                # path lookup or re-run is offered.
+                receipt["diagnostics"] = failure_diagnostics(log, test_exit)
+            elif not unchanged:
+                # Tests passed for bytes that no longer exist in the candidate.
+                # Say so instead of pretending a named test failed.
+                receipt["diagnostics"] = {
+                    "kind": "candidate-changed", "test_exit": 0,
+                    "reason": "candidate source changed during acceptance; tests do not apply to retained bytes",
+                    "expected_head": receipt["candidate_head"], "actual_head": actual_head,
+                    "dirty": dirty}
         if publish and receipt["status"] == "reviewed":
             if head != git(record.root, "rev-parse", "HEAD") or git(record.root, "status", "--porcelain", "--untracked-files=all"):
                 raise ValueError("shared source changed during review; candidate retained")
@@ -233,7 +285,7 @@ def save_result(record: Record, actor: str, path: Path, receipt: dict):
     finally:
         os.close(directory)
     record.append("say", actor, {"text": "house-integration-v1 " + json.dumps({
-        k: v for k, v in receipt.items() if k != "candidate"}, sort_keys=True)})
+        k: v for k, v in receipt.items() if k not in JOURNAL_EXCLUDED_FIELDS}, sort_keys=True)})
 
 
 def main():
