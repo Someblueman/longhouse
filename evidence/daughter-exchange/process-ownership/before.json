@@ -1,0 +1,19 @@
+{
+  "house": "0f2f93d7-37a9-49b2-9745-3e14829015b3",
+  "head": "5906496511d3285b64d42a640d2a7356adaee5d9",
+  "events": 15,
+  "rule_revision": "46aab9ac484ad5aca7c7d7fd119e48c9ce5f140516a55fc83f4650a3ca9f4a9c",
+  "owner_key": "",
+  "task_ids": [
+    "published-backup-drill"
+  ],
+  "resident_ids": [
+    "keeper-visitor-d43177",
+    "osier-61464e3b88",
+    "reed-e7311b2815"
+  ],
+  "lesson_ids": [
+    "reedbank-checkpoint-recovery-v1",
+    "seed-b39e1e3631436a9a4a0cbba8e466533560d5dd4d6b125e85d8dbafd26d19548b-0"
+  ]
+}

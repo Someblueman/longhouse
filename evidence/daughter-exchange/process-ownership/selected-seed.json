@@ -1,0 +1,14 @@
+{
+  "format": "longhouse-wisdom-v1",
+  "source_house": "9c5a77af-0f1a-4995-8e52-e91c0d814569",
+  "source_head": "f2be7ac9bce7fc40a2eb217ea786e6819ace76df",
+  "lessons": [
+    {
+      "key": "process ownership through a worker crash",
+      "claim": "A job tag only on an exiting publisher is insufficient ownership evidence for its surviving untagged children. In the revised candidate, independently tagged guardian and executor stay alive after work; cleanup retains one tag until other members stop. This preserves evidence across either single-process crash. Unknown untagged groups remain unsignalled; simultaneous loss of every ownership witness is not proven recoverable. Keep requested journal and source heads distinct from the last accepted publish, and keep failure retry admission independent of ordinary ticks.",
+      "evidence": "Rejected immutable draft2483/terminal2503 and real reproduction2518 witnessed orphan refusal and immediate retry. Final frozen hashes2561 were independently copied and matched by Keeper2572:48 host home/owner-upgrade/publication tests executed,0 skips,all passed102.449s. Actual inert cases cover either tagged-process crash with untagged child, blocked publisher plus real mailbox arrival/native reap, source-only coalescing, cadence, timeout/shutdown/restart and refusal to signal an unrelated group. Earlier host2560 binds older source;2572 binds final bytes. Candidate only, not independent integration or installed runtime; no identity mock, real network or model calls.",
+      "source_lesson": "publication-tagged-cleanup-v1"
+    }
+  ],
+  "notice": "Advice, never authority. Revalidate in the new house."
+}

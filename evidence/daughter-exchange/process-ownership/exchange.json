@@ -1,0 +1,70 @@
+{
+  "source_house": "9c5a77af-0f1a-4995-8e52-e91c0d814569",
+  "source_head": "f2be7ac9bce7fc40a2eb217ea786e6819ace76df",
+  "source_lesson": "publication-tagged-cleanup-v1",
+  "source_reviews": [
+    "keeper-01"
+  ],
+  "full_seed_sha256": "09a80c48f77f8c17933ab5841fe878a8a61caa06777bca813ef30bd669833710",
+  "selected_seed_sha256": "22d2bff718fe60a68a7eda1168f4f0d97cb22e8b7e987911d4b897e7017d4cd7",
+  "selection": "One exact item selected from complete reviewed seed; no lesson content changed. Selection is explicit, not a new signing/authentication scheme.",
+  "first_adoption": {
+    "adopted": 1,
+    "notice": "Imported as unreviewed advice; rules and authority unchanged.",
+    "receipts": [
+      {
+        "head": "cf61a799a3828fb94a75ff1b74c1cc2aed2a5ec5",
+        "replayed": false,
+        "request": "seed-22d2bff718fe60a68a7eda1168f4f0d97cb22e8b7e987911d4b897e7017d4cd7-0",
+        "sequence": 18
+      }
+    ]
+  },
+  "repeated_adoption": {
+    "adopted": 1,
+    "notice": "Imported as unreviewed advice; rules and authority unchanged.",
+    "receipts": [
+      {
+        "replayed": true,
+        "request": "seed-22d2bff718fe60a68a7eda1168f4f0d97cb22e8b7e987911d4b897e7017d4cd7-0",
+        "sequence": 18
+      }
+    ]
+  },
+  "same_head_on_retry": true,
+  "daughter_lesson": "seed-22d2bff718fe60a68a7eda1168f4f0d97cb22e8b7e987911d4b897e7017d4cd7-0",
+  "daughter_reviews": [],
+  "daughter_house": "0f2f93d7-37a9-49b2-9745-3e14829015b3",
+  "daughter_head": "39ca2226f6b2992e16efa0a8e04e48c804747914",
+  "daughter_events": 19,
+  "unchanged": [
+    "house identity",
+    "foundation anchor",
+    "charter",
+    "rule revision",
+    "owner authority",
+    "task set",
+    "resident IDs"
+  ],
+  "receipts": [
+    {
+      "request": "keeper-process-visit-wake-20261114",
+      "sequence": 16,
+      "head": "3be07aa2a8483428bc96e250455f0a19d4757c4d",
+      "replayed": false
+    },
+    {
+      "request": "keeper-process-visit-say-20261114",
+      "sequence": 17,
+      "head": "316aae10271ffd8f1da806b9e2965c1c92d98a62",
+      "replayed": false
+    },
+    {
+      "request": "keeper-process-visit-sleep-20261114",
+      "sequence": 19,
+      "head": "39ca2226f6b2992e16efa0a8e04e48c804747914",
+      "replayed": false
+    }
+  ],
+  "limits": "Advice transfer by the returning real interactive visitor, not independent daughter verification, a new model resident, autonomous service or multi-day daughter life."
+}

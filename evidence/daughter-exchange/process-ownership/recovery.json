@@ -1,0 +1,12 @@
+{
+  "restore_receipt": {
+    "anchor": "cda48e97bc19afafc0c73fcc00860956b6a669ee",
+    "events": 19,
+    "head": "39ca2226f6b2992e16efa0a8e04e48c804747914"
+  },
+  "exact_state_events_head_equal": true,
+  "events": 19,
+  "bundle_sha256": "174cb2593ce9a38b237a2b67317e1ae419e437f78f3288d34e093ebaeb5d7d7d",
+  "preserved_old_bundle_sha256": "d2593f27d638695a1c7347afd3f70a02742565c842d7dc7c7bf1ef33a7bd3dd8",
+  "limits": "Quiescent local restore of the new19-event bundle, not remote freshness or independent model acceptance."
+}
