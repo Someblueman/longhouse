@@ -342,7 +342,21 @@ function drawHouse() {
   roomLabels.forEach(r=>el("text",{x:r.x,y:r.y,class:"room-label","text-anchor":"middle","pointer-events":"none"},map,r.name));
   map.setAttribute("viewBox",selected?roomBounds[selected]||wholeBounds:wholeBounds);
 }
-function effectiveTasks() {const at = current?Date.now()/1000:frame.at;return frame.tasks.map(t=>({...t,expired:t.status==="claimed"&&t.until<=at}));}
+function effectiveTasks() {const at=observationTime();return frame.tasks.map(t=>({...t,expired:t.status==="claimed"&&t.until<=at}));}
+function renderWorkshopTasks(content) {
+  const tasks=effectiveTasks(),expired=tasks.filter(t=>t.expired).length;
+  const claimed=tasks.filter(t=>t.status==="claimed"&&!t.expired).length;
+  const unassigned=tasks.length-claimed-expired;
+  html("p","small",`${tasks.length} unfinished · ${unassigned} unassigned · ${claimed} recorded claims · ${expired} expired leases`,content);
+  html("p","small","Unassigned does not mean ready to start: readiness is not included in this snapshot. Recorded claims exclude expired leases and are not live process status.",content);
+  tasks.forEach(t=>{
+    const row=html("div",`task${t.expired?" expired":""}`,undefined,content);
+    html("strong","",t.title,row);
+    const status=t.expired?"Lease expired · fate unconfirmed":t.status==="claimed"?"Recorded claim":"Unassigned";
+    const owner=t.status==="claimed"?` · ${t.owner?residentName(t.owner):"Owner unrecorded"}`:"";
+    html("span","small",status+owner,row);
+  });
+}
 function visibleScars() {
   const marks=[...frame.scars];
   effectiveTasks().filter(t=>t.expired).forEach(t=>{const id=`lease:${t.id}:${t.generation}`;if(!marks.some(s=>s.id===id))marks.push({id,room:"workshop",kind:"expired",title:"A lease ran out",detail:t.title,sequence:frame.seq,basis:"Inferred from the observation clock; fate unconfirmed",mended:false});});
@@ -487,12 +501,7 @@ function roomPanel() {
     link.href="#shelf-card";
   }
   if(room?.id==="parlor") renderCatchupPanel(content);
-  if((!room&&rooms.some(r=>r.id==="workshop"))||room?.id==="workshop") effectiveTasks().forEach(t=>{
-    const row=html("div",`task${t.expired?" expired":""}`,undefined,content);
-    html("strong","",t.title,row);
-    const owner=frame.residents.find(r=>r.id===t.owner);
-    html("span","small",`${t.expired?"Lease expired · fate unconfirmed":t.status} · ${owner?.name||"available"}`,row);
-  });
+  if((!room&&rooms.some(r=>r.id==="workshop"))||room?.id==="workshop") renderWorkshopTasks(content);
   const roomScars=room?visibleScars().filter(s=>s.room===room.id):[];
   if(roomScars.length)html("p","small","These marks are historical receipts, not alerts that a run is still failing.",content);
   roomScars.forEach(s=>{
