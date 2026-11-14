@@ -16,7 +16,7 @@ import sys
 import time
 import uuid
 
-from . import home_work, inbox, mailbox, mailbox_jobs, providers, work_metrics
+from . import home_work, inbox, mailbox, mailbox_jobs, project_work, providers, work_metrics
 from .life import CONTROLLER, latest_run, provider_available, return_eligible, workload
 from .record import Record
 from .wake_policy import active_policy, active_prompt
@@ -312,6 +312,16 @@ class Coordinator:
                     "Inspect its compact receipt before deliberately updating evidence/checkpoint.json "
                     "and docs/RESUME.md for independent source review. Finish with the metadata only; "
                     "do not embed the bundle in the journal. Never restore over this house or your room.\n")
+        if "task" in assigned:
+            task = state["tasks"][assigned["task"]]
+            project = state["shelf"]["projects"][task["project"]]
+            assignment += (
+                f"Suggested project task: {assigned['task']}; generation {assigned['task_generation']}; "
+                f"project {task['project']}; milestone deadline {project['deadline']}.\n"
+                f"Title: {task['title']}\nFull task: {task['description']}\n"
+                "This finite admission hint is not ownership. Read current state and claim the current generation "
+                "with a fresh token before editing; if blocked, claimed or changed, do not overwrite another resident. "
+                "Build this assigned project work before unrelated contribution reviews.\n")
         if help_request:
             assignment += "Shared request: " + help_request["reason"] + "\n"
         if "explore_generation" in assigned:
@@ -335,6 +345,10 @@ class Coordinator:
                            json.dumps(candidates[:12], ensure_ascii=False) + "\n" +
                            "Use the trusted integration command documented in the house; inspect the contribution and "
                            "its tests before publication. Preserve conflicting candidates.\n")
+            if project_work.enabled(state) and ("task" in assigned or help_request):
+                assignment += ("These queued contributions do not replace your suggested project task or shared request. "
+                    "Review only the assigned source contribution or one that directly unblocks the assigned work; "
+                    "leave unrelated reviews queued.\n")
             own = {key for key, item in state.get("life", {}).get("runs", {}).items()
                    if item["resident"] == resident}
             if any(candidate["run"] in own for candidate in candidates):
@@ -344,7 +358,8 @@ class Coordinator:
         return assignment + "\n" + active_prompt(state)
 
     def start(self, kind: str, help_id: str | None = None, *, backlog: bool = False,
-              explore_generation: int | None = None, scheduled: bool = False) -> str | None:
+              explore_generation: int | None = None, scheduled: bool = False,
+              task_id: str | None = None, task_generation: int | None = None) -> str | None:
         self.refresh_runtime()
         self.resolve_completed_help()
         state = self.record.read()[0]
@@ -369,12 +384,18 @@ class Coordinator:
             extra["backlog"] = True
         if explore_generation is not None:
             extra["explore_generation"] = explore_generation
+        if task_id is not None:
+            extra.update(task=task_id, task_generation=task_generation)
+        mode = ("review" if "review_run" in request else "work") if project_work.enabled(state) else (
+            "review" if pending_contributions(self.private) else "work")
         try:
             self.life("run-start", run, resident=resident, agent=kind, model=model,
                       source_head=base, workspace="residents/" + run, policy_revision=policy["revision"],
-                      mode="review" if pending_contributions(self.private) else "work", **extra)
+                      mode=mode, **extra)
         except ValueError as error:
-            if str(error) not in {"owner paused admissions", "Explorer demand changed"} and not (
+            if str(error) not in {"owner paused admissions", "Explorer demand changed",
+                                   "project task demand changed", "project task generation changed",
+                                   "project help demand changed"} and not (
                     backlog and str(error) == "ready backlog demand changed"):
                 raise
             path.rmdir()  # This unadmitted run has no files, process or journal entry.
@@ -497,14 +518,24 @@ class Coordinator:
                 if not demand["wanted_starts"]:
                     break
                 pending = [(key, state["life"]["requests"][key]) for key in demand["pending_help"]]
-                request = pending[0] if pending else (None, {})
-                backlog = not pending and demand["uncovered_tasks"] > 0
-                explore = demand["explore_generation"] if not pending and not backlog else None
+                selected = project_work.first(state, max(time.time(), state["at"]),
+                                              demand["ready_tasks"] if demand["uncovered_tasks"] else [],
+                                              demand["pending_help"])
+                task_args = {}
+                if selected and "task" in selected:
+                    request = (None, {})
+                    backlog, explore = True, None
+                    task_args = {"task_id": selected["task"], "task_generation": selected["task_generation"]}
+                else:
+                    help_id = selected["help_request"] if selected else pending[0][0] if pending else None
+                    request = (help_id, state["life"]["requests"][help_id]) if help_id else (None, {})
+                    backlog = help_id is None and demand["uncovered_tasks"] > 0
+                    explore = demand["explore_generation"] if help_id is None and not backlog else None
                 kind = choose_provider(state, time.time(), request[1].get("agent"), exploring=explore is not None,
                                        reviewing="review_run" in request[1])
                 if kind is None:
                     break
-                run = self.start(kind, request[0], backlog=backlog, explore_generation=explore, scheduled=True)
+                run = self.start(kind, request[0], backlog=backlog, explore_generation=explore, scheduled=True, **task_args)
                 if run is None:
                     break
                 started.append(run)

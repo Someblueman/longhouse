@@ -127,15 +127,23 @@ def apply_event(previous: dict | None, event: dict) -> dict:
                 require(backlog_enabled(state), "ready backlog runtime not enabled")
                 require(type(data["ready"]) is bool and resident["awake"],
                         "task readiness requires an awake resident and boolean")
+            if "project" in data:
+                from .project_work import association
+                require(resident["awake"], "sleeping residents cannot attach projects")
+                association(state, data, at)
             state["tasks"][task_id] = {"title": string(data, "title", 500),
                 "description": string(data, "description"), "status": "open",
                 "generation": 0, "owner": None, "until": 0, "token": None, "used_tokens": []}
             if "ready" in data:
                 state["tasks"][task_id]["ready"] = data["ready"]
+            if "project" in data:
+                state["tasks"][task_id]["project"] = data["project"]
         elif op == "ready":
             from .life import backlog_enabled
             require(backlog_enabled(state), "ready backlog runtime not enabled")
-            require(set(data) == {"task", "expect", "ready"} and type(data["ready"]) is bool,
+            require({"task", "expect", "ready"} <= data.keys() <=
+                    {"task", "expect", "ready", "project", "clear_project"}
+                    and not {"project", "clear_project"} <= data.keys() and type(data["ready"]) is bool,
                     "invalid readiness fields")
             require(resident["awake"], "sleeping residents cannot change readiness")
             task = state["tasks"][string(data, "task", 100)]
@@ -143,6 +151,15 @@ def apply_event(previous: dict | None, event: dict) -> dict:
             require(task["until"] <= at, "task has a live lease; release before changing readiness")
             require(type(data["expect"]) is int and data["expect"] == task["generation"],
                     "task generation changed")
+            if "project" in data:
+                from .project_work import association
+                association(state, data, at)
+                task["project"] = data["project"]
+            if "clear_project" in data:
+                from .project_work import enabled
+                require(enabled(state), "project work runtime not enabled")
+                require(data["clear_project"] is True, "invalid clear_project")
+                task.pop("project", None)
             task.update(ready=data["ready"], generation=task["generation"] + 1)
         elif op == "claim":
             task = state["tasks"][string(data, "task", 100)]
