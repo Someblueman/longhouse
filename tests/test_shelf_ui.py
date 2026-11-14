@@ -41,7 +41,7 @@ assert.doesNotMatch(text(root),/Active projects/);assert.match(text(root),/Finis
 assert.match(text(root),/Completed map/);assert.doesNotMatch(text(root),/Already selected/);
 assert.match(text(root),/Too large for the first milestone/);
 assert.match(text(root),/Explorer: Juniper · OpenCode/);assert.doesNotMatch(text(root),/resident-fixture/);
-assert.match(text(root),/already in progress/);assert.doesNotMatch(text(root),/Room for one Explorer round/);
+assert.match(text(root),/see the recorded round above/);assert.doesNotMatch(text(root),/Room for one Explorer round/);
 assert.equal(all(root).filter(n=>n.tag==='img').length,0);
 const links=all(root).filter(n=>n.tag==='a');assert.equal(links.length,1);
 assert.equal(links[0].href,'https://example.org/');assert.equal(links[0].rel,'noopener noreferrer');
