@@ -420,7 +420,7 @@ function renderCatchupPanel(content) {
   const label=html("label","small","Start from event ",controls);
   label.htmlFor="catchup-seq";
   const input=html("input","",undefined,controls);
-  input.id="catchup-seq";input.type="number";input.min=String(data.frames[0]?.seq||1);input.max=String(digest.endSeq);input.value=String(digest.startSeq);
+  input.id="catchup-seq";input.type="number";input.min=String(data.frames[0]?.seq||1);input.max=String(digest.endSeq);input.value=String(digest.startSeq);input.defaultValue=input.value;
   const apply=html("button","","Update",controls);
   apply.id="catchup-apply";
   apply.addEventListener("click",()=>{const v=Number.parseInt(input.value,10);catchupStartSeq=Number.isFinite(v)?v:null;roomPanel();});
@@ -429,7 +429,7 @@ function renderCatchupPanel(content) {
   reset.addEventListener("click",()=>{catchupStartSeq=null;roomPanel();});
   const sections=[["Completed tasks",digest.tasks,t=>t.title],["Room changes",digest.rooms,r=>`${r.name} (${r.status})`],["Project choices",digest.projects,p=>`${p.title} (${p.status})`] ];
   let any=false;
-  sections.forEach(([heading,items,fmt])=>{
+  sections.forEach(([heading,items,fmt],section)=>{
     if(!items.length)return;
     any=true;
     html("h3","catchup-heading",`${heading} (${items.length})`,panel);
@@ -438,6 +438,7 @@ function renderCatchupPanel(content) {
       const row=html("div","catchup-item",undefined,list);
       html("span","",`${fmt(item)} · event ${item.seq}`,row);
       const btn=html("button","catchup-jump","Jump",row);
+      btn.id=`catchup-jump-${section}-${item.seq}`;
       btn.addEventListener("click",()=>jumpToSequence(item.seq));
     });
   });
@@ -512,9 +513,42 @@ function accounts() {
     html("span","balance",until>now?(/credential|key expired|401/i.test(reason)?"Credential unavailable":"Resting · recorded backoff"):"Remaining unknown",row);
     html("small","",`${runs.length} recorded runs · ${runs.some(r=>Number.isFinite(r.elapsed_seconds))?`${Math.round(seconds/60)} session min across ${runs.filter(r=>Number.isFinite(r.elapsed_seconds)).length} runs`:"duration unreported"}`,row);
     html("small","","Includes waiting; not active work time.",row);
+    const outcomes=["success","failed","interrupted","quota"].map(outcome=>
+      `${runs.filter(r=>r.outcome===outcome).length} ${outcome==="success"?"successful exits":outcome}`);
+    html("small","",outcomes.join(" · "),row);
+    const finished=runs.flatMap(r=>r.finished_tasks||[]);
+    html("small","",`${finished.length} finished task receipts · ${runs.filter(r=>(r.finished_tasks||[]).length).length} runs with a finish`,row);
+    const assignments=runs.filter(r=>r.assignment);
+    html("small","",["work","review","explore"].map(lane=>
+      `${assignments.filter(r=>r.assignment.lane===lane).length} ${lane} assignments`).join(" · ")+` · ${runs.length-assignments.length} unrecorded`,row);
+    const measured=runs.filter(r=>r.waiting?.measured_requests>0);
+    if(measured.length) {
+      const waiting=measured.reduce((n,r)=>n+r.waiting.mailbox_seconds,0);
+      const voluntary=measured.reduce((n,r)=>n+r.waiting.voluntary_seconds,0);
+      html("small","",`${Math.round(waiting/60)} measured mailbox min (${Math.round(voluntary/60)} explicit wait min included) · ${measured.length} runs`,row);
+    } else html("small","","Mailbox waiting: unreported",row);
+    const unknown=runs.reduce((n,r)=>n+(r.waiting?.unmeasured_requests||0),0);
+    html("small","",`${runs.length-measured.length} runs without measured waiting · ${unknown} observed requests without timing`,row);
+    if(assignments.length||finished.length) {
+      const detail=html("details","",undefined,row);
+      html("summary","","Recent work and routing",detail);
+      const reasons={balanced:"Balanced recent opportunities", "requested-provider":"Explicit provider request",
+        "preferred-unavailable":"Requested provider unavailable; balanced fallback",direct:"Direct coordinator assignment"};
+      for(const run of runs.filter(r=>r.assignment||(r.finished_tasks||[]).length).slice(-8).reverse()) {
+        const assignment=run.assignment;
+        html("small","",`Event ${run.sequence} · ${assignment?`${assignment.lane} · ${reasons[assignment.reason]}${assignment.requested_agent?` (${kinds[assignment.requested_agent].name})`:""}`:"Routing unrecorded"}`,detail);
+        if(assignment?.help_request)html("small","",`Request: ${assignment.help_request}`,detail);
+        for(const task of run.finished_tasks||[])html("small","",`Finished ${task.task} · event ${task.sequence}`,detail);
+      }
+    }
     if(until>now)html("small","",`Until ${clock(until)} · ${backoff.reason}`,row);
     const totals={};runs.forEach(r=>Object.entries(r.usage).forEach(([k,v])=>{totals[k]=(totals[k]||0)+v;}));
-    for(const key of ["input_tokens","output_tokens","total_tokens"]) if(totals[key]!==undefined)html("small","",`${key.replaceAll("_"," ")}: ${totals[key].toLocaleString()}`,row);
+    for(const [key,label] of [["input_tokens","Native input"],["cached_input_tokens","Cached input"],
+      ["output_tokens","Native output"],["total_tokens","Native total"]]) {
+      const reports=runs.filter(r=>r.usage[key]!==undefined).length;
+      if(reports)html("small","",`${label}: ${totals[key].toLocaleString()} · ${reports} reporting runs`,row);
+      else if(key==="cached_input_tokens")html("small","","Cached input: unreported",row);
+    }
   });
 }
 function clock(at, opts={}) {return new Intl.DateTimeFormat("en-GB",{timeZone:data.timezone,day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",...opts}).format(new Date(at*1000));}
@@ -615,13 +649,39 @@ function shelf() {
     });
   }
 }
+function snapshotCue(nowSec, observedAt, frameAt, isCurrent, timeZone) {
+  const validTime = ts => Number.isFinite(ts) && ts > 0 && Number.isFinite(new Date(ts * 1000).getTime());
+  const fmt = (ts) => new Intl.DateTimeFormat("en-GB", {
+    timeZone: timeZone || "Europe/London",
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(ts * 1000));
+  if (!isCurrent) {
+    if (!validTime(frameAt)) return "Event time unknown";
+    return `Event ${fmt(frameAt)}`;
+  }
+  if (!validTime(observedAt)) return "Snapshot time unknown";
+  const label = `Snapshot ${fmt(observedAt)}`;
+  if (!Number.isFinite(nowSec)) return label;
+  const diff = nowSec - observedAt;
+  if (diff < 0) return `${label} · ahead of clock`;
+  if (diff < 60) return `${label} · just now`;
+  if (diff < 3600) return `${label} · ${Math.floor(diff / 60)}m ago`;
+  if (diff < 86400) return `${label} · ${Math.floor(diff / 3600)}h ago`;
+  return `${label} · ${Math.floor(diff / 86400)}d ago`;
+}
 function lighting() {
-  const at=current?Date.now()/1000:frame.at;
+  const nowSec=Date.now()/1000;
+  const at=current?nowSec:frame.at;
   const hour=Number(new Intl.DateTimeFormat("en-GB",{timeZone:data.timezone,hour:"2-digit",hourCycle:"h23"}).format(new Date(at*1000)));
   const day=hour>=7&&hour<19;
   document.body.classList.toggle("day",day);
   $("sky-label").textContent=`${day?"Daylight":"Nightfall"} in Emberhall${current?"":" · remembered"}`;
-  $("house-clock").textContent=clock(at)+" · London";
+  $("house-clock").textContent=(Number.isFinite(at)&&at>0?clock(at):"Time unknown")+" · London";
+  const cue=$("snapshot-cue");
+  if(cue)cue.textContent=snapshotCue(nowSec,data.observed_at,frame?frame.at:NaN,current,data.timezone);
 }
 function render() {
   frame=data.frames[index];
@@ -660,13 +720,46 @@ function bindControls() {
   $("overview").addEventListener("click",()=>choose(null));
   controlsReady=true;
 }
+function decodePublicHistory(wire) {
+  // Published v1 snapshots remain readable while the publisher migrates to v2.
+  if(wire?.version===1)return wire;
+  if(wire?.version!==2||!Array.isArray(wire.nodes))throw new Error("Unrecognized public history transport");
+  const nodes=[];
+  function value(item) {
+    if(item!==null&&typeof item==="object") {
+      if(Array.isArray(item)||Object.keys(item).length!==1||!Number.isInteger(item.ref)||item.ref<0||item.ref>=nodes.length)
+        throw new Error("Invalid public history reference");
+      return nodes[item.ref];
+    }
+    return item;
+  }
+  for(const node of wire.nodes) {
+    if(Array.isArray(node))nodes.push(node.map(value));
+    else if(node!==null&&typeof node==="object")nodes.push(Object.fromEntries(Object.entries(node).map(([key,item])=>[key,value(item)])));
+    else throw new Error("Invalid public history node");
+  }
+  const root=value(wire.root);
+  if(!root||root.version!==1||Array.isArray(root))throw new Error("Invalid public history root");
+  return root;
+}
+function refreshView(changed=false) {
+  // Capture immediately before the redraw, after the fetch and any visitor edits.
+  const input=$("catchup-seq");
+  const draft=input&&input.value!==input.defaultValue?input.value:null;
+  const focusId=input&&document.activeElement?.id?.startsWith("catchup-")?document.activeElement.id:null;
+  if(changed)render();
+  else {lighting();accounts();roomPanel();drawHouse();}
+  const replacement=$("catchup-seq");
+  if(replacement&&draft!==null)replacement.value=draft;
+  if(replacement&&focusId)$(focusId)?.focus({preventScroll:true});
+}
 async function refresh() {
   if(refreshing)return;
   refreshing=true;
   try {
     const response=await fetch("history.json",{cache:"no-cache",signal:AbortSignal.timeout(15000)});
     if(!response.ok)throw new Error(`History returned ${response.status}`);
-    const next=await response.json();
+    const next=decodePublicHistory(await response.json());
     if(next.version!==1||!Array.isArray(next.frames)||!next.frames.length)throw new Error("Unrecognized house history");
     if(data&&next.frames.length<data.frames.length)throw new Error("An older publication arrived");
     // Read the selection after the fetch: someone may have scrubbed while it was in flight.
@@ -679,13 +772,13 @@ async function refresh() {
       data=next;index=nextIndex;
       $("history").max=data.frames.length;$("history").disabled=false;
       if(!controlsReady)bindControls();
-      render();
-    }else if(current){lighting();accounts();roomPanel();drawHouse();}
+      refreshView(true);
+    }else if(current)refreshView();
   }catch(error){
     $("error").hidden=false;
     $("error").textContent=data?"A newer record could not be loaded. The last remembered snapshot is still here; we’ll try again shortly.":"The house record is unavailable. We’ll try again shortly.";
     if(!data)$("presence-line").textContent="The record is unavailable; no activity is invented.";
-    else if(current){lighting();accounts();roomPanel();drawHouse();}
+    else if(current)refreshView();
   }finally{refreshing=false;}
 }
 refresh();

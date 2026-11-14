@@ -89,7 +89,20 @@ main {
 .eyebrow {
   display:flex;
   justify-content:space-between;
-  gap:10px;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:4px 10px;
+}
+.clock-group {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:4px 10px;
+  text-align:right;
+}
+.snapshot-cue {
+  color:var(--muted,#b8aa96);
+  font-weight:500;
 }
 .introduction {
   display:flex;
