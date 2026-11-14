@@ -348,10 +348,25 @@
   function openScene(id) {
     if (!state.scenes.has(id)) return;
     state.activeScene = id;
-    renderTabs();
+    syncTabs();
     renderScene(id);
     var title = state.scenes.get(id).title;
     log('opened ' + id + ' (“' + title + '”)');
+  }
+
+  /* Update existing controls in place so the element that received the event
+   * keeps keyboard focus. Rebuilding these lists on every tick or tab press
+   * would otherwise drop focus to the document body. */
+  function syncTabs() {
+    document.querySelectorAll('#tabs button.tab').forEach(function (button) {
+      button.setAttribute('aria-pressed', String(button.dataset.scene === state.activeScene));
+    });
+  }
+
+  function syncEvidenceBoxes() {
+    document.querySelectorAll('input[type="checkbox"][data-key]').forEach(function (box) {
+      box.checked = state.evidence.has(box.dataset.key);
+    });
   }
 
   function renderScene(id) {
@@ -412,8 +427,7 @@
     if (statement) {
       log((checked ? 'cited ' : 'uncited ') + statement.fact + ' in ' + parts[0]);
     }
-    if (state.activeScene) renderScene(state.activeScene);
-    renderNotebook();
+    syncEvidenceBoxes();
   }
 
   function renderNotebook() {
