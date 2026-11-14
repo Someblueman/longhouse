@@ -570,7 +570,7 @@ function shelf() {
     return;
   }
   const residentName = id => frame.residents.find(r => r.id === id)?.name || id;
-  html("p", "shelf-policy", dataShelf.policy ? `Selection open · ${dataShelf.policy}` : "Project selection awaits ratification.", box);
+  html("p", "shelf-policy", dataShelf.policy ? `Work selection · ${dataShelf.policy}` : "Project selection awaits ratification.", box);
   if (dataShelf.explorer && (dataShelf.explorer.resident || dataShelf.explorer.agent)) {
     const exp = dataShelf.explorer;
     const parts = [residentName(exp.resident), kinds[exp.agent]?.name || exp.agent].filter(Boolean).join(" · ");
@@ -583,7 +583,16 @@ function shelf() {
   const activeProjects = rawProjects.filter(p => p.status === "active");
   const completedProjects = rawProjects.filter(p => p.status === "done");
   html("p", "shelf-counts", `${activeProjects.length} / 2 active projects · ${ideas.length} unselected ideas`, box);
-  html("p", "small", ideas.length < 3 ? "Room for one Explorer round." : "Shelf full · council decision needed.", box);
+  if (dataShelf.policy) {
+    if (activeProjects.length >= 2) {
+      html("p", "small", "Both project slots occupied · build the active projects.", box);
+    } else if (ideas.length) {
+      html("p", "small", "Project slot available · council can choose from the shelf.", box);
+    }
+    html("p", "small", dataShelf.explorer
+      ? "An Explorer round is already in progress."
+      : ideas.length < 3 ? "Room for one Explorer round." : "Shelf stocked · no Explorer round needed.", box);
+  }
   const graveyard = [
     ...rawProjects.filter(p => p.status === "dropped").map(p => ({
       title: p.title || p.id || "Untitled project",
