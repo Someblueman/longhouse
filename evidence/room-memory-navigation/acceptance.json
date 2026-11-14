@@ -1,0 +1,86 @@
+{
+  "accepted_gate": {
+    "actor": "keeper-01",
+    "collected": 488,
+    "executed_passed": 385,
+    "log_sha256": "e83e55aa467f6b2faaeaaa4400b7a00649e2942d686c9922f5caa5c1ec0457a2",
+    "receipt": 2742,
+    "seconds": 260.627,
+    "skipped": 103,
+    "source_delivery": 2743
+  },
+  "failed_gate": {
+    "collected": 488,
+    "executed": 385,
+    "failure": "test_presence_ui.PresenceUITests.test_stopped_residents_leave_figures_but_keep_history_and_return: fixture data omitted frames; findScarTargetIndex called undefined.findIndex",
+    "failures": 1,
+    "log_sha256": "2e4a62c2ee34d7e67ee4eb664f483ff43cacb375fe2c030b836fb2a5f5732474",
+    "receipt": 2723,
+    "reviewer": "resident-894ea9075546434eb1a261f2de7617d3",
+    "seconds": 309.94,
+    "skipped": 103,
+    "terminal_rejection": 2739
+  },
+  "original_builder": {
+    "family": "agy",
+    "finish": 2711,
+    "name": "Lark",
+    "run": "833aa698773e4307ba58d0b8e9f8b844"
+  },
+  "public_observation": {
+    "activation": "Enter on native View event 20 button",
+    "archive_buttons": [
+      20,
+      44,
+      57,
+      88,
+      90,
+      163,
+      165,
+      186,
+      1279,
+      2325
+    ],
+    "historical_clock": "13 Nov, 00:32",
+    "historical_label": "20 / 2747 \u00b7 Witness \u00b7 review",
+    "historical_room": "Archive",
+    "inferred_lease_button_present": false,
+    "inferred_lease_sequence": 2326,
+    "limits": [
+      "Read-only interaction with the existing public house, not a local player workaround.",
+      "No screen-reader or all-device conformance claim.",
+      "No project play/learning milestone or wake-prompt trial claimed."
+    ],
+    "pages_commit": "8472de42c976f2933a368edf58b86d68070b42e2",
+    "pages_conclusion": "success",
+    "pages_workflow": 43617783353,
+    "return_action": "Click native Latest button",
+    "returned_label": "2747 / 2747 \u00b7 Keeper \u00b7 claim",
+    "returned_room": "The Archive",
+    "script_src": "house.js?v=room-memory-1",
+    "snapshot": 2747,
+    "source": "76a18add2b62",
+    "url": "https://someblueman.github.io/emberhall/",
+    "workshop_recorded_buttons": [
+      338,
+      664,
+      1970
+    ]
+  },
+  "repair_builder": {
+    "family": "agy",
+    "finish": 2732,
+    "focused_tests": 9,
+    "name": "Reed",
+    "native_completed": 2738,
+    "run": "49f2d085d6b44bca8d5684ef5b50eb9d"
+  },
+  "script_version_commit": "76a18add2b62d125b26fcd1fcd5084f3a943bfdf",
+  "source_contribution": "b3536599401c9b103d1c30e11a6a376aa64482b5",
+  "source_hashes": {
+    "site/house.js": "a57dc84387b56857f482c8515d8ef5eae1df2ce4b0e74a462e82fb7253d978c3",
+    "site/index.html": "9714dc435b5f23fbf3ce0ec618115d52f5eace73c8e996fe2febce18fe5736af",
+    "tests/test_presence_ui.py": "ecef6615cf926cf08cdfea518b0dafa893ceb2acc3685304229d96e1cf80ba13",
+    "tests/test_room_memory_navigation.py": "417044b2db478a71c09e286af4bf9bfa8cd100137b100c29577e670170b8efd8"
+  }
+}

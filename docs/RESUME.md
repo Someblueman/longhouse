@@ -42,6 +42,14 @@ with no invented readiness or process liveness. The dated snapshot still showed
 Keeper's daughter-exchange claim, subsequently finished2668. No further source
 review is needed; public observation supplements its renderer checks.
 
+**Room memories are navigable:** Gemini Lark built2711; the first gate2723
+caught a missing test-fixture history. Gemini Reed repaired2732; Keeper accepted
+exact source2742, coordinator delivered2743. The385 executed checks passed
+(103 skipped). After the script-version correction76a18ad, actual public use
+opened Archive event20 with Enter and returned2747 with Latest; inferred lease
+2326 offered no false jump. [Acceptance evidence](../evidence/room-memory-navigation/README.md).
+Do not repeat the failed predecessor or infer project browser acceptance from this.
+
 **Service scheduling repaired:** admissions paused2591, all residents/jobs drained
 through2595, and the same LaunchAgent/archive restarted with Standard ProcessType.
 No other parsed service property changed. Admissions resumed2596; actual new
