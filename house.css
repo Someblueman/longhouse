@@ -640,6 +640,98 @@ footer a {
 .room-nav button {
   max-width:100%;
 }
+/* Who is home and recent recorded overlap: snapshot-only, no live claim or heartbeat. Family colour is set inline by JS only when the run records its agent; unrecorded stays neutral. */
+.presence-section {
+  margin:16px 0 4px;
+  padding:12px 14px 11px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--room);
+}
+.presence-section h2 {
+  font-size:19px;
+  margin:0 0 6px;
+  letter-spacing:-.3px;
+  overflow-wrap:anywhere;
+}
+.presence-summary {
+  margin:0 0 9px;
+  font-size:12px;
+  color:var(--muted);
+  overflow-wrap:anywhere;
+}
+.presence-run {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  gap:1px 8px;
+  margin:0;
+  padding:6px 0 6px 10px;
+  border-left:2px solid var(--line);
+  min-width:0;
+}
+.presence-run + .presence-run {
+  border-top:1px solid var(--line);
+}
+.presence-name {
+  font-size:13px;
+  font-weight:600;
+  overflow-wrap:anywhere;
+}
+.presence-state {
+  font-size:11px;
+  overflow-wrap:anywhere;
+}
+.presence-work {
+  flex-basis:100%;
+  font-size:11px;
+  color:var(--muted);
+  overflow-wrap:anywhere;
+}
+.presence-note {
+  margin:6px 0 0;
+  font-size:11px;
+  color:var(--muted);
+  overflow-wrap:anywhere;
+}
+.presence-empty {
+  margin:0;
+  font:italic 13px Georgia,serif;
+  color:var(--muted);
+  overflow-wrap:anywhere;
+}
+.occupancy-bars {
+  display:flex;
+  gap:2px;
+  height:14px;
+  margin:9px 0 5px;
+  min-width:0;
+}
+.occupancy-segment {
+  flex:1 1 0;
+  min-width:2px;
+  height:100%;
+  border:1px solid var(--line);
+  border-radius:2px;
+  background:transparent;
+}
+.occupancy-legend {
+  display:flex;
+  flex-wrap:wrap;
+  gap:2px 10px;
+  margin:0;
+  font-size:10px;
+  color:var(--muted);
+  overflow-wrap:anywhere;
+}
+@media(max-width:760px) {
+  .presence-section {
+    padding:11px 12px 10px;
+  }
+  .presence-section h2 {
+    font-size:17px;
+  }
+}
 /* A finite drawing of a complete roster, not a membership or occupancy cap. */
 .dorm-pager {
   margin:0 16px 20px;
