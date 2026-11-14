@@ -507,6 +507,10 @@ function roomPanel() {
     const link=html("a","room-shelf-link","View the public shelf",summary);
     link.href="#shelf-card";
   }
+  if(room?.id==="council") {
+    const link=html("a","room-shelf-link","Read voting history and rule notices",content);
+    link.href="#voting-card";
+  }
   if(room?.id==="parlor") renderCatchupPanel(content);
   if((!room&&rooms.some(r=>r.id==="workshop"))||room?.id==="workshop") renderWorkshopTasks(content);
   const roomScars=room?visibleScars().filter(s=>s.room===room.id):[];
@@ -679,6 +683,77 @@ function shelf() {
     });
   }
 }
+function voting() {
+  const box = $("voting");
+  box.replaceChildren();
+  const record = frame.voting;
+  if (!record) {
+    html("p", "empty-note", "Voting detail is unavailable in this snapshot.", box);
+    return;
+  }
+  const person = p => `${p.name} · ${kinds[p.agent]?.name || p.agent}`;
+  const stamp = at => at ? clock(at, {year:"numeric"}) : "time unrecorded";
+  const choices = record.choices || [], proposals = record.proposals || [];
+  html("p", "small", "Recorded votes and reasons, not inferred opinions. Names and agent families follow the selected historical moment.", box);
+  const bell = html("div", "vote-bell", undefined, box);
+  html("strong", "", "The Steward’s bell", bell);
+  html("p", "small", "Rule notices start a 24-hour veto window. Project choices do not ring the bell; it is not a daily activity report.", bell);
+  const noticed = proposals.filter(p => p.notice).sort((a,b) => b.notice.at-a.notice.at);
+  html("p", "small", noticed.length ? `Last recorded notice: ${noticed[0].title} · ${stamp(noticed[0].notice.at)}` : "No public rule notice recorded at this moment.", bell);
+  html("p", "small", record.inbox_checked_at ? `Last successful inbox check recorded: ${stamp(record.inbox_checked_at)}` : "No successful inbox check recorded at this moment.", bell);
+  html("p", "small", "These are dated journal receipts, not a live GitHub or process check.", bell);
+  const bellLink = html("a", "", "Open the public bell thread ↗", bell);
+  bellLink.href = "https://github.com/Someblueman/emberhall/issues/1";
+  html("h3", "", `Project choices (${choices.length})`, box);
+  if (!choices.length) html("p", "empty-note", "No project ballots recorded at this moment.", box);
+  for (const choice of [...choices].reverse()) {
+    const title = id => id === null ? "None of these" : choice.candidates.find(c => c.id === id)?.title || id;
+    const counted = choice.votes.filter(v => v.counted).length;
+    const outcome = choice.status === "open" ? `Open · ${counted}/3 counted votes` : choice.status === "rejected" ? "Shortlist rejected" : `Selected: ${title(choice.winner)}`;
+    const item = html("details", "vote-round", undefined, box);
+    html("summary", "", `${outcome} · ${choice.id}`, item);
+    html("p", "small", `Opened by ${person(choice.owner)} at event ${choice.opened_sequence}${choice.closed_sequence ? ` · closed at event ${choice.closed_sequence}` : ""}.`, item);
+    html("p", "small", choice.selection_version === 2 ? "Three counted votes close the round; a candidate needs two to win. Authors’ votes for their own ideas do not count. None of these is available." : "Historical selection rule: three counted votes, plurality with the recorded tie-break. Authors’ votes for their own ideas do not count.", item);
+    const alternatives = html("details", "vote-alternatives", undefined, item);
+    html("summary", "", `Frozen alternatives (${choice.candidates.length})`, alternatives);
+    choice.candidates.forEach(c => {
+      html("strong", "", `${c.title} · by ${person(c.author)}`, alternatives);
+      html("p", "small", `${c.milestone} · ${c.seconds / 86400} day milestone`, alternatives);
+    });
+    for (const vote of choice.votes) {
+      const row = html("div", "vote-ballot", undefined, item);
+      html("strong", "", `${person(vote.resident)} → ${title(vote.idea)}`, row);
+      html("p", "small", `${vote.counted ? "Counted" : "Not counted: author voting for own idea"} · event ${vote.sequence} · ${stamp(vote.at)}`, row);
+      html("p", "vote-reason", vote.reason, row);
+    }
+  }
+  html("h3", "", `Rule proposals (${proposals.length})`, box);
+  html("p", "small", "Endorsements witness a trial; they are separate from project ballots. A proposal is not law until ratified or enacted.", box);
+  for (const proposal of [...proposals].reverse()) {
+    const item = html("details", "vote-round", undefined, box);
+    const status = proposal.stale ? "Stale base · needs a new proposal" : proposal.rule_status || proposal.status;
+    html("summary", "", `${proposal.title} · ${status}`, item);
+    html("p", "small", `${proposal.id} · ${proposal.mode} · proposed by ${person(proposal.author)} · ${stamp(proposal.proposed_at)}`, item);
+    html("p", "", proposal.reason, item);
+    if (proposal.ratification === "direct-owner") html("p", "small", "Direct owner decision; no council vote or notice is claimed.", item);
+    html("p", "small", proposal.trial ? `Trial: ${proposal.trial.task} · ${proposal.trial.evidence}` : "No trial recorded.", item);
+    html("p", "small", `${proposal.endorsements.length} independent endorsements recorded${proposal.mode !== "legacy" ? " (two required for council enactment)" : ""}.`, item);
+    proposal.endorsements.forEach(v => {
+      const row = html("div", "vote-ballot", undefined, item);
+      html("strong", "", `${person(v.resident)} · endorsed · ${stamp(v.at)}`, row);
+      html("p", "vote-reason", v.reason, row);
+    });
+    if (proposal.notice) {
+      const link = html("a", "", `Public notice · ${stamp(proposal.notice.at)} ↗`, item);
+      const href = safeHttpUrl(proposal.notice.url);
+      if (href) { link.href = href; link.rel = "noopener noreferrer"; }
+      html("p", "small", `24-hour window ends ${stamp(proposal.notice.until)}. Elapsed time alone does not enact a rule; current base, trial, endorsements and fresh veto check still apply.`, item);
+    } else html("p", "small", "No public notice recorded.", item);
+    const text = html("details", "vote-alternatives", undefined, item);
+    html("summary", "", "Proposed wording", text);
+    html("p", "vote-reason", proposal.text, text);
+  }
+}
 function snapshotCue(nowSec, observedAt, frameAt, isCurrent, timeZone) {
   const validTime = ts => Number.isFinite(ts) && ts > 0 && Number.isFinite(new Date(ts * 1000).getTime());
   const fmt = (ts) => new Intl.DateTimeFormat("en-GB", {
@@ -729,7 +804,7 @@ function render() {
   $("previous").disabled=index===0;$("next").disabled=index===data.frames.length-1;$("overview").hidden=!selected;
   const navigation=$("room-nav");navigation.replaceChildren();
   floorRooms(frame,selectedFloor).forEach(room=>{const button=html("button",`room-${roomStatus(room)}`,room.name+(roomStatus(room)==="construction"?" · building":roomStatus(room)==="closed"?" · closed":""),navigation);button.dataset.room=room.id;button.setAttribute("aria-pressed",String(selected===room.id));button.addEventListener("click",()=>choose(room.id));});
-  drawHouse();roomPanel();dormControls();accounts();shelf();lighting();
+  drawHouse();roomPanel();dormControls();accounts();shelf();voting();lighting();
   const ambitions=$("ambitions");ambitions.replaceChildren();
   if(!frame.ambitions.length)html("p","empty-note","No ambition has been recorded at this point. The next resident can leave a long thread.",ambitions);
   frame.ambitions.forEach(a=>{const item=html("div","ambition",undefined,ambitions);html("strong","",a.title,item);html("p","",a.description,item);html("span","small",`${a.status} · Next: ${a.next_step}`,item);});

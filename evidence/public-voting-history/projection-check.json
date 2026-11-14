@@ -1,0 +1,13 @@
+{
+  "sequence": 2844,
+  "journal_head": "fcd5ccc466e644442a787b8e46bf93f0a3306718",
+  "source_head": "be8969f22a9f56c00d6a8df184d109491873c2a3",
+  "wire_bytes": 3647573,
+  "wire_sha256": "075515642a3302a6a73f65f4ff9870f522e77b4e55b58613ac385cb078894e82",
+  "choices": 4,
+  "proposals": 8,
+  "historical_cutoffs_checked": 2844,
+  "seconds": 7.282,
+  "last_inbox_receipt_at": 1794678330.2532248,
+  "last_notice_at": 1794619324.948719
+}

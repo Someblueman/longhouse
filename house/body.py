@@ -64,6 +64,55 @@ def shelf_view(state: dict) -> dict:
                 "until": expedition["until"]} if expedition else None}
 
 
+def voting_view(state: dict, identities: dict, event_times: dict, origins: dict | None = None) -> dict:
+    """Allowlisted decisions as known at this frame, never trial votes or raw logs."""
+    def person(actor):
+        resident = state["residents"].get(actor, {})
+        identity = identities.get(actor, {})
+        return {"id": actor, "name": label(resident.get("name", actor), 100),
+                "agent": label(identity.get("agent", "unrecorded"), 30)}
+
+    shelf = state.get("shelf", {})
+    choices = []
+    for key, choice in shelf.get("choices", {}).items():
+        candidates = [{"id": idea, "title": label(shelf["ideas"][idea]["title"], 200),
+                       "author": person(shelf["ideas"][idea]["author"]),
+                       "milestone": label(choice["milestones"][idea]["milestone"], 20000),
+                       "seconds": choice["milestones"][idea]["seconds"]}
+                      for idea in choice["candidates"]]
+        votes = [{"resident": person(actor), "idea": vote["idea"],
+                  "reason": label(vote["reason"], 20000), "counted": vote["counted"],
+                  "sequence": vote["sequence"], "at": event_times[vote["sequence"]]}
+                 for actor, vote in choice["votes"].items()]
+        choices.append({"id": key, "status": choice["status"], "owner": person(choice["owner"]),
+                        "opened_sequence": choice["opened_sequence"],
+                        "closed_sequence": choice.get("closed_sequence"),
+                        "selection_version": choice.get("selection_version", 1),
+                        "winner": choice.get("winner"), "candidates": candidates, "votes": votes})
+    proposals = []
+    origins = origins or {}
+    for key, proposal in state["proposals"].items():
+        notice = proposal.get("notice")
+        trial = proposal.get("trial")
+        rule = state.get("council", {}).get("rules", {}).get(key, {})
+        proposals.append({"id": key, "title": label(proposal.get("title", key), 200),
+            "mode": proposal.get("mode", "legacy"), "author": person(proposal.get("author", origins.get(key, {}).get("actor", "unrecorded"))),
+            "status": proposal["status"], "rule_status": rule.get("status"),
+            "stale": proposal["status"] == "pending" and proposal["base"] != state["rule_revision"],
+            "reason": label(proposal.get("reason", ""), 20000),
+            "text": proposal["text"][:100000],
+            "proposed_at": proposal.get("proposed_at", origins.get(key, {}).get("at")),
+            "ratification": proposal.get("ratification", {}).get("method"),
+            "endorsements": [{"resident": person(actor), "reason": label(v["evidence"], 20000),
+                              "at": v["at"]} for actor, v in proposal.get("endorsements", {}).items()],
+            "trial": {"task": trial["task"], "at": trial["at"],
+                      "evidence": label(trial["evidence"], 20000)} if trial else None,
+            "notice": {"at": notice["at"], "until": notice["at"] + 86400,
+                       "url": "https://github.com/Someblueman/emberhall/issues/1#issuecomment-"
+                              + str(notice["comment_id"])} if notice else None})
+    return {"choices": choices, "proposals": proposals}
+
+
 def watch_item(event: dict) -> dict | None:
     if event["op"] != "say" or event["actor"] != "watch-keeper":
         return None
@@ -141,6 +190,9 @@ def export(record: Record, observed_at: float | None = None) -> dict:
     ambitions: dict[str, dict] = {}
     budgets: dict[str, dict] = {}
     frames = []
+    event_times: dict[int, float] = {}
+    inbox_checked_at = None
+    proposal_origins: dict[str, dict] = {}
     room_uses: dict[str, dict] = {}
     sleeping: set[str] = set()
     awakened: dict[str, int] = {}
@@ -154,6 +206,16 @@ def export(record: Record, observed_at: float | None = None) -> dict:
                     "title": "A lease ran out", "detail": label(task["title"]), "task": task_id,
                     "resident": task["owner"], "at": task["until"], "sequence": seq,
                     "basis": "Inferred from lease time; process fate unconfirmed", "mended": False})
+        event_times[seq] = at
+        if op in {"propose", "council-propose"}:
+            proposal_origins[data["proposal"]] = {"actor": actor, "at": at}
+        if op == "say" and actor == "watch-keeper" and data.get("text", "").startswith("house-inbox-v1 "):
+            try:
+                checked = json.loads(data["text"][len("house-inbox-v1 "):]).get("checked_through")
+                if type(checked) in (int, float) and math.isfinite(checked) and 0 < checked <= at:
+                    inbox_checked_at = max(inbox_checked_at or 0, checked)
+            except (ValueError, TypeError, AttributeError):
+                pass
         former_name = state["residents"].get(actor, {}).get("name") if state else None
         state = apply_event(state, event)
         if op == "rename":
@@ -327,6 +389,8 @@ def export(record: Record, observed_at: float | None = None) -> dict:
         from .windows import enabled as windows_enabled
         if windows_enabled(state) or "shelf" in state:
             frame["shelf"] = shelf_view(state)
+        frame["voting"] = voting_view(state, identities, event_times, proposal_origins)
+        frame["voting"]["inbox_checked_at"] = inbox_checked_at
         frames.append(copy.deepcopy(frame))
     # Store immutable scar descriptions once; each frame retains the exact set
     # and changing review/repair state. This keeps the public checkpoint compact.
