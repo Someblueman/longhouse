@@ -1,0 +1,96 @@
+{
+  "format": "emberhall-integration-diagnostics-activation-v1",
+  "source_head": "1b82843384c744c6bb985ac3f24ce54afbfacb6a",
+  "builder": {
+    "agent": "opencode",
+    "resident": "resident-c6036599626b4fcbaee845b2aec48a2d",
+    "run": "b97dddd2519c486dbc73c3989fdf23a6",
+    "finish": 2769,
+    "sleep": 2773,
+    "completed": 2777,
+    "contribution": "f82ebcd030ca2242ecf90b55623c0a88e659c303"
+  },
+  "reviewer": {
+    "agent": "agy",
+    "resident": "resident-ce12b0eb3f0c4d4780cda3b9c4456e49",
+    "run": "4fffbb3589b64b1fa0a14e56c42cbe3b",
+    "integration": 2784,
+    "sleep": 2786,
+    "completed": 2790
+  },
+  "integration_gate": {
+    "collected": 496,
+    "executed_passed": 389,
+    "skipped": 107,
+    "seconds": 312.08,
+    "output_sha256": "ce6f9870e0d4a574ff32bcf1fe086aa9e3a7e537280185e4cbdaca443fe1c0c4"
+  },
+  "source_delivery": {
+    "sequence": 2791,
+    "commit": "1b82843384c744c6bb985ac3f24ce54afbfacb6a",
+    "remote_equal": true
+  },
+  "activation_gate": {
+    "collected": 496,
+    "executed_passed": 389,
+    "skipped": 107,
+    "seconds": 248.849,
+    "output_sha256": "62ff5d738474f0dd0965ed44f52925b8cb88f82013010cb19ea578f6491ae83b"
+  },
+  "owner_migration": {
+    "sequence": 2792,
+    "scope": "integration-diagnostics-20261114",
+    "approval_sha256": "29085159f29f29bf1feebaaca9b57693b8156cfa49e8d7cd5e32f50a03be6ded",
+    "protected_changes": [
+      "house/integrate.py",
+      "house/maintenance.py"
+    ],
+    "previous_runtime_sha256": "21d6828b3c98f77b0a5aec6ef5edc080e1f6a084046f3b64567b936b8e62c8ee",
+    "runtime_sha256": "01377d31d5bebe149a74f18cfdfdb0ef10a9aa45217a79bbc4ea7d0f992b432f"
+  },
+  "service": {
+    "label": "local.emberhall.watch",
+    "old_pid": 4669,
+    "new_pid": 36291,
+    "old_pid_gone": true,
+    "changed_properties": [
+      "ProgramArguments"
+    ],
+    "changed_argument_indices": [
+      2,
+      7
+    ],
+    "process_type": "Standard",
+    "existing_service_only": true
+  },
+  "installed_archive_probe": {
+    "executed_passed": 2,
+    "skipped": 0,
+    "seconds": 1.61,
+    "output_sha256": "5145599483331a1b5ed73d866962a91c450aee5455e5c26ac2bb5220446b9770",
+    "checks": [
+      "actual failed subprocess returns exact bounded private diagnostics without journal leakage",
+      "success and receipt replay remain unchanged"
+    ],
+    "disposable_repositories": true,
+    "live_journal_unmodified_by_probe": true
+  },
+  "admissions": {
+    "pause_sequence": 2783,
+    "resume_sequence": 2793,
+    "generation": 30,
+    "first_normal_run": "c5ef2835e5d04d6cb7da1a6e93598873",
+    "first_start_sequence": 2794,
+    "first_start_prior_work_counts": {
+      "agy": 8,
+      "codex": 8,
+      "muse": 8,
+      "opencode": 8
+    }
+  },
+  "limitations": [
+    "No measured production time or token saving yet",
+    "Private native output and raw candidate test logs are retained locally, not published",
+    "Project browser milestones and council wake trial remain separate"
+  ]
+}

@@ -37,6 +37,23 @@ Twenty relevant owner/scope checks passed; five initially hit the outer shell
 sandbox process-inspection restriction, then passed under the host harness with
 candidate sandboxing retained. No implementation change rescued those checks.
 
-Normal full integration acceptance and runtime installation remain pending.
-These results do not establish a production performance improvement. Private
-native output and candidate logs stay outside this published evidence directory.
+## Installed result
+
+Gemini Cairn independently accepted the OpenCode contribution at2784, merged as
+`1b82843384c744c6bb985ac3f24ce54afbfacb6a`; delivery2791 verified remote equality.
+The full gate passed389 executed checks, with107 skipped, in312.080s. Cairn slept
+2786 and completed2790 normally. A separate required exact-source activation gate
+passed the same389 checks in248.849s. No live resident was interrupted.
+
+Migration2792 installed runtime SHA256
+`01377d31d5bebe149a74f18cfdfdb0ef10a9aa45217a79bbc4ea7d0f992b432f`.
+Only the two archive arguments in the existing Standard LaunchAgent changed;
+old PID4669 stopped and new PID36291 was verified against that archive. Two real
+disposable integration fixtures loaded the installed module and passed: private
+failed-test diagnostics and unchanged successful replay. Admissions resumed2793;
+the next normal Codex wake2794 followed recorded prior work counts of8 per family.
+[Exact activation evidence](activation.json) binds source, checks, archive and receipts.
+
+This does not establish a production speedup or equal useful output. Private
+native output and raw candidate logs stay outside this published evidence directory.
+The failed predecessor2723 and its diagnostic cost remain in history.

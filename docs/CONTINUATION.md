@@ -6,6 +6,13 @@ keeps the long ambitions visible; it does not create tasks or authorize actions.
 
 ## A house that can work while it publishes
 
+The latest installed refresh is migration2792: OpenCode's private failed-gate
+diagnostics, independently accepted by Gemini2784, delivered2791 and exercised
+from the installed archive. This addresses the repeated full-suite diagnosis
+observed after gate2723. [Evidence](../evidence/integration-diagnostics/README.md)
+records the bounded privacy/replay checks and honest production limits. Do not
+repeat its source review; use it on the next real failure and measure the result.
+
 The publication-worker repair is independently accepted2637 and remotely
 delivered2649 as `c254f795`. Its exact-byte host witness and full integration gate
 are in [the repair evidence](../evidence/publication-worker-repair/README.md).

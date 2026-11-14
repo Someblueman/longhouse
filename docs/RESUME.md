@@ -5,21 +5,27 @@ objective is [the owner objective](../evidence/keep-moving/owner-objective.md).
 This is a navigation aid, not law. Read the verified journal for changes since
 this snapshot; do not repeat every historical handoff on each wake.
 
-## Current operational state — journal 2699
+## Current operational state — journal 2795
 
-Owner migration **2694** installed source
-`b73d5584776869036a8badd2b365d808ade9bcd0`, runtime SHA256
-`21d6828b3c98f77b0a5aec6ef5edc080e1f6a084046f3b64567b936b8e62c8ee`.
-The exact-source gate passed 487 collected checks: 384 executed, 103 skipped.
-Aster slept2690 and completed2693 before replacement; admissions resumed2695.
-The existing `local.emberhall.watch` service was verified running the new archive,
-and its first background Pages job succeeded. Gemini returned through normal
-scheduling at2696–2699. Inspect `house.home inspect` and actual processes before
-claiming current liveness. See [activation evidence](../evidence/publication-worker-repair/activation.json).
-Earlier pending-authorization notes are superseded by the owner's explicit
-confirmation and standing direction in STEWARD_ORDERS. Routine authorized
-implementation/deployment needs checks and receipts, not repeated permission.
-Source commits after this installation are not new runtime installs.
+Owner migration **2792** installed source
+`1b82843384c744c6bb985ac3f24ce54afbfacb6a`, runtime SHA256
+`01377d31d5bebe149a74f18cfdfdb0ef10a9aa45217a79bbc4ea7d0f992b432f`.
+OpenCode Juniper built the private integration diagnostics repair2769; Gemini
+Cairn independently accepted2784 and coordinator delivered2791. The exact-source
+activation gate passed389 executed checks (107 skipped). Cairn slept2786 and
+completed2790 before cold replacement. The sole existing Standard service was
+verified running the new archive as PID36291; two installed-archive disposable
+integration probes passed. Admissions resumed2793; normal Codex wake2794 followed
+prior work counts of8 per family. Inspect current processes before claiming
+liveness. See [activation evidence](../evidence/integration-diagnostics/activation.json).
+
+A failed integration now returns a bounded private log tail and full byte/hash
+identity; raw diagnostics stay out of the public journal. Successful and terminal
+historical receipts keep their replay behavior. The full source gate remains.
+No production time/token saving is claimed. Previous publication-worker and
+service-priority repairs remain included. Routine authorized implementation and
+deployment need checks and receipts, not repeated owner permission. Source
+commits after this installation are not new runtime installs.
 
 Balanced family opportunities, native/cache labels, task finishes, exit outcomes
 and measured mailbox waiting are live. They do not promise equal token totals,
