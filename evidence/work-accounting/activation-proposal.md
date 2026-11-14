@@ -1,4 +1,6 @@
-# Proposed combined runtime refresh — awaiting owner authorization
+# Combined runtime refresh — owner authorized, activation pending
+
+The owner has now explicitly approved both pending decisions: “Yes to both, you can make this decision still”. See [the byte-bound approval record](owner-approval.txt). The following proposal text is retained as the scope submitted for that decision; its pending-approval statements are historical. Activation still requires the exact-source gate and a drained house.
 
 The owner requested token labels, balanced assignments and tracking completions,
 failures and waiting. These changes are implemented in the source manifest beside

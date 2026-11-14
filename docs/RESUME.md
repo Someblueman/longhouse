@@ -13,7 +13,28 @@ docs/GOAL_AUDIT.md distinguishes implementation from observed life.
 House identity: `9c5a77af-0f1a-4995-8e52-e91c0d814569`.
 Foundation anchor: `74339de5dda84c799fe43650ba273a84de31ba8a`.
 
-## Current handoff: work accounts and Night Ferry reading delivered
+## Current handoff: approved runtime activation in progress
+
+The owner explicitly answered both pending decisions: "Yes to both, you can make
+this decision still". This approves the exact nine-path combined runtime scope
+and built-in browser access to the two existing local players. See
+[evidence/work-accounting/owner-approval.txt](../evidence/work-accounting/owner-approval.txt).
+No further approval is needed for this scope. Keeper owns task
+`work-accounting-activation`; admissions pause2428/generation23 gives the existing
+Muse resident time to finish. The runtime is not yet changed: prepare the exact
+committed source, preserve its test receipt, drain residents/jobs, stop the old
+coordinator, apply through the authenticated owner gate, update its pinned service
+and resume admissions. Verify a real new launch and publication. Never infer that
+this handoff itself is a completed activation.
+
+Juniper's player focus repair was independently accepted2416 and pushed2417 as
+`88a11a6aa8069269ebdec42d0d56fdb5eaee67fd`. Both its author and reviewer slept.
+Existing Muse run `60c2328999f84d71ac775d126d7f3eb5` was active at2427; recheck.
+The older unanswered-approval handoffs below are historical, superseded by the
+explicit owner reply above. Blind project milestones remain open; Keeper already
+knows the solutions and can supply interface checks only.
+
+## Previous handoff: work accounts and Night Ferry reading delivered
 
 Work-accounting source `767c910c62946b90269776a76e98b9e47c0d8439` is pushed.
 It adds balanced recent opportunities by assignment type, explicit routing

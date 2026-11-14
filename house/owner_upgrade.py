@@ -66,6 +66,8 @@ def prepare(record: Record, actor: str, scope: str, approval_file: Path, source_
     state, _, _ = record.read()
     old = maintenance.protected_manifest(state)
     names = set(old) | maintenance.OWNER_MODULES
+    if scope == maintenance.WORK_ACCOUNTING_SCOPE:
+        names.update({"house/work_metrics.py", "house/public_history.py"})
     if scope == maintenance.DIGEST_SCOPE:
         names.add("house/digest.py")
     if scope == maintenance.CHECKPOINT_SCOPE:

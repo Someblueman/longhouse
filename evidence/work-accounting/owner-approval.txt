@@ -1,0 +1,30 @@
+Owner authorization, 14 November 2026
+
+Pending decision 1: Activate the combined runtime refresh through the existing
+owner authentication, exact-source test and drain gate. Exactly these protected
+paths are approved:
+house/home.py
+house/mailbox.py
+house/body.py
+house/work_metrics.py
+house/publish.py
+house/public_history.py
+house/test_sandbox.py
+house/maintenance.py
+house/owner_upgrade.py
+
+Scope: balanced assignments and work accounting, publication recovery, timeout
+cleanup, completed-help resolution, and one-use scope metadata with the two new
+helper pins. No sandbox policy, money, credentials, provider routes, web safeguards
+or ratification changes. The concrete proposal is activation-proposal.md.
+
+Pending decision 2: Open and interact with the existing local Night Ferry and
+Signal Garden players through built-in browser tools using repo-local assets.
+No server, upload, HTTP/CDP workaround or alternate access route was requested.
+
+Exact owner reply to both pending decisions:
+"Yes to both, you can make this decision still"
+
+This file records the reply and its referenced scope; the scope description above
+is operator context, not an invented verbatim owner quotation. Activation still
+requires the existing authenticated owner upgrade process and passing tests.
