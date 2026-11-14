@@ -48,6 +48,7 @@ REVIEW_TOOLS_SCOPE = "source-review-tools-20261114"
 PROJECT_CHECKS_SCOPE = "project-checks-20261114"
 DIGEST_SCOPE = "wake-digest-command-20261114"
 WORK_ACCOUNTING_SCOPE = "work-accounting-refresh-20261114"
+PUBLICATION_SCOPE = "publication-worker-refresh-20261114"
 SELECTION_SHA256 = "e01580a8a78bbbb5b9286635b85df68bd43b8f8a4785cf9df477765767ba1df8"
 RESTORED_SHA256 = "4fa255013b0b0bb0021b5461e6cb25f084de67bb55557cff7c773f137d233fde"
 VERIFIED_KEY_RUN = "fc2795f6b6824fc3ae4b9229e8667b61"
@@ -70,11 +71,13 @@ SOURCES = {RETRY_SCOPE: OPENCODE_SHA256, GROWTH_SCOPE: GROWTH_SHA256,
            EXPLORER_SCOPE: KEEP_MOVING_SHA256, DELIVERY_SCOPE: KEEP_MOVING_SHA256,
            REVIEW_TOOLS_SCOPE: KEEP_MOVING_SHA256, PROJECT_CHECKS_SCOPE: KEEP_MOVING_SHA256,
            DIGEST_SCOPE: KEEP_MOVING_SHA256,
+           PUBLICATION_SCOPE: "ccb2cb1cfc0432417e2cde28ea424e59708f633ddf83b0b99bc30721285f5c08",
            WORK_ACCOUNTING_SCOPE: "5ad50252f356345a1ccf7f3bdc7d909446cd801f8a3bc45347506561c2198dce"}
 RETRY_BUDGET_SEQUENCE = 300
 RETRY_BUDGET_UNTIL = 1794676437.592195
 OWNER_MODULES = {"house/maintenance.py", "house/owner_upgrade.py"}
 ALLOWED_CHANGES = {
+    PUBLICATION_SCOPE: OWNER_MODULES | {"house/home.py", "house/publication_worker.py"},
     WORK_ACCOUNTING_SCOPE: OWNER_MODULES | {"house/home.py", "house/mailbox.py",
         "house/body.py", "house/work_metrics.py", "house/publish.py",
         "house/public_history.py", "house/test_sandbox.py"},
@@ -249,6 +252,8 @@ def apply(state: dict, event: dict) -> None:
         extra = OWNER_MODULES | ({"house/building.py"} if scope == GROWTH_SCOPE else set())
         if scope == REPAIR_SCOPE:
             extra.add("house/opencode_auth.py")
+        if scope == PUBLICATION_SCOPE:
+            extra.add("house/publication_worker.py")
         if scope == WORK_ACCOUNTING_SCOPE:
             extra.update({"house/work_metrics.py", "house/public_history.py"})
         if scope == DIGEST_SCOPE:

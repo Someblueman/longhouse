@@ -1,5 +1,19 @@
 # Steward-approved objective and standing orders
 
+## Operator authorization clarification — 14 November 2026
+
+The owner confirmed the publication repair and reiterated: "Authorized from me.
+I’ve said it before that you don’t need my authorization for these things".
+Routine reversible implementation and deployment within the authorized house
+work do not need repeated confirmation merely because a technical migration
+receipt has a new scope. Continue using exact source pins, relevant checks,
+authenticated operator gates and durable receipts. Do not turn those mechanisms
+into additional human approval ceremonies. This does not let residents ratify
+rules outside the approved council process or change the owner's reserved money,
+keys, irreversible-action, sandbox/web or ratification limits. The specific
+publication migration is recorded in
+[its authorization](../evidence/publication-worker-repair/owner-authorization.md).
+
 ## Latest objective: keep moving and windows onto the world
 
 The owner added [Keep moving and Windows onto the world](../evidence/keep-moving/owner-addition.md).
