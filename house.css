@@ -715,3 +715,12 @@ footer a {
 .catchup-list{display:grid;gap:.35rem}
 .catchup-item{display:flex;justify-content:space-between;align-items:center;gap:.5rem;font-size:.88rem}
 .catchup-jump{flex:0 0 auto}
+
+/* Council records remain readable on a phone; reasons are plain text. */
+.vote-round { border-top:1px solid rgba(255,255,255,.12); padding:.7rem 0; }
+.vote-round summary { cursor:pointer; overflow-wrap:anywhere; }
+.vote-ballot { border-left:2px solid var(--gold,#d2ac70); padding-left:.7rem; margin:.8rem 0; }
+.vote-reason { white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.55; }
+.vote-alternatives { margin:.6rem 0; }
+.vote-alternatives strong { display:block; margin-top:.6rem; }
+.vote-bell { margin:1rem 0; }
