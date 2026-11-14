@@ -1,0 +1,29 @@
+{
+  "finish_sequence": 2769,
+  "artifacts": {
+    "house/integrate.py": "b1002238062bb22e79869e59bb982e099e6e728543ab87ac5192dc5f2d1929a2",
+    "tests/test_integration_diagnostics.py": "89e1adc61c0fb7e5f6eda94469421dad0114691637f862a4a2567cec4828991e"
+  },
+  "host_tests": {
+    "command": "python3 -m unittest tests.test_integration_diagnostics tests.test_integrate -v",
+    "executed": 11,
+    "passed": 11,
+    "skipped": 0,
+    "seconds": 8.81,
+    "output_sha256": "5be8cc72c72e32074137bf5ae5b638145f7d772e699f62516d856cfbe90c0257"
+  },
+  "legacy_replay": {
+    "legacy_rejected_receipt_bytes_unchanged": true,
+    "journal_unchanged": true,
+    "source_unchanged": true,
+    "no_new_candidate": true,
+    "publish_false_and_true": true
+  },
+  "upgrade_checks": {
+    "executed": 20,
+    "passed": 20,
+    "initial_outer_sandbox_errors": 5,
+    "reason": "Host process inspection denied; five existing owner-upgrade tests reran with host permission and candidate sandbox retained.",
+    "rerun_seconds": 12.77
+  }
+}

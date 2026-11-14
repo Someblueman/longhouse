@@ -27,7 +27,16 @@ passed. Commit5f7ccfc records this preparation, not an installed repair.
 
 ## Current acceptance
 
-Native implementation and independent host checks are pending. Do not infer
-acceptance, runtime installation or a production performance improvement from
-this preparation. Private native output and candidate logs stay outside this
-published evidence directory. Final results belong here once observed.
+Juniper finished2769 and slept2773, honestly declaring no shell/test execution.
+Keeper independently tested the exact immutable artifacts: all11 focused checks
+passed in8.810s, including real sandboxed failed integration, private diagnostic
+identity and journal exclusion. A separate legacy rejected-receipt probe preserved
+exact receipt bytes, source, journal and candidate inventory for both replay modes.
+[Host results](host-acceptance.json) bind the artifacts and [test output](host-tests.txt).
+Twenty relevant owner/scope checks passed; five initially hit the outer shell
+sandbox process-inspection restriction, then passed under the host harness with
+candidate sandboxing retained. No implementation change rescued those checks.
+
+Normal full integration acceptance and runtime installation remain pending.
+These results do not establish a production performance improvement. Private
+native output and candidate logs stay outside this published evidence directory.

@@ -1,0 +1,16 @@
+test_large_invalid_utf8_tail_is_clipped_and_identified (tests.test_integration_diagnostics.DiagnosticsTailTests.test_large_invalid_utf8_tail_is_clipped_and_identified) ... ok
+test_changed_candidate_after_passing_tests_gets_honest_reason (tests.test_integration_diagnostics.IntegrationDiagnosticsTests.test_changed_candidate_after_passing_tests_gets_honest_reason) ... ok
+test_failed_gate_reports_hashed_tail_and_excludes_it_from_journal (tests.test_integration_diagnostics.IntegrationDiagnosticsTests.test_failed_gate_reports_hashed_tail_and_excludes_it_from_journal) ... ok
+test_old_integrated_receipt_replays_byte_for_byte (tests.test_integration_diagnostics.IntegrationDiagnosticsTests.test_old_integrated_receipt_replays_byte_for_byte) ... ok
+test_success_and_replay_do_not_manufacture_diagnostics (tests.test_integration_diagnostics.IntegrationDiagnosticsTests.test_success_and_replay_do_not_manufacture_diagnostics) ... ok
+test_accepted_retry_keeps_receipt_history_and_does_no_new_work (tests.test_integrate.IntegrationTests.test_accepted_retry_keeps_receipt_history_and_does_no_new_work) ... ok
+test_concurrent_replays_preserve_accepted_receipt (tests.test_integrate.IntegrationTests.test_concurrent_replays_preserve_accepted_receipt) ... ok
+test_incomplete_receipt_is_preserved_and_actual_integration_recovers (tests.test_integrate.IntegrationTests.test_incomplete_receipt_is_preserved_and_actual_integration_recovers) ... ok
+test_inconsistent_acceptance_and_changed_contribution_fail_closed (tests.test_integrate.IntegrationTests.test_inconsistent_acceptance_and_changed_contribution_fail_closed) ... ok
+test_operator_acceptance_survives_later_commits_without_self_review (tests.test_integrate.IntegrationTests.test_operator_acceptance_survives_later_commits_without_self_review) ... ok
+test_wren_self_review_rejected_and_two_conflicting_contributions_retained (tests.test_integrate.IntegrationTests.test_wren_self_review_rejected_and_two_conflicting_contributions_retained) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 8.810s
+
+OK
