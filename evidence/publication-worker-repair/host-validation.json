@@ -1,0 +1,33 @@
+{
+  "reviewer": "keeper-01",
+  "candidate_run": "d3155cbb6bce4f45b7bc8af61d806140",
+  "candidate_commit": "42e5e07fe7970b64951cc2addd0676d50eb4cf1b",
+  "base": "fda4204311dbe028524b218f91b96fa5222a3eb2",
+  "freeze_sequence": 2561,
+  "immutable_finish_sequence": 2573,
+  "independent_host_result_sequence": 2572,
+  "python": "3.13.2 (main, Mar 17 2025, 21:26:38) [Clang 20.1.0 ]",
+  "paths_sha256": {
+    "house/home.py": "aee001eb722d6902b0ed0e292f1395019c328d79f4e4f6768bd1ee032224a0b6",
+    "house/owner_upgrade.py": "ef8b066c2732c9b23904b43054e2b27af19cba690a0d61c7c3e1ebc453309ace",
+    "house/publication_worker.py": "2b58b8bdba0aadc8ef7a8da063f57ee1112fc60cfb5e32205b06c921047c7372",
+    "tests/test_publication_worker.py": "49c52aa162c8024560866767b7cc4412f6f40899cb980c55bb85e64803211a27"
+  },
+  "commands": [
+    "python3 -B -m unittest tests.test_home tests.test_owner_upgrade tests.test_publication_worker -v"
+  ],
+  "test_exit": 0,
+  "tests_executed": 48,
+  "tests_skipped": 0,
+  "unittest_seconds": 102.449,
+  "output_sha256": "1e05d4cdebf1827d2e4a7bd33ff34036d012ea81a4d17cc7cf473211c3e059b0",
+  "source_unchanged_after_tests": true,
+  "stopped_commit_and_finish_match_tested_files": true,
+  "network_or_model_calls": false,
+  "process_identity_mocks": false,
+  "limits": [
+    "Inert process fixtures, not a production latency measurement.",
+    "Either single tagged-process crash covered; simultaneous loss of all ownership witnesses is not proven recoverable. Unknown groups remain unsignalled.",
+    "This host witness does not replace independent source integration or trusted runtime activation."
+  ]
+}
