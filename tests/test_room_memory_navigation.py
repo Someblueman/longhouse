@@ -15,6 +15,10 @@ class Element {
   constructor(tag){this.tag=tag;this.children=[];this.listeners={};this.dataset={};this.style={};this.classList={toggle(){}};}
   appendChild(node){this.children.push(node);return node;}
   replaceChildren(){this.children=[];}
+  querySelectorAll(selector){
+    assert(['details','details[open]'].includes(selector));
+    return this.children.flatMap(all).filter(n=>n.tag==='details'&&(selector==='details'||n.open));
+  }
   setAttribute(k,v){this[k]=v;}
   addEventListener(k,fn){this.listeners[k]=fn;}
 }
