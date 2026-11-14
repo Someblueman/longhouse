@@ -5,33 +5,35 @@ objective is [the owner objective](../evidence/keep-moving/owner-objective.md).
 This is a navigation aid, not law. Read the verified journal for changes since
 this snapshot; do not repeat every historical handoff on each wake.
 
-## Current operational state — journal 2669
+## Current operational state — journal 2699
 
-Owner migration **2437** installed source
-`1dcaf56f2b1173bcbc326a89bb60176aaf80b3b1`, runtime SHA256
-`034e36552f90c2ac984e805a55999e5fb0dec3248fade4d7941196f28654310d`.
-The exact-source gate passed 472 collected checks: 375 executed, 97 skipped.
-Ember slept 2434 and exited 2436 before replacement; admissions resumed 2439.
-The sole service is `local.emberhall.watch`. Inspect `house.home inspect` and
-actual processes before claiming current liveness. See
-[activation evidence](../evidence/work-accounting/activation.json).
-Earlier notes saying that this nine-path activation still awaits approval are
-superseded. Source commits after this installation are not new runtime installs.
+Owner migration **2694** installed source
+`b73d5584776869036a8badd2b365d808ade9bcd0`, runtime SHA256
+`21d6828b3c98f77b0a5aec6ef5edc080e1f6a084046f3b64567b936b8e62c8ee`.
+The exact-source gate passed 487 collected checks: 384 executed, 103 skipped.
+Aster slept2690 and completed2693 before replacement; admissions resumed2695.
+The existing `local.emberhall.watch` service was verified running the new archive,
+and its first background Pages job succeeded. Gemini returned through normal
+scheduling at2696–2699. Inspect `house.home inspect` and actual processes before
+claiming current liveness. See [activation evidence](../evidence/publication-worker-repair/activation.json).
+Earlier pending-authorization notes are superseded by the owner's explicit
+confirmation and standing direction in STEWARD_ORDERS. Routine authorized
+implementation/deployment needs checks and receipts, not repeated permission.
+Source commits after this installation are not new runtime installs.
 
 Balanced family opportunities, native/cache labels, task finishes, exit outcomes
 and measured mailbox waiting are live. They do not promise equal token totals,
 equal useful output, or active-work/cost measurements. Historical gaps stay
 unknown. See [work accounts](WORK_ACCOUNTING.md).
 
-**Publication repair accepted, not installed:** Hawthorn's `42e5e07` was
-independently accepted by Sable2637 as `c254f795`; coordinator delivery2649 verified
-remote equality. Full gate:481 collected,378 passed,103 skipped. The separate
-exact-byte host witness passed48 with no skips. Timeout and Keeper-caused source
-races remain in [repair evidence](../evidence/publication-worker-repair/README.md).
-Do not review this contribution again. The [four-path runtime authorization](../evidence/publication-worker-repair/owner-authorization-proposal.md)
-has been requested and remains pending; no new scope or migration is recorded.
-The installed archive is still the one named above. Source acceptance and runtime
-installation are separate.
+**Publication repair installed:** Hawthorn's `42e5e07` was independently accepted
+by Sable2637 as `c254f795`; delivery2649 verified remote equality. Migration2694
+now activates the accepted coordinator and worker bytes, plus the exact owner
+gate scope. Full activation and separate 48-test host evidence are retained in
+[repair evidence](../evidence/publication-worker-repair/README.md). Website
+publication runs outside the coordinator tick. Timeout and Keeper-caused source
+races remain preserved; do not review this contribution again. Actual production
+speedup has not been measured.
 
 **Workshop repair delivered:** Mallow finished2619; OpenCode Juniper independently
 accepted2656 as `af36396`, coordinator delivered2657. Actual public browser

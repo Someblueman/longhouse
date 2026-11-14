@@ -1,6 +1,7 @@
 # Proposed nonblocking Pages runtime activation
 
-Status: **owner authorized on 14 November; preparation/installation in progress.**
+Status: **installed at migration2694 on 14 November; admissions resumed2695.**
+[Activation evidence](activation.json) records the exact-source gate and successful real publication.
 See [the actual authorization](owner-authorization.md). The earlier proposal is
 preserved as the requested scope; it no longer requires a user decision.
 Candidate `42e5e07` was independently accepted by Sable at journal2637 as

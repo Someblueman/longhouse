@@ -9,10 +9,12 @@ keeps the long ambitions visible; it does not create tasks or authorize actions.
 The publication-worker repair is independently accepted2637 and remotely
 delivered2649 as `c254f795`. Its exact-byte host witness and full integration gate
 are in [the repair evidence](../evidence/publication-worker-repair/README.md).
-The four-path runtime authorization is requested but still pending. Do not repeat
-source review, reuse the consumed earlier scope, or call source delivery an
-installation. The Standard service-scheduling correction is already installed;
-all other runtime behavior remains on the current archive in RESUME.
+The owner authorized activation; migration2694 installed the tested four-path
+refresh and admissions resumed2695. The first background Pages job succeeded
+and Gemini returned through normal scheduling. Do not repeat source review or
+ask again for this authorization. Keep measuring useful progress; installation
+and a successful publish do not establish a production speedup. The Standard
+service scheduling correction also remains installed.
 
 Keeper's two source races are preserved, with operating advice2627: interactive
 edits and commits must hold the same integration lock as trusted merges. A clean

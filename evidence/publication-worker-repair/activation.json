@@ -1,0 +1,118 @@
+{
+  "admissions_resumed_sequence": 2695,
+  "approval_sha256": "ccb2cb1cfc0432417e2cde28ea424e59708f633ddf83b0b99bc30721285f5c08",
+  "drain": {
+    "admissions_paused": 2686,
+    "forced_resident_interruptions": 0,
+    "last_native_completed": 2693,
+    "last_native_sleep": 2690,
+    "unfinished_jobs_at_switch": 0
+  },
+  "first_normal_wake": {
+    "agent": "agy",
+    "assignment_sequence": 2697,
+    "launch_sequence": 2698,
+    "prior_work_assignments": {
+      "agy": 7,
+      "codex": 8,
+      "muse": 9,
+      "opencode": 8
+    },
+    "run": "833aa698773e4307ba58d0b8e9f8b844",
+    "start_sequence": 2696,
+    "wake_sequence": 2699
+  },
+  "first_publication": {
+    "job": "69399e8c55eefefc3b9d905a804f866d9d440ab96cc356cc1928291163f4f955",
+    "metadata": {
+      "id": "69399e8c55eefefc3b9d905a804f866d9d440ab96cc356cc1928291163f4f955",
+      "pgid": 4727,
+      "runtime": "/Users/sws/Code/longhouse/.git/house-home/runtime-b73d5584776869036a8badd2b365d808ade9bcd0.pyz",
+      "runtime_sha256": "21d6828b3c98f77b0a5aec6ef5edc080e1f6a084046f3b64567b936b8e62c8ee"
+    },
+    "result": {
+      "ok": true,
+      "result": {
+        "changed": true,
+        "commit": "4d70009d4974c717be7a59893ecbf040db1350dc",
+        "pushed": true,
+        "url": "https://someblueman.github.io/emberhall/"
+      }
+    }
+  },
+  "format": "emberhall-publication-activation-v1",
+  "limits": [
+    "Live background publication and normal resident wake observed; no production speedup claimed.",
+    "Blocked-publisher mailbox concurrency and crash boundaries are demonstrated by the separately retained 48-test host witness.",
+    "Simultaneous loss of every tagged process ownership witness remains unproven."
+  ],
+  "migration_head": "04d299d79b5a42c65e549e37cfb830d1ef13bbee",
+  "migration_sequence": 2694,
+  "observed_at": 1794673287.9395041,
+  "protected_files": {
+    "house/__init__.py": "cc618c6c92ad3a52c2c3002d3b63a8b1ea87ada554ec26b1eec259cc901eb3cf",
+    "house/__main__.py": "b6c8e904bdad7434f8a870f07eb018a71181de2dbda6d03db97c5505c32e9cc4",
+    "house/body.py": "732069d1c2d17df5feeca2c7f7315045d32e03f6dd9ba05f5ef733482c2cee27",
+    "house/building.py": "572a6c2d527c41e7cb08d45e56d61885a41036c1188b112c1d4e2ff39e681b3e",
+    "house/checkpoint.py": "02a71c6bb1f81d44b6a9f4fd9fefc700a0bdcd4f9542dd49598de077d6f24fcc",
+    "house/council.py": "85fcd011da8e037bd290e4e0400e5fe50b93a200d449e1f9e22d574a19d9eeba",
+    "house/digest.py": "0953e129532183c42960034d899c984ad042b0fea532127f1f84dbf94ead9deb",
+    "house/files.py": "2a2d308fcab1e7c72143188378e2512ebd27e12dd93f9d741dbbe8cbe1cc8383",
+    "house/governance.py": "d35940b6b63f26082aa3666a835808539761a8aa47b61bafff314a4d0978c29a",
+    "house/home.py": "aee001eb722d6902b0ed0e292f1395019c328d79f4e4f6768bd1ee032224a0b6",
+    "house/home_control.py": "ded5a6446bc9fbd393805fa19e4e53c70862faa6eb4ad118be110ad51eb0805e",
+    "house/home_work.py": "ed0a03c4607491d7ad4109b1c6a86f2ce14cc84b1d4758aa13dd6e9c657160d4",
+    "house/inbox.py": "000a7c14d1c0c1d87a8f20df2a5e0f107b86fa9c2217a5b003224c1c8a43f1b8",
+    "house/integrate.py": "349d608ff3ad38527cdbbcf862fb8d167a5ded6ad3ce9e9be3cf354dd295381c",
+    "house/life.py": "e34c24f52296a98e9202bf9524ae999744a253203d7a8817e81bf4f6c7203c74",
+    "house/mailbox.py": "ee0f5abbdff5c833347bad575b24d5f9dd302e9b797a45b7dd7d07db728bebc7",
+    "house/mailbox_jobs.py": "5811594f823da06ac8bbc94dba4e28f358543bb049c2b262467239fe4ae2c7f6",
+    "house/maintenance.py": "4c2e1e55fed6891e8133d803484242c02de12279e63650f1153e2800d176fac8",
+    "house/model.py": "7e608e5c51e50577f8a32ef0c9095274e41580d8895c5eb92f3b0f0bedf858ff",
+    "house/opencode_auth.py": "453dc0a6042309c618cadf18ecdc0840453f9dd6de97dd03d90efe9cc71fe5bc",
+    "house/opencode_tool.py": "45ee06d76b4192ce47b6d025384d88a163bf28ff1172dc79aa9622bf1eb5b7f4",
+    "house/owner_upgrade.py": "df8f068b35a0d2510727e2070f4c81601a1c432ae2b473b40fc6482916bb218c",
+    "house/providers.py": "36d6d403ac4ecd0a39724445b7ccb47895077b1452ce807c40e82ce54c55b843",
+    "house/public_history.py": "6cdc4a213b538b69cb6dd6a5b3e057d20fc1e89efe1fa48ed2b16ed423ea595f",
+    "house/publication_worker.py": "2b58b8bdba0aadc8ef7a8da063f57ee1112fc60cfb5e32205b06c921047c7372",
+    "house/publish.py": "756c816917df355eb88d4b4ad35ad57f1a655d5c8cb4f1833f5410271f06f1b8",
+    "house/record.py": "31f2a76b74c88a88344d258a84aae8897b8434899f1a1dc4e3d345b2acbc4985",
+    "house/resident_actions.py": "74e55a0128416e5c9a2485d48586e0955dcc589c12425ac7a075152f296864d7",
+    "house/resident_client.py": "6f8964f4acf65f130fb1671edc66f892cfeb4478a66c4d63f177497a95faaad1",
+    "house/runtime.py": "bb5e1db13cd6381da2ce760498ffaafad1cb022217196733450f3145f2596c0d",
+    "house/shelf.py": "bf57cf575b7396d7933de8a5653e9a2d490270ea5dce1abaf8ff916dc1753f54",
+    "house/shelf_gate.py": "ffb613ae33b86c4fa8cde8539dd070d49f8c27fce0b216312e359e77b86d8404",
+    "house/source_delivery.py": "5142629c63049dc1553ceee16b9e76387b3731c638ea656a37f0f8d554790ddd",
+    "house/steward.py": "63dda2d2ecef9a4fd29cec4568f5348cd402dca7bc1a959062a4610018ca435f",
+    "house/test_sandbox.py": "88ab2e0f8f3d2f48fd0f9c7685fb8cc57d503c9bcfdbc21b4346858d3e5efca1",
+    "house/wake_policy.py": "cd394dca02e2a8b2d83e3cf6e10d1c7863cff910f172bbb81e6f13b8ce6eff84",
+    "house/watch.py": "330c2f2e0a8287ad0d97db091d9360b69614340700a9237603509cf646455237",
+    "house/watch_recovery.py": "cd85efe96bd538a7b1951c40f3d0541813bf4cf27d2e2454bd222d96578117f9",
+    "house/windows.py": "a19390f80e3ed23e60ed80abd479f1ee20158276f7aa4791d1b12f8740185140",
+    "house/work_metrics.py": "fa8edb24f348a7a3ce395ef0e7a4b59508e0329bedb880a8c411562fca7979df"
+  },
+  "runtime_sha256": "21d6828b3c98f77b0a5aec6ef5edc080e1f6a084046f3b64567b936b8e62c8ee",
+  "service": {
+    "bootstrap_exit_code": 0,
+    "changed_plist_keys": [
+      "ProgramArguments"
+    ],
+    "label": "local.emberhall.watch",
+    "nice": 0,
+    "observed_new_pid": 4669,
+    "observed_priority": 20,
+    "old_pid": 9940,
+    "old_process_verified_gone": true,
+    "process_type": "Standard",
+    "runtime_argument_replacements": 2
+  },
+  "source_head": "b73d5584776869036a8badd2b365d808ade9bcd0",
+  "tests": {
+    "collected": 487,
+    "executed": 384,
+    "output": "activation-tests.txt",
+    "seconds": 246.589,
+    "sha256": "6e7521edb894adce7743e4cd57231733325d6c192bdd8db79379d4dd617ea3d0",
+    "skipped": 103
+  }
+}

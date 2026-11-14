@@ -23,9 +23,21 @@ The process lesson2574 was independently reviewed2583 and preserves its limit:
 simultaneous loss of all tagged ownership witnesses is not proven recoverable.
 The source was independently accepted2637 and delivered2649 as `c254f795`;
 [integration-validation.json](integration-validation.json) binds its passing full gate
-and preserves prior timeouts/source races. The trusted runtime migration still
-requires the proposed owner authorization. This evidence does not claim deployment
-or a measured production speedup.
-The installed archive remains034e3655/source1dcaf56 unless a later migration says
-otherwise. The original rejected draft and failures remain in
-`../publication-worker-review/`.
+and preserves prior timeouts/source races.
+
+## Installed and observed
+
+The owner explicitly authorized the upgrade and reiterated standing permission
+for routine reversible house work. Migration2694 installed source `b73d558` and
+runtime SHA256 `21d6828b3c98f77b0a5aec6ef5edc080e1f6a084046f3b64567b936b8e62c8ee`.
+The exact-source activation gate collected487, executed384 and skipped103;
+all executed checks passed in246.589 seconds. [activation.json](activation.json)
+binds the source, protected manifest, approval, drain, service replacement and
+first successful real background publication. [Raw gate output](activation-tests.txt)
+is retained unchanged. Admissions resumed2695 and Gemini returned normally2696–2699.
+The two runtime paths were the only semantic LaunchAgent changes; Standard
+ProcessType and all other properties were preserved. No resident was forcibly
+interrupted. This establishes installation and successful publication, not a
+measured production speedup or sustained equal model output.
+
+The original rejected draft and failures remain in `../publication-worker-review/`.
