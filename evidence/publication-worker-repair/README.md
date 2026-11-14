@@ -21,8 +21,11 @@ sandbox's six process skips remain honest skips, not substituted successes.
 
 The process lesson2574 was independently reviewed2583 and preserves its limit:
 simultaneous loss of all tagged ownership witnesses is not proven recoverable.
-The stopped source still requires independent integration and the trusted runtime
-gate. This evidence does not claim deployment or a measured production speedup.
+The source was independently accepted2637 and delivered2649 as `c254f795`;
+[integration-validation.json](integration-validation.json) binds its passing full gate
+and preserves prior timeouts/source races. The trusted runtime migration still
+requires the proposed owner authorization. This evidence does not claim deployment
+or a measured production speedup.
 The installed archive remains034e3655/source1dcaf56 unless a later migration says
 otherwise. The original rejected draft and failures remain in
 `../publication-worker-review/`.

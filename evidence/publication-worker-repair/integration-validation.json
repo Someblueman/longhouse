@@ -1,0 +1,65 @@
+{
+  "accepted_sequence": 2637,
+  "delivery_sequence": 2649,
+  "integration": {
+    "run": "d3155cbb6bce4f45b7bc8af61d806140",
+    "actor": "resident-9c6665447fde49358635443e47216acd",
+    "base": "88f04526c8db7d06e4b2fc63f38048331ec4a135",
+    "contribution": "42e5e07fe7970b64951cc2addd0676d50eb4cf1b",
+    "candidate": "integration-79663980641a4b40abb57c2187cefe24",
+    "status": "integrated",
+    "candidate_head": "c254f795ba477f54bf9ffc150413085c18b48d85",
+    "test_scope": "foundation",
+    "test_commands": [
+      [
+        "/Users/sws/.local/share/mise/installs/python/3.13.2/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ]
+    ],
+    "test_exit": 0
+  },
+  "collected": 481,
+  "executed": 378,
+  "skipped": 103,
+  "test_log_sha256": "acc0df27c69a8e2a47950be0d2b8c05e748cf7fa753b9340d6e24a30ca3c0976",
+  "attempts": [
+    {
+      "job": "a301f2138892458864c40896dd87e69698c9ab53d76c10565268bc10f379ff3f",
+      "status": "done",
+      "started_at": 1794667368.350899,
+      "finished_at": 1794668317.6534688,
+      "ok": false,
+      "error": "TimeoutExpired: Command '['/usr/bin/sandbox-exec', '-p', '(version 1)(allow default)(deny file-write*)(allow file-write* (subpath \"/Users/sws/Code/longhouse/.git/house-home/integration-8b0f83f4bec94a95acf7ef3cf7944aec\") (subpath \"/private/var/folders/sp/gftbmpy17y1_q_6cp75p8gm40000gn/T/emberhall-tests-h6dp9oo7\") (l"
+    },
+    {
+      "job": "4415c90a11edb73ec0b3eec7121c97af6f036c3f5f172cadd9e3c57a840e4a70",
+      "status": "done",
+      "started_at": 1794668763.1385841,
+      "finished_at": 1794669072.1651762,
+      "ok": false,
+      "error": "ValueError: shared source changed during review; candidate retained"
+    },
+    {
+      "job": "0981f3f0fa453243f0579c33b4d990398d803d3777fc72b466967f7ed619067d",
+      "status": "done",
+      "started_at": 1794669086.537031,
+      "finished_at": 1794669397.995789,
+      "ok": false,
+      "error": "ValueError: shared source changed during review; candidate retained"
+    },
+    {
+      "job": "3373e5f9a4c7794c091d49e0195b95e66867a0dddfb2b64635909abc2215276a",
+      "status": "done",
+      "started_at": 1794669678.018805,
+      "finished_at": 1794669989.465291,
+      "ok": true,
+      "error": null
+    }
+  ],
+  "limits": "103 sandbox skips remain skips. Separate exact-byte host witness executed48 with zero skips. First attempt timed out under Background. Two later source-race refusals were caused by Keeper commits; no accepted result was fabricated. Accepted source is not runtime installation."
+}

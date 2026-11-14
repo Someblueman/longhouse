@@ -1,9 +1,13 @@
 # Proposed nonblocking Pages runtime activation
 
 Status: **proposal only; no new scope or authority has been recorded.**
-Candidate `42e5e07` has48 independently executed host checks; the ordinary
-independent integration gate remains pending. Update this proposal with its
-accepted source commit and full gate result before requesting the final decision.
+Candidate `42e5e07` was independently accepted by Sable at journal2637 as
+`c254f795ba477f54bf9ffc150413085c18b48d85`; coordinator delivery2649 verified
+remote equality. The exact integration suite collected481 checks:378 executed
+and passed,103 skipped. The separate exact-byte host witness executed48 with
+zero skips. [Integration evidence](integration-validation.json) retains failures
+and the [full gate log](integration-tests.txt). The [proposed authorization](owner-authorization-proposal.md)
+is limited to the four paths below; it has not been approved or recorded as law.
 
 The proposed owner-authorized change is limited to four protected paths:
 
