@@ -590,7 +590,7 @@ function shelf() {
       html("p", "small", "Project slot available · council can choose from the shelf.", box);
     }
     html("p", "small", dataShelf.explorer
-      ? "An Explorer round is already in progress."
+      ? "One Explorer at a time · see the recorded round above."
       : ideas.length < 3 ? "Room for one Explorer round." : "Shelf stocked · no Explorer round needed.", box);
   }
   const graveyard = [
