@@ -50,6 +50,7 @@ DIGEST_SCOPE = "wake-digest-command-20261114"
 WORK_ACCOUNTING_SCOPE = "work-accounting-refresh-20261114"
 PUBLICATION_SCOPE = "publication-worker-refresh-20261114"
 VOTING_SCOPE = "public-voting-history-20261114"
+PROJECT_WORK_SCOPE = "project-work-routing-20261114"
 DIAGNOSTICS_SCOPE = "integration-diagnostics-20261114"
 SELECTION_SHA256 = "e01580a8a78bbbb5b9286635b85df68bd43b8f8a4785cf9df477765767ba1df8"
 RESTORED_SHA256 = "4fa255013b0b0bb0021b5461e6cb25f084de67bb55557cff7c773f137d233fde"
@@ -62,7 +63,8 @@ FAILED_CLI_OBSERVATION = 465
 FAILED_BOOTSTRAP_RUN = "2c9fc6bd10574c84bf0e45aba78a054c"
 FAILED_BOOTSTRAP_SHA256 = "034347cdaac227cd535f60f5d01d91fa83a90b458245e4aaa0ea61da787a7406"
 FAILED_BOOTSTRAP_OBSERVATION = 530
-SOURCES = {VOTING_SCOPE: "27fa743f14d4e09df5345df54e8dc4c743c77fed90fe327d8497e9c1ab45d999",
+SOURCES = {PROJECT_WORK_SCOPE: "28f99162a0cb1f333f2f6e1572255f3db1f23e95c1a8a24096219fdd7dec31bf",
+           VOTING_SCOPE: "27fa743f14d4e09df5345df54e8dc4c743c77fed90fe327d8497e9c1ab45d999",
            RETRY_SCOPE: OPENCODE_SHA256, GROWTH_SCOPE: GROWTH_SHA256,
            REPAIR_SCOPE: GROWTH_SHA256, LAUNCHER_SCOPE: GROWTH_SHA256,
            CONTINUITY_SCOPE: GROWTH_SHA256, NAMING_SCOPE: GROWTH_SHA256,
@@ -81,6 +83,8 @@ RETRY_BUDGET_SEQUENCE = 300
 RETRY_BUDGET_UNTIL = 1794676437.592195
 OWNER_MODULES = {"house/maintenance.py", "house/owner_upgrade.py"}
 ALLOWED_CHANGES = {
+    PROJECT_WORK_SCOPE: OWNER_MODULES | {"house/project_work.py", "house/model.py",
+        "house/life.py", "house/home.py", "house/__main__.py", "house/body.py"},
     VOTING_SCOPE: {"house/maintenance.py", "house/body.py"},
     DIAGNOSTICS_SCOPE: {"house/maintenance.py", "house/integrate.py"},
     PUBLICATION_SCOPE: OWNER_MODULES | {"house/home.py", "house/publication_worker.py"},
@@ -258,6 +262,8 @@ def apply(state: dict, event: dict) -> None:
         extra = OWNER_MODULES | ({"house/building.py"} if scope == GROWTH_SCOPE else set())
         if scope == REPAIR_SCOPE:
             extra.add("house/opencode_auth.py")
+        if scope == PROJECT_WORK_SCOPE:
+            extra.add("house/project_work.py")
         if scope == PUBLICATION_SCOPE:
             extra.add("house/publication_worker.py")
         if scope == WORK_ACCOUNTING_SCOPE:

@@ -51,7 +51,7 @@ class TaskStatusUITests(unittest.TestCase):
 const before=JSON.stringify(frame);
 roomPanel();
 assert.match(text(panel()),/3 unfinished · 1 unassigned · 1 recorded claims · 1 expired leases/);
-assert.match(text(panel()),/Unassigned does not mean ready to start: readiness is not included in this snapshot/);
+assert.match(text(panel()),/Unassigned does not mean ready to start/);
 assert.match(text(panel()),/Recorded claims exclude expired leases and are not live process status/);
 assert.equal(rows().length,3);
 assert.equal(rows()[0].children[1].textContent,'Unassigned');

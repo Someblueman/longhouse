@@ -1,0 +1,22 @@
+{
+  "focused": {
+    "executed": 16,
+    "skipped": 0,
+    "seconds": 3.514,
+    "passed": true
+  },
+  "host_owner_upgrade": {
+    "executed": 5,
+    "skipped": 0,
+    "seconds": 13.22,
+    "passed": true,
+    "log_sha256": "b4660751d5fcf1bc92e402e86a04c72f048ab1070d882087cb32300aba07640b",
+    "earlier_attempt": "Workspace sandbox denied ps in disposable child cleanup; rerun with approved host inspection passed."
+  },
+  "native_integration": {
+    "run": "52ee8a11acae419eb9823118dea21e3a",
+    "commit": "3ddcf23975d5fc29baf1b36c52816a23e9ea1b15",
+    "test_exit": 0
+  },
+  "limits": "These are pre-activation checks. The exact committed owner runtime gate remains separate."
+}

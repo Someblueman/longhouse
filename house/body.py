@@ -168,15 +168,9 @@ def public_task(task_id: str, task: dict) -> dict:
     ready = task.get("ready")
     if ready is True or ready is False:
         item["ready"] = ready
-    project_id = None
-    for key in ("project", "project_id"):
-        value = task.get(key)
-        if isinstance(value, str) and value.strip():
-            project_id = label(value, 100)
-            break
-    if project_id:
-        item["project"] = project_id
-        item["project_id"] = project_id
+    project = task.get("project")
+    if isinstance(project, str) and project.strip():
+        item["project"] = label(project, 100)
     return item
 
 

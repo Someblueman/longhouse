@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-14",
+  "target": "projects/night-ferry/player/index.html",
+  "attempt": "Original local file URL through the existing in-app browser",
+  "owner_approval": "Owner explicitly approved browser testing again in this chat and then authorized installed Chrome/Playwright. Owner approval is not missing.",
+  "result": "Browser Use rejected this action due to browser security policy. The requested URL protocol is not allowed. Allowed protocols: http:, https:.",
+  "restriction": "The tool explicitly prohibits achieving the same outcome through workarounds, indirect execution, raw browser commands, alternate browser surfaces or policy circumvention. No such workaround was attempted.",
+  "status": "Actual browser acceptance remains unverified; source and automated tests are separate evidence."
+}

@@ -26,12 +26,9 @@ class PublicTaskProjectionTests(HouseCase):
 
     def test_project_exported_only_when_recorded_and_never_inferred(self):
         linked = public_task("project-work-visibility-build", fake_task(project="night-ferry"))
-        alias = public_task("other", {**fake_task(), "project_id": "signal-garden"})
         tricky = public_task("project-x", fake_task(title="project: night-ferry build"))
         self.assertEqual(linked["project"], "night-ferry")
-        self.assertEqual(linked["project_id"], "night-ferry")
-        self.assertEqual(alias["project"], "signal-garden")
-        self.assertEqual(alias["project_id"], "signal-garden")
+        self.assertNotIn("project_id", linked)
         self.assertNotIn("project", tricky)
         self.assertNotIn("project_id", tricky)
         empty = public_task("empty", fake_task(project="   "))
@@ -44,7 +41,7 @@ class PublicTaskProjectionTests(HouseCase):
         for secret in ("secret-token", "private note"):
             self.assertNotIn(secret, public)
         self.assertEqual(set(exported), {"id", "title", "owner", "status", "until",
-                                          "generation", "ready", "project", "project_id"})
+                                          "generation", "ready", "project"})
 
     def test_journal_ready_transitions_keep_historical_frames_unknown(self):
         self.record.append("task", "alice", {"task": "work", "title": "Work", "description": "Bounded"})

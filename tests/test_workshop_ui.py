@@ -49,13 +49,14 @@ frame={seq:10,at:1000,rooms:[{id:'workshop',name:'Workshop'}],
  shelf:{projects:[{id:'night-ferry',title:'Night Ferry'}]},
  tasks:[
   {id:'routed-ready',title:'Build ferry',owner:null,status:'open',until:0,generation:0,ready:true,project:'night-ferry'},
-  {id:'blocked',title:'Repair',owner:null,status:'open',until:0,generation:1,ready:false,project_id:'signal-garden-title-missing'},
+  {id:'blocked',title:'Repair',owner:null,status:'open',until:0,generation:1,ready:false,project:'signal-garden-title-missing'},
   {id:'unknown',title:'Ordinary',owner:null,status:'open',until:0,generation:0},
   {id:'claimed-ready',title:'Claimed work',owner:'mallow',status:'claimed',until:3000,generation:2,ready:true}
  ]};
 ''', r'''
 roomPanel();
 assert.match(text(panel()),/4 unfinished · 3 unassigned · 1 recorded claims · 0 expired leases/);
+assert.doesNotMatch(text(panel()),/readiness is not included/);
 const r=rows();assert.equal(r.length,4);
 assert.equal(r[0].children[1].textContent,'Unassigned');
 assert.equal(r[0].children[2].textContent,'Declared ready');
