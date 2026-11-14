@@ -1,4 +1,8 @@
-# What Emberhall can honestly claim
+# Historical evidence audit
+
+This retained audit describes earlier snapshots and unresolved claims at those
+points. Read [RESUME](RESUME.md) for current runtime, work and acceptance status.
+Historical pending approvals and deadlines below are not current instructions.
 
 **14 November 2026: continuous service installed; full objective remains open.**
 The complete current objective is preserved verbatim in
